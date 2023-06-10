@@ -1,8 +1,5 @@
 package com.techchallenge.adapter.driver.exceptionhandler;
 
-import lombok.Getter;
-
-@Getter
 public enum ProblemType {
 
 	MENSAGEM_INCONSISTENTE("/mensagem-inconsistente", "Mensagem inconsistente"),
@@ -17,5 +14,13 @@ public enum ProblemType {
 	ProblemType(String path, String title) {
 		this.uri = BASE_URL + path;
 		this.title = title;
+	}
+	
+	public String getTitle() {
+		return this.title;
+	}
+	
+	public String getUri() {
+		return this.uri;
 	}
 }
