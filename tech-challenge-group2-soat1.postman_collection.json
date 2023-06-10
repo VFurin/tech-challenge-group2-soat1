@@ -47,6 +47,14 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "PESQUISAR CLIENTE POR CPF",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
 		}
 	]
 }

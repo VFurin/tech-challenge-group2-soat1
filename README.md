@@ -42,3 +42,11 @@ Para listar os clientes cadastrados, utilize o seguinte endpoint:
 ```sh
 GET http://localhost:8080/clientes
 ```
+
+## Busca de Cliente por CPF
+
+Para buscar um cliente por CPF, utilize o seguinte endpoint:
+
+```sh
+GET http://localhost:8080/clientes?cpf=12345678911
+```
