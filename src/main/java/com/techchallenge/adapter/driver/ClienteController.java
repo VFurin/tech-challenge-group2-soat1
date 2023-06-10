@@ -45,4 +45,10 @@ public class ClienteController {
 		List<Cliente> todosClientes = service.buscarTodos();
 		return mapper.toCollectionModel(todosClientes);
 	}
+
+	@GetMapping(params = "cpf")
+	public ClienteModel buscarPorCpf(String cpf) {
+		Cliente cliente = service.buscarPorCpf(cpf);
+		return mapper.toModel(cliente);
+	}
 }

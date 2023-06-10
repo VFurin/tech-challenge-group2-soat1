@@ -24,4 +24,8 @@ public class ClienteService {
     public List<Cliente> buscarTodos() {
     	return repository.findAll();
     }
+
+    public Cliente buscarPorCpf(String cpf) {
+    	return repository.findByCpf(cpf);
+    }
 }
