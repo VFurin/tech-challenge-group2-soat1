@@ -25,7 +25,7 @@ public class ClienteService {
     	return repository.findAll();
     }
 
-    public Cliente buscarPorCpf(String cpf) {
-    	return repository.findByCpf(cpf);
+    public List<Cliente> buscarPorCpf(Long cpf) {
+        return repository.findByCpfIs(cpf);
     }
 }
