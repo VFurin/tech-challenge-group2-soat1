@@ -61,6 +61,7 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+
 		<!-- dependencias de suporte -->
 		<dependency>
 			<groupId>com.h2database</groupId>
@@ -117,6 +118,13 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/junit/junit -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+
 	</dependencies>
 
 	<build>

@@ -20,10 +20,6 @@ public class ClienteService {
     public Cliente salvar(Cliente cliente) {
         return repository.save(cliente);
     }
-    
-    public List<Cliente> buscarTodos() {
-    	return repository.findAll();
-    }
 
     public List<Cliente> buscarPorCpf(Long cpf) {
         return repository.findByCpfIs(cpf);
