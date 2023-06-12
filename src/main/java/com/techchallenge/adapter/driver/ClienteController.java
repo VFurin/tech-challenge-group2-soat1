@@ -32,13 +32,6 @@ public class ClienteController {
 
 		return mapper.toModel(cliente);
 	}
-	
-	@GetMapping
-	public Collection<ClienteModel> listar() {
-		List<Cliente> todosClientes = service.buscarTodos();
-
-		return mapper.toCollectionModel(todosClientes);
-	}
 
 	@GetMapping(value = "/{cpf}")
 	public ClienteModel buscarPorCpf(@PathVariable Long cpf) {

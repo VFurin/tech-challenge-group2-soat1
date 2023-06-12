@@ -12,8 +12,6 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
     @SuppressWarnings("unchecked")
 	Cliente save(Cliente cliente);
-    
-    List<Cliente> findAll();
 
     List<Cliente> findByCpfIs(Long cpf);
 }
