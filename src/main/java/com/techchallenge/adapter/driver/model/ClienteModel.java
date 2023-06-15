@@ -1,9 +1,16 @@
 package com.techchallenge.adapter.driver.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel("Cliente")
 public class ClienteModel {
 
+	@ApiModelProperty(example = "Nome do cliente")
 	private String nome;
+	@ApiModelProperty(example = "cliente-teste@teste.com.br")
 	private String email;
+	@ApiModelProperty(example = "12345678901")
 	private Long cpf;
 
 	public String getNome() {

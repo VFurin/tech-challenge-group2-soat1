@@ -1,19 +1,34 @@
 package com.techchallenge.adapter.driver;
 
+import java.util.List;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.techchallenge.adapter.driver.exceptionhandler.Problem;
 import com.techchallenge.adapter.driver.model.ClienteModel;
 import com.techchallenge.adapter.driver.model.input.ClienteInput;
 import com.techchallenge.adapter.mapper.ClienteMapper;
 import com.techchallenge.core.applications.service.ClienteService;
 import com.techchallenge.core.domain.Cliente;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.util.Collection;
-import java.util.List;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
+@Api(tags = "Clientes")
 @RestController
 @RequestMapping(value = "/clientes", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ClienteController {
@@ -24,6 +39,10 @@ public class ClienteController {
 	@Autowired
 	private ClienteMapper mapper;
 	
+	@ApiOperation("Inclui um cliente a plataforma")
+	@ApiResponses({ 
+			@ApiResponse(code = 201, message = "Cliente incluso com sucesso") 
+			})
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public ClienteModel adicionar(@RequestBody @Valid ClienteInput input) {
@@ -33,8 +52,13 @@ public class ClienteController {
 		return mapper.toModel(cliente);
 	}
 
+	@ApiOperation("Consultar cliente por CPF")
+	@ApiResponses({ 
+		@ApiResponse(code = 200, message = "Cliente referente ao CPF informado"),
+		@ApiResponse(code = 404, message = "Cliente não encontrado com o CPF informado", response = Problem.class) 
+	})
 	@GetMapping(value = "/{cpf}")
-	public ClienteModel buscarPorCpf(@PathVariable Long cpf) {
+	public ClienteModel buscarPorCpf(@ApiParam(value = "CPF para consulta (apenas números)", example = "12345678901") @PathVariable Long cpf) {
 		List<Cliente> clientes = service.buscarPorCpf(cpf);
 
 		return mapper.toCollectionModel(clientes)
