@@ -1,0 +1,36 @@
+version: '3'
+services:
+  api:
+    container_name: tech-challenge-api
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./src:/app/src
+    networks:
+      - tech-challenge-network
+    depends_on:
+      - db
+
+  db:
+    container_name: tech-challenge-db
+    image: mysql:8.0.33
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: tech_challenge
+      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - .docker/mysql/data:/var/lib/mysql
+      - .docker/mysql/my.cnf:/etc/mysql/my.cnf
+    ports:
+      - "3306:3306"
+    networks:
+      - tech-challenge-network
+
+networks:
+    tech-challenge-network:
+        driver: bridge

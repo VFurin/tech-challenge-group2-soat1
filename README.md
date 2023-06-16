@@ -1,18 +1,18 @@
 # Documentação - Tech Challenge - Grupo 2 - PosTech - Arquitetura de Software - FIAP 
 Repositório para o desafio do Tech Challenge da Pós-gradução em Software Architecture pela FIAP.
 
-### Build da Imagem Docker
-Para buildar a imagem Docker da aplicação, execute o seguinte comando:
+### Build do Container Docker
+Para buildar o container da aplicação, utilize o comando a seguir:
 
 ```sh
-docker build -t tech-challenge .
+docker-compose up -d
 ```
 
-### Rodando a Imagem Docker
-Para executar a aplicação, utilize o comando a seguir:
+### Rebuid do Container Docker
+Para rebuidar o container da aplicação, utilize o comando a seguir:
 
 ```sh
-docker run -p 8080:8080 --rm -it tech-challenge:latest
+docker-compose up -d --build
 ```
 
 Após executar o comando acima, a aplicação estará disponível em http://localhost:8080.
@@ -22,7 +22,7 @@ Após executar o comando acima, a aplicação estará disponível em http://loca
 Para cadastrar um cliente, utilize o seguinte endpoint:
 
 ```sh
-POST http://localhost:8080/clientes
+POST http://localhost:8080/api/clientes
 ```
 
 Exemplo de payload:
@@ -40,7 +40,7 @@ Exemplo de payload:
 Para listar os clientes cadastrados, utilize o seguinte endpoint:
 
 ```sh
-GET http://localhost:8080/clientes
+GET http://localhost:8080/api/clientes
 ```
 
 ## Busca de Cliente por CPF
@@ -48,5 +48,5 @@ GET http://localhost:8080/clientes
 Para buscar um cliente por CPF, utilize o seguinte endpoint:
 
 ```sh
-GET http://localhost:8080/clientes?cpf=12345678911
+GET http://localhost:8080/api/clientes/12345678911
 ```

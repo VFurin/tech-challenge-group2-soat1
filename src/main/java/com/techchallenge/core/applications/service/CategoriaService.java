@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 public class CategoriaService {
@@ -14,5 +15,7 @@ public class CategoriaService {
     private CategoriaRepository repository;
 
     @Transactional
-    public Categoria salvar(Categoria categoria) {return repository.save(categoria);}
+    public List<Categoria> buscarTodos() {
+        return repository.findAll();
+    }
 }

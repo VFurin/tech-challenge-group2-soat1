@@ -11,7 +11,7 @@ public class Produto {
     @Column(nullable = false)
     private String nome;
     @ManyToOne
-    @JoinColumn(name = "categoria", nullable = false)
+    @JoinColumn(name = "categoria_id", nullable = false)
     private Categoria categoria;
     @Column(nullable = false)
     private BigDecimal preco;
