@@ -3,7 +3,7 @@ FROM maven:3.8.6-openjdk-11-slim AS build
 
 WORKDIR /app
 
-COPY src /app/src
+COPY ./src /app/src
 COPY pom.xml /app
 RUN mvn -f /app/pom.xml clean install
 

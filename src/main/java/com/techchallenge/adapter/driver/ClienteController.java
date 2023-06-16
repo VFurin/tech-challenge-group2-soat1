@@ -22,11 +22,15 @@ import com.techchallenge.adapter.mapper.ClienteMapper;
 import com.techchallenge.core.applications.service.ClienteService;
 import com.techchallenge.core.domain.Cliente;
 
+feature/ajustes-model-swagger
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import javax.validation.Valid;
+import java.util.List;
+main
 
 @Api(tags = "Clientes")
 @RestController
