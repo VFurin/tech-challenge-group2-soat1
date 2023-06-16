@@ -4,6 +4,9 @@ import com.techchallenge.adapter.driver.model.ProdutoModel;
 import com.techchallenge.adapter.mapper.ProdutoMapper;
 import com.techchallenge.core.applications.service.ProdutoService;
 import com.techchallenge.core.domain.Produto;
+
+import io.swagger.annotations.Api;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Collection;
 import java.util.List;
 
+@Api(tags = "Produtos")
 @RestController
 @RequestMapping(value = "/produtos", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ProdutoController {

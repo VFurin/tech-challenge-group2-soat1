@@ -14,13 +14,19 @@ import io.swagger.annotations.ApiModelProperty;
 public final class Problem {
 	
 	public static final class ProblemBuilder {
-		
+		@ApiModelProperty(example = "400")
 		private Integer status;
+		@ApiModelProperty(example = "http://localhost:8080/dados-invalidos")
 		private String type;
+		@ApiModelProperty(example = "Dados inválidos")
 		private String title;
+		@ApiModelProperty(example = "Um ou mais campos estão inválidos. Faça o preenchimento corretamente.")
 		private String detail;
+		@ApiModelProperty(example = "Um ou mais campos estão inválidos. Faça o preenchimento corretamente.")
 		private String userMessage;
+		@ApiModelProperty(example = "2019-12-01T18:10:23.70844Z")
 		private OffsetDateTime timestamp;
+		@ApiModelProperty(value = "Objetos ou campos que geraram o erro.")
 		private List<Object> objects;
 		
 
