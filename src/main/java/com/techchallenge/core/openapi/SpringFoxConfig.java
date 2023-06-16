@@ -46,7 +46,7 @@ public class SpringFoxConfig implements WebMvcConfigurer {
 		
 		return new Docket(DocumentationType.SWAGGER_2)
 				.select()
-				.apis(RequestHandlerSelectors.basePackage("com.techchallenge.adapter"))
+				.apis(RequestHandlerSelectors.basePackage("com.techchallenge.adapter.driver"))
 				.paths(PathSelectors.any())
 				.build()
 				.useDefaultResponseMessages(Boolean.FALSE)
@@ -63,6 +63,9 @@ public class SpringFoxConfig implements WebMvcConfigurer {
 						File.class,
 						InputStream.class)
 				.apiInfo(apiInfo())
+				// Configuração de tags para apresentação nas sections do Swagger
+				// O Primeiro argumento do construtor do objeto definido aqui deve
+				// coincidir com o mesmo nome que definido no controller no atributo tags da anotação @Api.                                         
 				.tags(new Tag("Clientes", "Gestão de clientes"),
 						new Tag("Categorias", "Gestão de categorias"),
 						new Tag("Pagamentos", "Gestão dos tipos de pagamentos"),
@@ -71,6 +74,10 @@ public class SpringFoxConfig implements WebMvcConfigurer {
 						new Tag("Checkout", "Controle de checkout de pedidos"));
 	}
 	
+	/**
+	 * Disponibilização de response messages padrões para o verbo GET na apresentação do swagger.
+	 * @return Lista de objetos ResponseMessage contendo a estrutura das mensagens padrões.
+	 */
 	private List<ResponseMessage> globalGetResponseMessages() {
 		return Arrays.asList(
 				new ResponseMessageBuilder()
@@ -85,6 +92,10 @@ public class SpringFoxConfig implements WebMvcConfigurer {
 				);
 	}
 	
+	/**
+	 * Disponibilização de response messages padrões para os verbos PUT e POST na apresentação do swagger.
+	 * @return Lista de objetos ResponseMessage contendo a estrutura das mensagens padrões.
+	 */
 	private List<ResponseMessage> globalPostPutResponseMessages() {
 	    return Arrays.asList(
 	            new ResponseMessageBuilder()
@@ -109,6 +120,10 @@ public class SpringFoxConfig implements WebMvcConfigurer {
 	        );
 	}
 
+	/**
+	 * Disponibilização de response messages padrões para o verbo DELETE na apresentação do swagger.
+	 * @return Lista de objetos ResponseMessage contendo a estrutura das mensagens padrões.
+	 */
 	private List<ResponseMessage> globalDeleteResponseMessages() {
 	    return Arrays.asList(
 	            new ResponseMessageBuilder()
