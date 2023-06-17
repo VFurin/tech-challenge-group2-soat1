@@ -6,6 +6,8 @@ services:
       context: .
       dockerfile: .docker/Dockerfile
     restart: unless-stopped
+    environment:
+      DB_HOST: "tech-challenge-db:3306"
     ports:
       - "8080:8080"
     volumes:
