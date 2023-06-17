@@ -1,0 +1,14 @@
+create table categoria (id bigint not null auto_increment, nome varchar(255) not null, primary key (id)) engine=InnoDB;
+create table cliente (id bigint not null auto_increment, cpf bigint not null, email varchar(255) not null, nome varchar(255) not null, primary key (id)) engine=InnoDB;
+create table item_pedido (id bigint not null auto_increment, preco_total decimal(19,2), quantidade integer, pedido_id bigint not null, produto_id bigint not null, primary key (id)) engine=InnoDB;
+create table pagamento (id bigint not null auto_increment, primary key (id)) engine=InnoDB;
+create table pedido (id bigint not null auto_increment, data_cancelamento datetime(6), data_finalizacao datetime(6), data_solicitacao datetime(6), status varchar(255), valor decimal(19,2), cliente_id bigint not null, tipo_pagamento_id bigint not null, primary key (id)) engine=InnoDB;
+create table produto (id bigint not null auto_increment, descricao varchar(255) not null, imagem varchar(255) not null, nome varchar(255) not null, preco decimal(19,2) not null, categoria_id bigint not null, primary key (id)) engine=InnoDB;
+create table tipo_pagamento (id bigint not null auto_increment, nome varchar(255) not null, primary key (id)) engine=InnoDB;
+alter table cliente add constraint UK_r1u8010d60num5vc8fp0q1j2a unique (cpf);
+alter table cliente add constraint UK_cmxo70m08n43599l3h0h07cc6 unique (email);
+alter table item_pedido add constraint FK60ym08cfoysa17wrn1swyiuda foreign key (pedido_id) references pedido (id);
+alter table item_pedido add constraint FKtk55mn6d6bvl5h0no5uagi3sf foreign key (produto_id) references produto (id);
+alter table pedido add constraint FK30s8j2ktpay6of18lbyqn3632 foreign key (cliente_id) references cliente (id);
+alter table pedido add constraint FK5juq0l4n7h25dly1nwbyqoru0 foreign key (tipo_pagamento_id) references tipo_pagamento (id);
+alter table produto add constraint FKopu9jggwnamfv0c8k2ri3kx0a foreign key (categoria_id) references categoria (id);
