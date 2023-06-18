@@ -1,7 +1,5 @@
 package com.techchallenge.adapter.driver.model;
 
-import com.techchallenge.core.domain.Categoria;
-
 import java.math.BigDecimal;
 
 public class ProdutoModel {
