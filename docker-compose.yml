@@ -2,16 +2,18 @@ version: '3'
 services:
   api:
     container_name: tech-challenge-api
-    build:
-      context: .
-      dockerfile: .docker/Dockerfile
+    image: fiap-soat1-gp02/tech-challenge-soat1-gp02
+    # Adicionei como se fosse um "healthcheck". Se trata de um script que fica pingando o serviço e 
+    # "prende" o start do container até que tenha uma resposta dentro do tempo parametrizado. 
+    # Caso contrário, retorna um signal code de erro e o container encerra a execução.
+    # No meu ambiente, estava ocorrendo que o MySQL estava com a porta disponível depois do container ter iniciado a daemon.
+    # Isso acarretava do container da API iniciar sem estar disponível o serviço na porta 3306 no container do DB.
+    command: ["/wait-for-it.sh", "tech-challenge-db:3306", "-t", "60", "--", "java", "-jar", "/app/api.jar"]
     restart: unless-stopped
     environment:
       DB_HOST: "tech-challenge-db:3306"
     ports:
       - "8080:8080"
-    volumes:
-      - ./src:/app/src
     networks:
       - tech-challenge-network
     depends_on:
