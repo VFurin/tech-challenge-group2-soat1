@@ -2,7 +2,12 @@ version: '3'
 services:
   api:
     container_name: tech-challenge-api
-    image: fiap-soat1-gp02/tech-challenge-soat1-gp02
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile
+      # Argumento a ser passado para o Dockerfile indicando o nome do artefato para cópia.
+      args: 
+        JAR_FILE: tech-challenge-group2-soat1.jar
     # Adicionei como se fosse um "healthcheck". Se trata de um script que fica pingando o serviço e 
     # "prende" o start do container até que tenha uma resposta dentro do tempo parametrizado. 
     # Caso contrário, retorna um signal code de erro e o container encerra a execução.
