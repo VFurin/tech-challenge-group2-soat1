@@ -8,11 +8,14 @@ Para buildar o container da aplicação, utilize o comando a seguir:
 docker-compose up -d
 ```
 
-Após start dos containers, será necessário realizar uma carga de dados iniciais na base, executando o seguinte comando:
+Após finalizar o start dos containers, será necessário realizar uma carga de dados iniciais na base, executando o seguinte comando:
 
 ```sh
-docker exec -i tech-challenge-db mysql -u root -p[password] < ./load-data.sql
+docker exec -i tech-challenge-db mysql -u root -p[password] < .docker/seeds/load-data.sql
 ```
+
+**Importante!**<br/>
+Esse comando é necessário ser executado apenas uma vez no up do compose. Após a primeira inicialização, os volumes relacionados aos dados do MySQL estarão persistidos. Somente será necessária a execução novamente se houver a remoção dos volumes mapeados.
 
 ### Rebuid do Container Docker
 Para rebuidar o container da aplicação, utilize o comando a seguir:
@@ -74,6 +77,7 @@ GET http://localhost:8080/api/pedidos?status={status}
 Os possíveis status dos pedidos são: REALIZADO, CANCELADO, PREPARACAO e PRONTO.
 
 Para buscar um pedido pelo id do pedido, utilize o seguinte endpoint:
+
 ```sh
 GET http://localhost:8080/api/pedidos/{id}
 ```
