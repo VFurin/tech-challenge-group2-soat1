@@ -8,6 +8,12 @@ Para buildar o container da aplicação, utilize o comando a seguir:
 docker-compose up -d
 ```
 
+Após start dos containers, será necessário realizar uma carga de dados iniciais na base, executando o seguinte comando:
+
+```sh
+docker exec -i tech-challenge-db mysql -u root -p[password] < ./load-data.sql
+```
+
 ### Rebuid do Container Docker
 Para rebuidar o container da aplicação, utilize o comando a seguir:
 
