@@ -50,3 +50,39 @@ Para buscar um cliente por CPF, utilize o seguinte endpoint:
 ```sh
 GET http://localhost:8080/api/clientes/12345678911
 ```
+
+## Listagem de Pedidos
+
+Para listar todos os pedidos, utilize o seguinte endpoint:
+
+```sh
+GET http://localhost:8080/api/pedidos
+```
+
+Para listar os pedidos, filtrando pelo status do pedido, utilize o seguinte endpoint:
+
+```sh
+GET http://localhost:8080/api/pedidos?status={status}
+```
+
+Os possíveis status dos pedidos são: REALIZADO, CANCELADO, PREPARACAO e PRONTO.
+
+Para buscar um pedido pelo id do pedido, utilize o seguinte endpoint:
+```sh
+GET http://localhost:8080/api/pedidos/{id}
+```
+
+## Atualizar status do pedido
+
+Para atualizar o status de um pedido, utilize o seguinte endpoint:
+
+```sh
+PATCH http://localhost:8080/api/pedidos/status
+
+Request body: 
+{
+    "status": "PRONTO"
+}
+```
+
+Os possíveis status dos pedidos são: REALIZADO, CANCELADO, PREPARACAO e PRONTO.
