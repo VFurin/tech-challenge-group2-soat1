@@ -1,17 +1,15 @@
 package com.techchallenge.adapter.mapper;
 
-import com.techchallenge.adapter.driver.model.ClienteModel;
-import com.techchallenge.adapter.driver.model.PedidoModel;
-import com.techchallenge.adapter.driver.model.input.ClienteInput;
-import com.techchallenge.adapter.driver.model.input.PedidoInput;
-import com.techchallenge.core.domain.Cliente;
-import com.techchallenge.core.domain.Pedido;
+import java.util.Collection;
+import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Collection;
-import java.util.stream.Collectors;
+import com.techchallenge.adapter.driver.model.PedidoModel;
+import com.techchallenge.adapter.driver.model.input.PedidoInput;
+import com.techchallenge.core.domain.Pedido;
 
 @Component
 public class PedidoMapper {

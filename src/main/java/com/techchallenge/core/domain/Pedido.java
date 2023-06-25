@@ -28,12 +28,12 @@ public class Pedido {
 	private List<ItemPedido> itens;
 	private BigDecimal valor;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="tipo_pagamento_id", nullable = false)
+    @JoinColumn(name="tipo_pagamento_id", nullable = true)
 	private TipoPagamento tipoPagamento;
 	@Enumerated(EnumType.STRING)
 	private StatusPedido status;
     @ManyToOne
-    @JoinColumn(name = "cliente_id", nullable = false)
+    @JoinColumn(name = "cliente_id", nullable = true)
 	private Cliente cliente;
 
 	@CreationTimestamp

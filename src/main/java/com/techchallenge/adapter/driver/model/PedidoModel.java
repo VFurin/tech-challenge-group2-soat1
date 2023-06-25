@@ -8,6 +8,7 @@ import java.time.OffsetDateTime;
 import java.util.List;
 
 public class PedidoModel {
+	private Long id;
     private List<ItemPedidoModel> itens;
     private BigDecimal valor;
     private TipoPagamento tipoPagamento;
@@ -81,4 +82,12 @@ public class PedidoModel {
     public void setDataFinalizacao(OffsetDateTime dataFinalizacao) {
         this.dataFinalizacao = dataFinalizacao;
     }
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 }
