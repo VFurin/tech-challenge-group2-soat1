@@ -7,6 +7,7 @@ import com.techchallenge.core.domain.exception.NegocioException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Service
@@ -32,5 +33,10 @@ public class PedidoService {
         pedido.setStatus(statusPedido);
         pedidoRepository.save(pedido);
     }
-
+    
+    public Pedido inicializar(Pedido pedido) {
+        pedido.setStatus(StatusPedido.GERACAO);
+        pedido.setDataSolicitacao(OffsetDateTime.now());
+        return pedidoRepository.save(pedido);
+    }
 }

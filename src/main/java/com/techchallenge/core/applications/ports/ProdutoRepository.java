@@ -1,17 +1,24 @@
 package com.techchallenge.core.applications.ports;
 
-import com.techchallenge.core.domain.Produto;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import com.techchallenge.core.domain.Produto;
 
 @Repository
 public interface ProdutoRepository extends JpaRepository<Produto, Long> {
 
-    Produto save(Produto produto);
+    @SuppressWarnings("unchecked")
+	Produto save(Produto produto);
 
+    @Query("from Produto p join fetch p.categoria where p.categoria.nome = :produtoCategoria")
     List<Produto> findByCategoriaNome(String produtoCategoria);
+    
+	@Query("from Produto p join fetch p.categoria")
+	List<Produto> findAll();
 
     void deleteById(Long produtoId);
 }

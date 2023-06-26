@@ -96,3 +96,50 @@ Request body:
 ```
 
 Os possíveis status dos pedidos são: REALIZADO, CANCELADO, PREPARACAO e PRONTO.
+
+## Inicializar pedido
+
+Um pedido deve ser inicializado para que, posteriormente, os pedidos sejam inseridos. Para geração do pedido, executar o seguinte endpoint:
+
+```sh
+POST http://localhost:8080/api/pedidos
+
+Request body: 
+{
+    "status" : "GERACAO"
+}
+```
+
+## Adicionar itens ao pedido
+
+Para inclusão de itens a um pedido aberto, executar o seguinte endpoint:
+
+```sh
+POST http://localhost:8080/api/pedidos/{id_pedido}/itens
+
+Request body: 
+{
+    "quantidade" : 1,
+    "produtoId" : 4 
+}
+```
+
+## Adicionar produtos por categoria
+
+Para inclusão de produtos por categoria, executar o seguinte endpoint:
+
+```sh
+POST http://localhost:8080/api/produtos
+
+Request body: 
+{
+ "nome": "Cheeseburger",
+ "categoria": {
+   "id": 1,
+   "nome": "Lanche"
+ },
+ "preco" : "39.90",
+ "descricao" : "Carne bovina de 120G. Duas fatias de queijo cheedar.",
+ "imagem" : "/imgs/products/cheeseburger.png"
+}
+```
