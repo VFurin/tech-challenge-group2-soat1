@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.techchallenge.adapter.driver.model.PedidoModel;
 import com.techchallenge.adapter.driver.model.input.PedidoInput;
+import com.techchallenge.core.domain.Cliente;
 import com.techchallenge.core.domain.Pedido;
 
 @Component
@@ -18,7 +19,12 @@ public class PedidoMapper {
     private ModelMapper mapper;
 
     public Pedido toDomainObject(PedidoInput input) {
-        return mapper.map(input, Pedido.class);
+        Pedido pedido = mapper.map(input, Pedido.class);
+        
+        pedido.setCliente(new Cliente());
+        pedido.getCliente().setId(input.getClienteId());
+        
+        return pedido;
     }
 
     public PedidoModel toModel(Pedido pedido) {

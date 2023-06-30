@@ -7,7 +7,7 @@ public class ProdutoInput {
 
     private String nome;
 
-    private CategoriaInput categoria;
+    private Long categoriaId;
 
     private BigDecimal preco;
 
@@ -22,10 +22,6 @@ public class ProdutoInput {
     public void setNome(String nome) {
         this.nome = nome;
     }
-
-    public CategoriaInput getCategoria() {return categoria;}
-
-    public void setCategoria(CategoriaInput categoria) {this.categoria = categoria;}
 
     public BigDecimal getPreco() {
         return preco;
@@ -50,4 +46,12 @@ public class ProdutoInput {
     public void setImagem(String imagem) {
         this.imagem = imagem;
     }
+
+	public Long getCategoriaId() {
+		return categoriaId;
+	}
+
+	public void setCategoriaId(Long categoriaId) {
+		this.categoriaId = categoriaId;
+	}
 }

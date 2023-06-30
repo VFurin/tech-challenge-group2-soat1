@@ -1,22 +1,23 @@
 package com.techchallenge.adapter.driver.model.input;
 
+import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import io.swagger.annotations.ApiModelProperty;
 
-public class ClienteInput {
+public class ClienteAtualizacaoInput {
 
 	@ApiModelProperty(example = "Nome do cliente")
 	@JsonProperty(required = true)
+	@NotNull
 	private String nome;
 	
 	@ApiModelProperty(example = "cliente-teste@teste.com.br")
+	@JsonProperty(required = true)
+	@NotNull
 	private String email;
 	
-	@ApiModelProperty(example = "12345678901")
-	@JsonProperty(required = true)
-	private Long cpf;
-
 	public String getNome() {
 		return nome;
 	}
@@ -31,13 +32,5 @@ public class ClienteInput {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public Long getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(Long cpf) {
-		this.cpf = cpf;
 	}
 }

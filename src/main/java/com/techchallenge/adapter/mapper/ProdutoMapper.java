@@ -1,14 +1,16 @@
 package com.techchallenge.adapter.mapper;
 
-import com.techchallenge.core.domain.Produto;
+import java.util.Collection;
+import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
-import com.techchallenge.adapter.driver.model.ProdutoModel;
-import com.techchallenge.adapter.driver.model.input.ProdutoInput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Collection;
-import java.util.stream.Collectors;
+import com.techchallenge.adapter.driver.model.ProdutoModel;
+import com.techchallenge.adapter.driver.model.input.ProdutoInput;
+import com.techchallenge.core.domain.Categoria;
+import com.techchallenge.core.domain.Produto;
 
 @Component
 public class ProdutoMapper {
@@ -17,7 +19,15 @@ public class ProdutoMapper {
     private ModelMapper mapper;
 
     public Produto toDomainObject(ProdutoInput input) {
-        return mapper.map(input, Produto.class);
+        Produto produto = mapper.map(input, Produto.class);
+        
+        // Não sei por qual motivo, mapper está associando o atributo categoriaId
+        // para o id do produto. Por isso eu forcei o null.
+        produto.setId(null);
+        produto.setCategoria(new Categoria());
+        produto.getCategoria().setId(input.getCategoriaId());
+        
+        return produto;
     }
 
     public ProdutoModel toModel(Produto produto) {

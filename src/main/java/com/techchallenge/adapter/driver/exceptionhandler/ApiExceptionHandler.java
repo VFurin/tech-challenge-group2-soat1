@@ -26,6 +26,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import com.fasterxml.jackson.databind.JsonMappingException.Reference;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.PropertyBindingException;
+import com.techchallenge.core.domain.exception.EntidadeNaoEncontradaException;
+import com.techchallenge.core.domain.exception.NegocioException;
 
 @ControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
@@ -145,11 +147,35 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	    return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
 	}
 	
+	@ExceptionHandler(NegocioException.class)
+	public ResponseEntity<?> handleNegocioException(NegocioException e, WebRequest webRequest) {
+		
+		HttpStatus status = HttpStatus.BAD_REQUEST;
+		ProblemType problemType = ProblemType.ERRO_NEGOCIO;
+		
+		Problem problem = this.createProblemBuilder(status, problemType, e.getMessage()).build();
+		
+		return this.handleExceptionInternal(e, problem, new HttpHeaders(), 
+				status, webRequest);
+	}
+	
+	@ExceptionHandler(EntidadeNaoEncontradaException.class)
+	public ResponseEntity<?> handleEntidadeNaoEncontradaException(EntidadeNaoEncontradaException e, WebRequest webRequest) {
+		
+		HttpStatus status = HttpStatus.NOT_FOUND;
+		ProblemType problemType = ProblemType.RECURSO_NAO_ENCONTRADO;
+		
+		Problem problem = this.createProblemBuilder(status, problemType, e.getMessage()).build();
+		
+		return this.handleExceptionInternal(e, problem, new HttpHeaders(), 
+				status, webRequest);
+	}
+	
 	@ExceptionHandler({ ValidacaoException.class })
 	public ResponseEntity<Object> handleValidacaoException(ValidacaoException ex, WebRequest request) {
 	    return handleValidationInternal(ex, ex.getBindingResult(), new HttpHeaders(), 
 	            HttpStatus.BAD_REQUEST, request);
-	} 
+	}
 	
 	@Override
 	protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers,

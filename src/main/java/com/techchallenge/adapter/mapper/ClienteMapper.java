@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.techchallenge.adapter.driver.model.ClienteModel;
+import com.techchallenge.adapter.driver.model.input.ClienteAtualizacaoInput;
 import com.techchallenge.adapter.driver.model.input.ClienteInput;
 import com.techchallenge.core.domain.Cliente;
 
@@ -18,6 +19,10 @@ public class ClienteMapper {
 	private ModelMapper mapper;
 	
 	public Cliente toDomainObject(ClienteInput input) {
+		return mapper.map(input, Cliente.class);
+	}
+	
+	public Cliente toDomainObject(ClienteAtualizacaoInput input) {
 		return mapper.map(input, Cliente.class);
 	}
 	

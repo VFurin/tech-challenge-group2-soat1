@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,7 +23,6 @@ import com.techchallenge.adapter.driver.exceptionhandler.Problem;
 import com.techchallenge.adapter.driver.model.ItemPedidoModel;
 import com.techchallenge.adapter.driver.model.PedidoModel;
 import com.techchallenge.adapter.driver.model.input.ItemPedidoInput;
-import com.techchallenge.adapter.driver.model.input.PedidoInput;
 import com.techchallenge.adapter.mapper.ItemPedidoMapper;
 import com.techchallenge.adapter.mapper.PedidoMapper;
 import com.techchallenge.core.applications.service.ItemPedidoService;
@@ -47,12 +47,13 @@ public class PedidoController {
     
     @Autowired
     private ItemPedidoService itemPedidoService;
-
+    
     @Autowired
     private PedidoMapper mapper;
     
     @Autowired
     private ItemPedidoMapper itemPedidoMapper;
+    
 
     @ApiOperation("Consulta pedido pelo ID do pedido")
     @ApiResponses({
@@ -94,19 +95,6 @@ public class PedidoController {
         service.atualizarStatusDoPedido(pedido, statusPedido);
     }
     
-	@ApiOperation("Inicializa um pedido na plataforma")
-	@ApiResponses({ 
-			@ApiResponse(code = 201, message = "Pedido inicializado com sucesso") 
-			})
-	@PostMapping
-	@ResponseStatus(HttpStatus.CREATED)
-	public PedidoModel inicializar(@RequestBody @Valid PedidoInput input) {
-		Pedido pedido = mapper.toDomainObject(input);
-		pedido = service.inicializar(pedido);
-
-		return mapper.toModel(pedido);
-	}
-	
 	@ApiOperation("Adicionar itens ao pedido na plataforma")
 	@ApiResponses({ 
 			@ApiResponse(code = 201, message = "Itens atualizados com sucesso") 
@@ -119,5 +107,14 @@ public class PedidoController {
 
 		return itemPedidoMapper.toModel(itemPedido);
 	}
-
+	
+	@ApiOperation("Exclui um pedido na plataforma")
+	@ApiResponses({ 
+			@ApiResponse(code = 204, message = "Pedido excluído com sucesso") 
+			})
+	@DeleteMapping(value="/{pedidoId}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void remover(@PathVariable Long pedidoId) {
+		this.service.excluir(pedidoId);
+	}
 }

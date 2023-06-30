@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 public class ProdutoModel {
 
+	private Long id;
     private String nome;
     private CategoriaResumoModel categoria;
 
@@ -16,7 +17,6 @@ public class ProdutoModel {
     public String getNome() {
         return nome;
     }
-
     public void setNome(String nome) {
         this.nome = nome;
     }
@@ -48,4 +48,12 @@ public class ProdutoModel {
     public void setImagem(String imagem) {
         this.imagem = imagem;
     }
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 }
