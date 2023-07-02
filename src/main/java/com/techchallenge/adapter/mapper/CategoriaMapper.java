@@ -1,16 +1,16 @@
 package com.techchallenge.adapter.mapper;
 
 
-import com.techchallenge.adapter.driver.model.CategoriaModel;
-import com.techchallenge.adapter.driver.model.input.CategoriaInput;
-import com.techchallenge.core.domain.Categoria;
-import com.techchallenge.core.domain.Produto;
+import java.util.Collection;
+import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Collection;
-import java.util.stream.Collectors;
+import com.techchallenge.adapter.driver.model.CategoriaModel;
+import com.techchallenge.adapter.driver.model.input.CategoriaInput;
+import com.techchallenge.core.domain.Categoria;
 
 @Component
 public class CategoriaMapper {

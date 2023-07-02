@@ -6,6 +6,8 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel("Cliente")
 public class ClienteModel {
 
+	@ApiModelProperty(example = "ID do cliente")
+	private Long id;
 	@ApiModelProperty(example = "Nome do cliente")
 	private String nome;
 	@ApiModelProperty(example = "cliente-teste@teste.com.br")
@@ -35,5 +37,13 @@ public class ClienteModel {
 
 	public void setCpf(Long cpf) {
 		this.cpf = cpf;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 }

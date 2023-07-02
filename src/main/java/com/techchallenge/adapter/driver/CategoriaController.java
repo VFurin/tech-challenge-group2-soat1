@@ -14,6 +14,9 @@ import com.techchallenge.adapter.mapper.CategoriaMapper;
 import com.techchallenge.core.applications.service.CategoriaService;
 import com.techchallenge.core.domain.Categoria;
 
+import io.swagger.annotations.Api;
+
+@Api(tags = "Categorias")
 @RestController
 @RequestMapping(value = "/categorias", produces = MediaType.APPLICATION_JSON_VALUE)
 public class CategoriaController {

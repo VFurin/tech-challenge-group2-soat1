@@ -19,6 +19,9 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long> {
     
 	@Query("from Produto p join fetch p.categoria")
 	List<Produto> findAll();
+	
+    @Query("from Produto p join fetch p.categoria where p.categoria.id = :categoriaId")
+    List<Produto> findByCategoriaId(Long categoriaId);
 
     void deleteById(Long produtoId);
 }

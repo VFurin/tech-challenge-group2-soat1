@@ -3,8 +3,9 @@ package com.techchallenge.core.domain;
 public enum StatusPedido {
 
 	GERACAO,
-	REALIZADO,
+	RECEBIDO,
 	CANCELADO,
 	PREPARACAO,
-	PRONTO;
+	PRONTO,
+	FINALIZADO;
 }

@@ -3,6 +3,7 @@ package com.techchallenge.core.domain;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -15,8 +16,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-
-import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 public class Pedido {
@@ -36,11 +35,17 @@ public class Pedido {
     @JoinColumn(name = "cliente_id", nullable = true)
 	private Cliente cliente;
 
-	@CreationTimestamp
 	private OffsetDateTime dataSolicitacao;
-
 	private OffsetDateTime dataCancelamento;
 	private OffsetDateTime dataFinalizacao;
+	
+    public void calcularValor() {
+    	Optional<BigDecimal> valorTotal = itens.stream()
+    			.map((ItemPedido i) -> i.getPrecoTotal())
+    			.reduce((BigDecimal p1, BigDecimal p2) -> p1.add(p2));
+    	
+    	this.setValor(valorTotal.orElse(BigDecimal.ZERO));
+    }
 
 	public List<ItemPedido> getItens() {
 		return itens;

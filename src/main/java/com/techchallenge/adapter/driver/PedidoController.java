@@ -8,10 +8,12 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,7 +24,6 @@ import com.techchallenge.adapter.driver.exceptionhandler.Problem;
 import com.techchallenge.adapter.driver.model.ItemPedidoModel;
 import com.techchallenge.adapter.driver.model.PedidoModel;
 import com.techchallenge.adapter.driver.model.input.ItemPedidoInput;
-import com.techchallenge.adapter.driver.model.input.PedidoInput;
 import com.techchallenge.adapter.mapper.ItemPedidoMapper;
 import com.techchallenge.adapter.mapper.PedidoMapper;
 import com.techchallenge.core.applications.service.ItemPedidoService;
@@ -47,12 +48,13 @@ public class PedidoController {
     
     @Autowired
     private ItemPedidoService itemPedidoService;
-
+    
     @Autowired
     private PedidoMapper mapper;
     
     @Autowired
     private ItemPedidoMapper itemPedidoMapper;
+    
 
     @ApiOperation("Consulta pedido pelo ID do pedido")
     @ApiResponses({
@@ -85,6 +87,8 @@ public class PedidoController {
     @ApiOperation("Atualiza o status do pedido")
     @ApiResponses({
             @ApiResponse(code = 204, message = "Status do pedido atualizado"),
+            @ApiResponse(code = 400, message = "Status inválido", response = Problem.class),
+            @ApiResponse(code = 404, message = "Pedido não encontrado com o ID informado", response = Problem.class)
     })
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping(value = "/{id}/status")
@@ -94,22 +98,11 @@ public class PedidoController {
         service.atualizarStatusDoPedido(pedido, statusPedido);
     }
     
-	@ApiOperation("Inicializa um pedido na plataforma")
-	@ApiResponses({ 
-			@ApiResponse(code = 201, message = "Pedido inicializado com sucesso") 
-			})
-	@PostMapping
-	@ResponseStatus(HttpStatus.CREATED)
-	public PedidoModel inicializar(@RequestBody @Valid PedidoInput input) {
-		Pedido pedido = mapper.toDomainObject(input);
-		pedido = service.inicializar(pedido);
-
-		return mapper.toModel(pedido);
-	}
-	
 	@ApiOperation("Adicionar itens ao pedido na plataforma")
 	@ApiResponses({ 
-			@ApiResponse(code = 201, message = "Itens atualizados com sucesso") 
+			@ApiResponse(code = 201, message = "Itens adicionados com sucesso"),
+            @ApiResponse(code = 400, message = "Produtos já adicionados com o IDs informados", response = Problem.class),
+            @ApiResponse(code = 404, message = "Pedido não encontrado com o ID informado", response = Problem.class)
 			})
 	@PostMapping(value = "/{id}/items")
 	@ResponseStatus(HttpStatus.OK)
@@ -119,5 +112,29 @@ public class PedidoController {
 
 		return itemPedidoMapper.toModel(itemPedido);
 	}
-
+	
+	@ApiOperation("Atualizar itens ao pedido na plataforma")
+	@ApiResponses({ 
+			@ApiResponse(code = 201, message = "Itens atualizados com sucesso"),
+            @ApiResponse(code = 400, message = "Produtos não encontrados com o IDs informados", response = Problem.class),
+            @ApiResponse(code = 404, message = "Pedido não encontrado com o ID informado", response = Problem.class)
+			})
+	@PutMapping(value = "/{id}/items")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void atualizarProduto(@PathVariable Long id, @RequestBody @Valid ItemPedidoInput input) {
+		ItemPedido itemPedido = itemPedidoMapper.toDomainObject(input);
+		itemPedidoService.atualizarItemAoPedido(id, itemPedido);
+	}
+	
+	@ApiOperation("Exclui um item do pedido na plataforma")
+	@ApiResponses({ 
+			@ApiResponse(code = 204, message = "Item excluído com sucesso"),
+            @ApiResponse(code = 400, message = "Produtos não encontrados com o IDs informados", response = Problem.class),
+            @ApiResponse(code = 404, message = "Pedido não encontrado com o ID informado", response = Problem.class)
+			})
+	@DeleteMapping(value="/{id}/items")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void remover(@PathVariable Long id, @RequestBody @Valid ItemPedidoInput input) {
+		itemPedidoService.excluirItemAoPedido(id, input.getProdutoId());
+	}
 }
