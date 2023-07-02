@@ -21,7 +21,7 @@ public class PagamentoService {
 	
 	public void efetuarPagamento(Long pedidoId, TipoPagamento tipoPagamento) {
 		Long id = tipoPagamento.getId();
-		Pedido pedido = pedidoService.buscarPedidoPorId(pedidoId);
+		Pedido pedido = pedidoService.buscarPedidoPorIdEStatus(pedidoId, StatusPedido.RECEBIDO);
 		
 		tipoPagamento = tipoPagamentoRepository.findById(id).orElseThrow(() -> new EntidadeNaoEncontradaException(
                 String.format("Não existe um cadastro de tipo de pagamento com código %d", id)));

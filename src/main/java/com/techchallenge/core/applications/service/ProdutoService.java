@@ -65,6 +65,10 @@ public class ProdutoService {
         return repository.findByCategoriaNome(produtoCategoria);
     }
     
+    public List<Produto> buscarPorCategoria(Long categoriaId) {
+    	return repository.findByCategoriaId(categoriaId);
+    }
+    
     @Transactional
     public void atualizar(Long id, Produto produto) {
         Produto produtoEntity = repository.findById(id)

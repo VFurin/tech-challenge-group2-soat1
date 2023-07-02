@@ -19,6 +19,7 @@ public class PedidoService {
 
 	private static final String MSG_PEDIDO_EM_USO = "Pedido em uso com o id %d";
 	private static final String MSG_PEDIDO_NAO_ENCONTRADO = "Pedido não encontrado com o id %d";
+	private static final String MSG_PEDIDO_STATUS_NAO_ENCONTRADO = "Não existe pedido com o id %d e com o status %s";
 	
     @Autowired
     private PedidoRepository repository;
@@ -29,11 +30,16 @@ public class PedidoService {
 
     public Pedido buscarPedidoPorId(Long id) {
         return repository.findById(id).orElseThrow(() -> new EntidadeNaoEncontradaException(
-                String.format("Não existe pedido com o id %d", id)));
+                String.format(MSG_PEDIDO_NAO_ENCONTRADO, id)));
     }
 
     public List<Pedido> buscarPedidosPorStatus(StatusPedido statusPedido) {
         return repository.findByStatus(statusPedido);
+    }
+    
+    public Pedido buscarPedidoPorIdEStatus(Long id, StatusPedido statusPedido) {
+        return repository.findByIdAndStatus(id, statusPedido).orElseThrow(() -> new EntidadeNaoEncontradaException(
+                String.format(MSG_PEDIDO_STATUS_NAO_ENCONTRADO, id, statusPedido.name())));
     }
 
     @Transactional

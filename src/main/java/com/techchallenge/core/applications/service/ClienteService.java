@@ -1,7 +1,6 @@
 package com.techchallenge.core.applications.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -21,14 +20,14 @@ public class ClienteService {
 	
 	private static final String MSG_CLIENTE_EM_USO = "Clinte em uso com o id %d";
 	private static final String MSG_CLIENTE_NAO_ENCONTRADO = "Cliente não encontrado com o id %d";
-	private static final String MSG_CLIENTE_EXISTENTE = "Cliente com o CPF informado já cadastrado";
+	private static final String MSG_CLIENTE_EXISTENTE = "Cliente com o CPF ou e-mail informados já cadastrado";
 
     @Autowired
     private ClienteRepository repository;
 
     @Transactional
     public Cliente salvar(Cliente cliente) {
-    	List<Cliente> clientes = repository.findByCpfIs(cliente.getCpf());
+    	List<Cliente> clientes = repository.findByCpfOrEmail(cliente.getCpf(), cliente.getEmail());
     	
     	if (!clientes.isEmpty()) {
     		throw new NegocioException(MSG_CLIENTE_EXISTENTE);

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.techchallenge.adapter.driver.exceptionhandler.Problem;
 import com.techchallenge.adapter.driver.model.ProdutoModel;
 import com.techchallenge.adapter.driver.model.input.ProdutoInput;
 import com.techchallenge.adapter.mapper.ProdutoMapper;
@@ -40,21 +41,42 @@ public class ProdutoController {
     @Autowired
     private ProdutoMapper mapper;
 
+	@ApiOperation("Listar produtos cadastrados na plataforma")
+	@ApiResponses({ 
+			@ApiResponse(code = 200, message = "Lista de produtos com sucesso") 
+			})
     @GetMapping
     public Collection<ProdutoModel> listar() {
         List<Produto> todosProdutos = service.buscarTodos();
         return mapper.toCollectionModel(todosProdutos);
     }
 
-    @GetMapping(value="/{categoria}")
-    public Collection<ProdutoModel> listarPorCategoria(@PathVariable String categoria) {
-        List<Produto> produto = service.buscarPorCategoria(categoria);
+	@ApiOperation("Listar produtos filtrando por nome de categoria")
+	@ApiResponses({ 
+			@ApiResponse(code = 200, message = "Lista de produtos por nome de categoria com sucesso") 
+			})
+    // Evitar ambiguidade do resource path
+    @GetMapping(value="/categorias/nome/{categoriaNome}")
+    public Collection<ProdutoModel> listarPorCategoria(@PathVariable String categoriaNome) {
+        List<Produto> produto = service.buscarPorCategoria(categoriaNome);
+        return mapper.toCollectionModel(produto);
+    }
+    
+	@ApiOperation("Listar produtos filtrando por código de categoria")
+	@ApiResponses({ 
+			@ApiResponse(code = 200, message = "Lista de produtos por códgo de categoria com sucesso") 
+			})
+    // Evitar ambiguidade do resource path
+    @GetMapping(value="/categorias/codigo/{categoriaId}")
+    public Collection<ProdutoModel> listarPorCategoria(@PathVariable Long categoriaId) {
+        List<Produto> produto = service.buscarPorCategoria(categoriaId);
         return mapper.toCollectionModel(produto);
     }
     
 	@ApiOperation("Inclui um produto na plataforma")
 	@ApiResponses({ 
-			@ApiResponse(code = 201, message = "Produto incluso com sucesso") 
+			@ApiResponse(code = 201, message = "Produto incluso com sucesso"),
+            @ApiResponse(code = 404, message = "Categoria informada não encontrada", response = Problem.class)
 			})
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
@@ -67,7 +89,9 @@ public class ProdutoController {
 	
 	@ApiOperation("Exclui um produto na plataforma")
 	@ApiResponses({ 
-			@ApiResponse(code = 204, message = "Produto excluído com sucesso") 
+			@ApiResponse(code = 204, message = "Produto excluído com sucesso"),
+			@ApiResponse(code = 400, message = "Produto em uso", response = Problem.class),
+			@ApiResponse(code = 404, message = "Produto não encontrado", response = Problem.class)
 			})
 	@DeleteMapping(value="/{produtoId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
@@ -77,7 +101,8 @@ public class ProdutoController {
 	
 	@ApiOperation("Atualiza um produto na plataforma")
 	@ApiResponses({ 
-			@ApiResponse(code = 204, message = "Produto atualizado com sucesso") 
+			@ApiResponse(code = 204, message = "Produto atualizado com sucesso"),
+			@ApiResponse(code = 404, message = "Produto não encontrado", response = Problem.class)
 			})
 	@PutMapping(value="/{produtoId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)

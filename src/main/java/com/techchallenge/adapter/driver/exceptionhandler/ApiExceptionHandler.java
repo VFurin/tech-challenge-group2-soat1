@@ -33,6 +33,10 @@ import com.techchallenge.core.domain.exception.NegocioException;
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
 	private static final String ERRO_INESPERADO = "Ocorreu um erro interno inesperado no sistema.";
+	private static final String CORPO_REQUISICAO_INVALIDO = "Corpo da requisição está inválido. Verifique erro de sintaxe";
+	private static final String CAMPOS_INVALIDOS = "Um ou mais campos estão inválidos. Faça o preenchimento correto e tente novamente.";
+	private static final String PROPRIEDADE_VALOR_INVALIDO = "Propriedade '%s' recebeu o valor '%s' de um tipo inválido. Informar valor compatível com %s. ";
+	private static final String PROPRIEDADE_NAO_EXISTE = "Propriedade '%s' não existe. Corrija ou remova essa propriedade e tente novamente.";
 
 	@Autowired
 	private MessageSource messageSource;
@@ -69,7 +73,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		}
 		
 		ProblemType problemType = ProblemType.MENSAGEM_INCONSISTENTE;
-		String detail = "O corpo da requisição está inválido. Verifique erro de sintaxe";
+		String detail = CORPO_REQUISICAO_INVALIDO;
 		
 		Problem problem = this.createProblemBuilder(status, problemType, detail).build();
 		
@@ -81,7 +85,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
 
 		ProblemType problemType = ProblemType.DADOS_INVALIDOS;
-		String detail = "Um ou mais campos estão inválidos. Faça o preenchimento correto e tente novamente.";
+		String detail = CAMPOS_INVALIDOS;
 
 		List<Problem.Object> problemObjects = bindingResult.getAllErrors().stream().map(objectError -> {
 			String message = messageSource.getMessage(objectError, LocaleContextHolder.getLocale());
@@ -107,9 +111,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 		String path = ex.getPath().stream().map(ref -> ref.getFieldName()).collect(Collectors.joining("."));
 		
 		ProblemType problemType = ProblemType.MENSAGEM_INCONSISTENTE;
-		String detail = String.format("A propriedade '%s' recebeu o valor '%s',"
-				+ "que é de um tipo inválido. Corrija e informe um valor compatível com o tipo %s. ", 
-				new Object[] {path, ex.getValue(), ex.getTargetType().getSimpleName()});
+		String detail = String.format(PROPRIEDADE_VALOR_INVALIDO, new Object[] {path, ex.getValue(), ex.getTargetType().getSimpleName()});
 		
 		Problem problem = this.createProblemBuilder(status, problemType, detail).userMessage(ERRO_INESPERADO).build();
 		
@@ -124,8 +126,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	    String path = joinPath(ex.getPath());
 	    
 	    ProblemType problemType = ProblemType.MENSAGEM_INCONSISTENTE;
-	    String detail = String.format("A propriedade '%s' não existe. "
-	            + "Corrija ou remova essa propriedade e tente novamente.", path);
+	    String detail = String.format(PROPRIEDADE_NAO_EXISTE, path);
 
 	    Problem problem = createProblemBuilder(status, problemType, detail).userMessage(ERRO_INESPERADO).build();
 		

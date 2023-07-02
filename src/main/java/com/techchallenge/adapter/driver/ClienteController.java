@@ -44,7 +44,8 @@ public class ClienteController {
 	
 	@ApiOperation("Inclui um cliente a plataforma")
 	@ApiResponses({ 
-			@ApiResponse(code = 201, message = "Cliente incluso com sucesso") 
+			@ApiResponse(code = 201, message = "Cliente incluso com sucesso"),
+			@ApiResponse(code = 400, message = "Cliente com CPF ou e-mail já cadastrado")
 			})
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
@@ -85,6 +86,8 @@ public class ClienteController {
     @ApiOperation("Atualiza dados do cliente")
     @ApiResponses({
             @ApiResponse(code = 204, message = "Dados do cliente atualizado"),
+            @ApiResponse(code = 400, message = "Dados inconsistentes", response = Problem.class),
+            @ApiResponse(code = 404, message = "Cliente com o ID informado não encontrado", response = Problem.class)
     })
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping(value = "/{id}")
