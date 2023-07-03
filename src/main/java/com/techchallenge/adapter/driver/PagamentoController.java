@@ -43,9 +43,14 @@ public class PagamentoController {
 	@PutMapping("/pedidos/{pedidoId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void realizarPagamento(@PathVariable Long pedidoId, @RequestBody TipoPagamentoInput tipoPagamentoInput) {
-		
-		TipoPagamento tipoPagamento = mapper.toDomainObject(tipoPagamentoInput);
-		service.efetuarPagamento(pedidoId, tipoPagamento);
+		try {
+			Thread.sleep(5000);
+
+			TipoPagamento tipoPagamento = mapper.toDomainObject(tipoPagamentoInput);
+			service.efetuarPagamento(pedidoId, tipoPagamento);
+		} catch (InterruptedException e) {
+			throw new RuntimeException(e);
+		}
 	}
 	
 	@ApiOperation("Consultar tipos de pagamentos aceitos na plataforma")
