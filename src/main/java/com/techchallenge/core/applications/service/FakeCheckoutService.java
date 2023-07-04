@@ -13,9 +13,13 @@ import com.techchallenge.core.domain.Cliente;
 import com.techchallenge.core.domain.Pedido;
 import com.techchallenge.core.domain.Produto;
 import com.techchallenge.core.domain.StatusPedido;
+import com.techchallenge.core.domain.exception.NegocioException;
 
 @Service
 public class FakeCheckoutService {
+	
+	private static final String MSG_PRODUTO_NAO_ENCONTRADO = "Produto não encontrado com código %d";
+	private static final String MSG_CLIENTE_NAO_ENCONTRADO = "Cliente não encontrado com código %d";
 	
 	@Autowired
 	private PedidoRepository pedidoRepository;
@@ -39,7 +43,10 @@ public class FakeCheckoutService {
 	
 	private void validarItens(Pedido pedido) {
 	    pedido.getItens().forEach(item -> {
-	        Produto produto = produtoRepository.findById(item.getProduto().getId()).get();
+	    	Long produtoId = item.getProduto().getId();
+	    	
+	        Produto produto = produtoRepository.findById(produtoId)
+	        		.orElseThrow(() -> new NegocioException(String.format(MSG_PRODUTO_NAO_ENCONTRADO, produtoId)));
 	        
 	        item.setPedido(pedido);
 	        item.setProduto(produto);
@@ -48,7 +55,11 @@ public class FakeCheckoutService {
 	}
 	
 	private void validarCliente(Pedido pedido) {
-		Cliente cliente = clienteRepository.findById(pedido.getCliente().getId()).get();
+		Long clienteId = pedido.getCliente().getId();
+		
+		Cliente cliente = clienteRepository.findById(clienteId)
+				.orElseThrow(() -> new NegocioException(String.format(MSG_CLIENTE_NAO_ENCONTRADO, clienteId)));
+				
 		pedido.setCliente(cliente);
 	}
 }

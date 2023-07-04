@@ -31,6 +31,21 @@ Após executar o comando acima, a aplicação estará disponível em http://loca
 ## Documentação Swagger da API
 A documentação em padrão Swagger está disponível em http://localhost:8080/api/swagger-ui.html.
 
+## Execução via Postman
+No diretório src/main/resources/postman está disponível o arquivo JSON contendo todos os endpoints configurados para execução via Postman dos recursos abaixo.
+
+## Informações adicionais
+Algumas informações adicionais sobre a construção da API
+
+### Conexão com banco de dados
+Na API foi adicionado um parâmetro condicional para verificação de uma variável de ambiente chamada **DB_HOST**. Essa variável é injetada no container em momento de construção e é indicada com a URL para acesso ao banco de dados. Caso não seja encontrado um valor para essa variável, o valor **localhost:3306** será utilizado como **default**.<br/><br/>
+Essa parametrização foi utilizada no caso se for necessário realizar testes via API localmente, sem a necessidade de estar inicializada no container.
+
+### Profiles do Springboot
+Foram criados dois profiles springboot para execução da API, sendo eles:
+
+- **default**: A execução desse profile irá verificar pela conectividade com o banco de dados MySQL identificado pela variável de ambiente ou pelo localhost na porta 3306;
+- **mock**: A execução desse profile irá iniciar o banco de dados H2 para testes. Esse profile pode ser utilizado em caso de testes unitários para persistência dos dados e memória.
 
 # Endpoints disponíveis por recurso
 Abaixo, segue a lista de endpoints disponíveis por recurso e exemplos de requisição.
@@ -161,7 +176,7 @@ GET http://localhost:8080/api/pedidos/{id}
 ```sh
 PATCH http://localhost:8080/api/pedidos/1/status
 
-Request body: 
+Request body
 {
     "status": "PRONTO"
 }
@@ -174,7 +189,7 @@ Os possíveis status dos pedidos são: REALIZADO, CANCELADO, PREPARACAO e PRONTO
 ```sh
 POST http://localhost:8080/api/pedidos/1/items
 
-Request body: 
+Request body
 {
     "quantidade" : 1,
     "produtoId" : 2 
@@ -186,7 +201,7 @@ Request body:
 ```sh
 PUT http://localhost:8080/api/pedidos/1/items
 
-Request body: 
+Request body
 {
     "quantidade" : 2,
     "produtoId" : 2 
@@ -198,7 +213,7 @@ Request body:
 ```sh
 DELETE http://localhost:8080/api/pedidos/1/items
 
-Request body: 
+Request body
 {
     "produtoId" : 2 
 }
@@ -215,7 +230,7 @@ Endpoints gerados para o processo de checkout de pedidos na plataforma
 ```sh
 POST http://localhost:8080/api/checkout
 
-Request body:
+Request body
 {
     "itens" :[
         {
@@ -249,7 +264,7 @@ GET http://localhost:8080/api/pagamentos/tipos-pagamento
 ```sh
 PUT http://localhost:8080/api/pagamentos/pedidos/1
 
-Request body:
+Request body
 {
     "pagamentoId": 1
 }
