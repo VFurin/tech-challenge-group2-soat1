@@ -12,6 +12,7 @@ import com.techchallenge.core.applications.ports.ProdutoRepository;
 import com.techchallenge.core.domain.ItemPedido;
 import com.techchallenge.core.domain.Pedido;
 import com.techchallenge.core.domain.Produto;
+import com.techchallenge.core.domain.StatusPedido;
 import com.techchallenge.core.domain.exception.EntidadeNaoEncontradaException;
 import com.techchallenge.core.domain.exception.NegocioException;
 
@@ -20,6 +21,8 @@ public class ItemPedidoService {
 
 	private static final String MSG_ITEM_NAO_ENCONTRADO = "Item não encontrado no pedido com o id %d e produto com o id %d";
 	private static final String MSG_ITEM_JA_ADICIONADO = "Item informado no pedido com o id %d e produto com o id %d já existente";
+	private static final String MSG_PEDIDO_NAO_ENCONTRADO = "Pedido com o id %d não encontrado com o status RECEBIDO";
+	private static final String MSG_PRODUTO_NAO_ENCONTRADO = "Produto com o id %d não encontrado";
 	
     @Autowired
     private PedidoRepository pedidoRepository;
@@ -33,8 +36,12 @@ public class ItemPedidoService {
     @Transactional
     public ItemPedido adicionarItemAoPedido(Long pedidoId, ItemPedido itemPedido) {
     	Long produtoId = itemPedido.getProduto().getId();
-    	Pedido pedido = pedidoRepository.findById(pedidoId).get();
-    	Produto produto = produtoRepository.findById(itemPedido.getProduto().getId()).get();
+    	
+    	Pedido pedido = pedidoRepository.findByIdAndStatus(pedidoId, StatusPedido.RECEBIDO)
+    			.orElseThrow(() -> new NegocioException(String.format(MSG_PEDIDO_NAO_ENCONTRADO, pedidoId)));
+    	
+    	Produto produto = produtoRepository.findById(itemPedido.getProduto().getId())
+    			.orElseThrow(() -> new NegocioException(String.format(MSG_PRODUTO_NAO_ENCONTRADO, produtoId)));
     	
     	List<ItemPedido> itens = itemPedidoRepository.findByPedidoAndProduto(pedidoId, produtoId);
     	

@@ -1,0 +1,607 @@
+{
+	"info": {
+		"_postman_id": "36138abe-f87c-4440-ac63-5763598003c0",
+		"name": "tech-challenge-group2-soat1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13953835",
+		"_collection_link": "https://grey-moon-1126-1.postman.co/workspace/ac04c78e-05f8-49a2-833a-48df469f18ac/collection/6731231-36138abe-f87c-4440-ac63-5763598003c0?action=share&creator=13953835&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "CLIENTES",
+			"item": [
+				{
+					"name": "CADASTRAR CLIENTE",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Teste 2\",\r\n    \"email\": \"teste2@teste.com.br\",\r\n    \"cpf\": 10987654321\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/clientes",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"clientes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PESQUISAR CLIENTE POR CPF",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/clientes/:cpf",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"clientes",
+								":cpf"
+							],
+							"variable": [
+								{
+									"key": "cpf",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "REMOVER CLIENTE",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/clientes/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"clientes",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ATUALIZAR CLIENTE",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome\": \"Teste 4\",\n    \"email\": \"teste3@teste.com.br\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/clientes/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"clientes",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PRODUTOS",
+			"item": [
+				{
+					"name": "LISTAR PRODUTOS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/produtos",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"produtos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LISTAR PRODUTOS POR CATEGORIA",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/produtos/categorias/nome/Bebida",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"produtos",
+								"categorias",
+								"nome",
+								"Bebida"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ADICIONAR PRODUTOS POR CATEGORIA",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n \"nome\": \"Sorvete casquinha Chocolate aaaaa1\",\n \"categoriaId\": 4,\n \"preco\" : \"2.00\",\n \"descricao\" : \"Sorvete de casquinha de chocolate.\",\n \"imagem\" : \"/imgs/products/icecream.png\"\n \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/produtos",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"produtos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "REMOVER PRODUTOS",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/produtos/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"produtos",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ATUALIZAR PRODUTOS",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n \"nome\": \"Sorvete casquinha Baunilha Teste\",\n \"categoriaId\": 4,\n \"preco\" : \"2.50\",\n \"descricao\" : \"Sorvete de casquinha de baunilha Teste.\",\n \"imagem\" : \"/imgs/products/icecream2.png\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/produtos/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"produtos",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LISTAR PRODUTOS POR CATEGORIA ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/produtos/categorias/codigo/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"produtos",
+								"categorias",
+								"codigo",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CATEGORIAS",
+			"item": [
+				{
+					"name": "LISTAR CATEGORIAS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/categorias",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"categorias"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PEDIDOS",
+			"item": [
+				{
+					"name": "LISTAR PEDIDOS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/pedidos",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"pedidos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LISTAR PEDIDOS POR STATUS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/pedidos?status=PREPARACAO",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"pedidos"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "PREPARACAO"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "BUSCAR PEDIDO POR ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/pedidos/2",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"pedidos",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ATUALIZAR STATUS DO PEDIDO",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\": \"PRONTO\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/pedidos/:id/status",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"pedidos",
+								":id",
+								"status"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "123"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ADICIONAR ITENS AO PEDIDO",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"quantidade\" : 1,\n    \"produtoId\" : 3 \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/pedidos/:id/items",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"pedidos",
+								":id",
+								"items"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "15"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "REMOVER PEDIDO",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/pedidos/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"pedidos",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ATUALIZAR ITEM DO PEDIDO",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"quantidade\" : 5,\n    \"produtoId\" : 2 \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/pedidos/:id/items",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"pedidos",
+								":id",
+								"items"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "14"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "REMOVER ITEM DO PEDIDO",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"produtoId\" : 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/pedidos/:id/items",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"pedidos",
+								":id",
+								"items"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "14"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CHECKOUT",
+			"item": [
+				{
+					"name": "CHECKOUT DO PEDIDO",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"itens\" :[\n        {\n            \"quantidade\": 2,\n            \"produtoId\": 1\n        },\n        {\n            \"quantidade\": 1,\n            \"produtoId\": 2\n        }\n    ],\n    \"clienteId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/checkout",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"checkout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PAGAMENTOS",
+			"item": [
+				{
+					"name": "REGISTRAR PAGAMENTO",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"pagamentoId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/pagamentos/pedidos/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"pagamentos",
+								"pedidos",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LISTAR TIPOS DE PAGAMENTO",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/pagamentos/tipos-pagamento",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"pagamentos",
+								"tipos-pagamento"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
