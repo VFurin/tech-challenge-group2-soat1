@@ -1,7 +1,18 @@
-# Documentação - Tech Challenge - Grupo 2 - PosTech - Arquitetura de Software - FIAP 
+# Documentação - Tech Challenge - Grupo 2 SOAT1 - PosTech - Arquitetura de Software - FIAP 
 Repositório para o desafio do Tech Challenge da Pós-gradução em Software Architecture pela FIAP.
 
-### Build do Container Docker
+## Introdução
+Uma lanchonete de barrio que está expandido sua operação devido seu grande sucesso. Porém, com a expansão e sem um sistema de controle de pedidos, o atendimento aos clientes pode ser caótico e confuso.
+Para solucionar o problema, a lanchonete irá investir em um sistema de autoatendimento de fast food, que é composto por uma série de dispositivos e interfaces que permitem aos clientes selecionar e fazer pedidos sem precisar interagir com um atendente.
+
+## Membros do Grupo 2
+- [Danilo Monteiro](https://github.com/dmonteirosouza)
+- [Marcel Cozono](https://github.com/macozono)
+- [Viviane Scarlatti](https://github.com/viviane-scarlatti)
+- [Vinicius Furin](https://github.com/VFurin)
+- [Vitor Walcker](https://github.com/VitorWalcker)
+
+# Build do Container Docker
 Para buildar o container da aplicação, utilize o comando a seguir:
 
 ```sh
@@ -31,8 +42,17 @@ Após executar o comando acima, a aplicação estará disponível em http://loca
 ## Documentação Swagger da API
 A documentação em padrão Swagger está disponível em http://localhost:8080/api/swagger-ui.html.
 
-## Execução via Postman
-No diretório src/main/resources/postman está disponível o arquivo JSON contendo todos os endpoints configurados para execução via Postman dos recursos abaixo.
+## Execução do projeto via Postman
+Basta clicar no link [diretório postman](src/main/resources/postman) onde está disponível o arquivo JSON contendo todos os endpoints configurados basta importa-lo via Postman e executar o passo-a-passo abaixo.
+
+<a name="ancora"></a>
+  1. [Cadastrar cliente](#ancora1)
+  2. [Listar categorias](#ancora2)
+  3. [Cadastrar produtos por categoria](#ancora3)
+  4. [Listar produtos](#ancora4)
+  5. [Checkout pedido informando os produtos](#ancora5)
+  6. [Listar tipos de pagamento](#ancora6)
+  7. [Efetuar pagamento](#ancora7)
 
 ## Informações adicionais
 Algumas informações adicionais sobre a construção da API
@@ -53,6 +73,7 @@ Abaixo, segue a lista de endpoints disponíveis por recurso e exemplos de requis
 ## Recurso Clientes
 Endpoints gerados para gestão de clientes na plataforma
 
+<a id="ancora1"></a>
 ##### Cadastrar clientes
 ```sh
 POST http://localhost:8080/api/clientes
@@ -64,17 +85,15 @@ Request body
     "cpf" : 12345678911
 }
 ```
-
 ##### Remover Clientes
 ```sh
 DELETE http://localhost:8080/api/clientes/1
 ```
-
 ##### Busca de Cliente por CPF
 ```sh
 GET http://localhost:8080/api/clientes/12345678911
-```
 
+```
 ##### Atualizar dados do clientes
 ```sh
 PATCH http://localhost:8080/api/clientes/1
@@ -88,7 +107,7 @@ Request body
 
 ## Recurso Categorias
 Endpoints gerados para a gestão de categorias na plataforma
-
+<a id="ancora2"></a>
 ##### Listar categorias
 ```sh
 GET http://localhost:8080/api/categorias
@@ -96,7 +115,7 @@ GET http://localhost:8080/api/categorias
 
 ## Recurso Produtos
 Endpoints gerados para a gestão de produtos na plataforma
-
+<a id="ancora4"></a>
 ##### Listagem de Produtos
 ```sh
 GET http://localhost:8080/api/produtos
@@ -111,7 +130,7 @@ GET http://localhost:8080/api/produtos/categorias/codigo/1
 ```sh
 GET http://localhost:8080/api/produtos/categorias/nome/Bebida
 ```
-
+<a id="ancora3"></a>
 ##### Adicionar produtos
 ```sh
 POST http://localhost:8080/api/produtos
@@ -220,12 +239,13 @@ Request body
 ```
 
 **Importante!** <br/>
-- Somente é possível adicionar itens ao pedido depois se o pedido estiver em status **RECEBIDO**. O que indica que já houve uma solicitação de pedido que ainda não foi efetivado o pagamento. Permitindo que seja realizada a manutenção de itens.
+- Somente é possível adicionar itens ao pedido depois que o pedido estiver em status **RECEBIDO**. O que indica que já houve uma solicitação de pedido que ainda não foi efetivado o pagamento. Permitindo que seja realizada a manutenção de itens.
 - Caso o pedido esteja em outro status, será entendido que o pedido esteja em outro estado na esteira e não permitirá mais a manutenção de itens.
 
 ## Recurso Checkout
 Endpoints gerados para o processo de checkout de pedidos na plataforma
 
+<a id="ancora5"></a>
 ##### Checkout
 ```sh
 POST http://localhost:8080/api/checkout
@@ -255,11 +275,12 @@ Request body
 ## Recurso Pagamentos
 Endpoints gerados para gestão de pagamentos na plataforma
 
+<a id="ancora6"></a>
 ##### Listar tipos de pagamento
 ```sh
 GET http://localhost:8080/api/pagamentos/tipos-pagamento
 ```
-
+<a id="ancora7"></a>
 ##### Efetuar pagamento de um pedido
 ```sh
 PUT http://localhost:8080/api/pagamentos/pedidos/1
