@@ -17,6 +17,8 @@ services:
     restart: unless-stopped
     environment:
       DB_HOST: "tech-challenge-db:3306"
+      DB_USER: root
+      DB_PASSWORD: root
     ports:
       - "8080:8080"
     networks:
