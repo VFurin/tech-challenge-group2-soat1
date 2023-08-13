@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tech-challenge-group2-db-deployment
+spec:
+  template:
+    metadata:
+      name: tech-challenge-group2-db
+      labels:
+        app: tech-challenge-group2-db
+    spec:
+      containers:
+        - name: tech-challenge-group2-db-container
+          image: mysql:8.0.33
+          ports:
+            - containerPort: 3306
+          envFrom:
+            - configMapRef:
+                name: tech-challenge-group2-db-configmap
+  selector:
+    matchLabels:
+      app: tech-challenge-group2-db

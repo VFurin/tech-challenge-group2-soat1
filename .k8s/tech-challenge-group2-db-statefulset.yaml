@@ -1,36 +1,32 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: mysql-statefulset
+  name: tech-challenge-group2-db-statefulset
 spec:
-  serviceName: mysql-service
+  serviceName: tech-challenge-group2-db-svc
   replicas: 1
   selector:
     matchLabels:
-      app: mysql
+      app: tech-challenge-group2-db
   template:
     metadata:
       labels:
-        app: mysql
+        app: tech-challenge-group2-db
     spec:
       containers:
-        - name: mysql
+        - name: tech-challenge-group2-db-container
           image: mysql:8.0.33
-          env:
-            - name: MYSQL_DATABASE
-              value: tech_challenge
-            - name: MYSQL_PASSWORD
-              value: root
-            - name: MYSQL_ROOT_PASSWORD
-              value: root
+          envFrom:
+            - configMapRef:
+                name: tech-challenge-group2-db-configmap
           ports:
             - containerPort: 3306
           volumeMounts:
-            - name: mysql-persistent-storage
+            - name: tech-challenge-group2-persistent-storage
               mountPath: /var/lib/mysql
   volumeClaimTemplates:
     - metadata:
-        name: mysql-persistent-storage
+        name: tech-challenge-group2-persistent-storage
       spec:
         accessModes: [ "ReadWriteOnce" ]
         resources:

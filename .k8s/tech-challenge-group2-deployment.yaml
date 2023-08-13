@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tech-challenge-group2-deployment
+spec:
+  template:
+    metadata:
+      name: tech-challenge-group2
+      labels:
+        app: tech-challenge-group2
+    spec:
+      containers:
+        - name: tech-challenge-group2-container
+          image: furin27/tech-challenge-group2:v1.0.1
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: tech-challenge-group2-configmap
+          #livenessProbe:
+          #  httpGet:
+          #    path: /api/actuator/health
+          #    port: 8080
+          #  periodSeconds: 10
+          #  failureThreshold: 3
+          #  initialDelaySeconds: 20
+          #readinessProbe:
+          #  httpGet:
+          #    path: /api/actuator/health
+          #    port: 8080
+          #  periodSeconds: 10
+          #  failureThreshold: 5
+          #  initialDelaySeconds: 3
+          resources:
+            requests:
+              cpu: 10m
+  replicas: 2
+  selector:
+    matchLabels:
+      app: tech-challenge-group2
