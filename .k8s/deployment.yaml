@@ -17,20 +17,6 @@ spec:
           envFrom:
             - configMapRef:
                 name: tech-challenge-group2-configmap
-          #livenessProbe:
-          #  httpGet:
-          #    path: /api/actuator/health
-          #    port: 8080
-          #  periodSeconds: 10
-          #  failureThreshold: 3
-          #  initialDelaySeconds: 20
-          #readinessProbe:
-          #  httpGet:
-          #    path: /api/actuator/health
-          #    port: 8080
-          #  periodSeconds: 10
-          #  failureThreshold: 5
-          #  initialDelaySeconds: 3
           resources:
             requests:
               cpu: 10m
