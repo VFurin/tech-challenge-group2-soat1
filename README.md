@@ -267,6 +267,12 @@ Request body
 - Somente é possível adicionar itens ao pedido depois que o pedido estiver em status **RECEBIDO**. O que indica que já houve uma solicitação de pedido que ainda não foi efetivado o pagamento. Permitindo que seja realizada a manutenção de itens.
 - Caso o pedido esteja em outro status, será entendido que o pedido esteja em outro estado na esteira e não permitirá mais a manutenção de itens.
 
+##### Consulta do Status de Pagamento do Pedido
+
+```sh
+GET http://localhost:8080/api/pedidos/{id}/pagamento-status
+```
+
 ## Recurso Checkout
 Endpoints gerados para o processo de checkout de pedidos na plataforma
 

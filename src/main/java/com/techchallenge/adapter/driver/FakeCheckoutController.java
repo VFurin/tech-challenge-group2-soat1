@@ -39,9 +39,9 @@ public class FakeCheckoutController {
 			})
 	@PostMapping
 	@ResponseStatus(HttpStatus.OK)
-	public PedidoModel checkout(@RequestBody PedidoInput pedidoInput) {
+	public String checkout(@RequestBody PedidoInput pedidoInput) {
 		
 		Pedido pedido = pedidoMapper.toDomainObject(pedidoInput);
-		return pedidoMapper.toModel(service.checkout(pedido));
+		return pedidoMapper.toModel(service.checkout(pedido)).getId().toString();
 	}
 }

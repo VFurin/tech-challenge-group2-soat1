@@ -17,15 +17,15 @@ import com.techchallenge.core.domain.exception.EntidadeNaoEncontradaException;
 @Service
 public class PedidoService {
 
-	private static final String MSG_PEDIDO_EM_USO = "Pedido em uso com o id %d";
-	private static final String MSG_PEDIDO_NAO_ENCONTRADO = "Pedido não encontrado com o id %d";
-	private static final String MSG_PEDIDO_STATUS_NAO_ENCONTRADO = "Não existe pedido com o id %d e com o status %s";
-	
+    private static final String MSG_PEDIDO_EM_USO = "Pedido em uso com o id %d";
+    private static final String MSG_PEDIDO_NAO_ENCONTRADO = "Pedido não encontrado com o id %d";
+    private static final String MSG_PEDIDO_STATUS_NAO_ENCONTRADO = "Não existe pedido com o id %d e com o status %s";
+
     @Autowired
     private PedidoRepository repository;
-    
+
     public List<Pedido> buscarPedidos() {
-        return repository.findAll();
+         return repository.findAll();
     }
 
     public Pedido buscarPedidoPorId(Long id) {
@@ -36,7 +36,7 @@ public class PedidoService {
     public List<Pedido> buscarPedidosPorStatus(StatusPedido statusPedido) {
         return repository.findByStatus(statusPedido);
     }
-    
+
     public Pedido buscarPedidoPorIdEStatus(Long id, StatusPedido statusPedido) {
         return repository.findByIdAndStatus(id, statusPedido).orElseThrow(() -> new EntidadeNaoEncontradaException(
                 String.format(MSG_PEDIDO_STATUS_NAO_ENCONTRADO, id, statusPedido.name())));
@@ -47,21 +47,21 @@ public class PedidoService {
         pedido.setStatus(statusPedido);
         repository.save(pedido);
     }
-    
+
     @Transactional
     public void atualizar(Pedido pedido) {
-    	repository.save(pedido);
+        repository.save(pedido);
     }
-    
+
     @Transactional
     public void excluir(Long pedidoId) {
-    	try {
-    		repository.deleteById(pedidoId);
-    		repository.flush();
-		} catch (DataIntegrityViolationException e) {
-			throw new EntidadeEmUsoException(String.format(MSG_PEDIDO_EM_USO, pedidoId));
-		} catch (EmptyResultDataAccessException e) {
-			throw new EntidadeNaoEncontradaException(String.format(MSG_PEDIDO_NAO_ENCONTRADO, pedidoId));
-		}
+        try {
+            repository.deleteById(pedidoId);
+            repository.flush();
+        } catch (DataIntegrityViolationException e) {
+            throw new EntidadeEmUsoException(String.format(MSG_PEDIDO_EM_USO, pedidoId));
+        } catch (EmptyResultDataAccessException e) {
+            throw new EntidadeNaoEncontradaException(String.format(MSG_PEDIDO_NAO_ENCONTRADO, pedidoId));
+        }
     }
 }

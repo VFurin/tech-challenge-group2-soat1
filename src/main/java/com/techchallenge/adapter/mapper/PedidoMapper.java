@@ -1,8 +1,10 @@
 package com.techchallenge.adapter.mapper;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.stream.Collectors;
 
+import com.techchallenge.core.domain.StatusPedido;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,10 +22,10 @@ public class PedidoMapper {
 
     public Pedido toDomainObject(PedidoInput input) {
         Pedido pedido = mapper.map(input, Pedido.class);
-        
+
         pedido.setCliente(new Cliente());
         pedido.getCliente().setId(input.getClienteId());
-        
+
         return pedido;
     }
 
@@ -37,4 +39,14 @@ public class PedidoMapper {
                 .collect(Collectors.toList());
     }
 
+    public Collection<PedidoModel> toCollectionModelOrderByStatus(Collection<Pedido> pedidos) {
+        return pedidos.stream()
+                .map(c -> mapper.map(c, PedidoModel.class)).sorted(Comparator.comparing(PedidoModel::getStatus))
+                .filter(pedido -> pedido.getStatus() != StatusPedido.FINALIZADO)
+                .collect(Collectors.toList());
+    }
+
+    public String toPagamentoStatus(Pedido pedido) {
+        return mapper.map(pedido, PedidoModel.class).getStatusPagamento().name();
+    }
 }
