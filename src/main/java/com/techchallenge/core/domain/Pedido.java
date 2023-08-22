@@ -35,6 +35,9 @@ public class Pedido {
     @JoinColumn(name = "cliente_id", nullable = true)
 	private Cliente cliente;
 
+	@Enumerated(EnumType.STRING)
+	private StatusPagamento statusPagamento;
+
 	private OffsetDateTime dataSolicitacao;
 	private OffsetDateTime dataCancelamento;
 	private OffsetDateTime dataFinalizacao;

@@ -1,5 +1,6 @@
 package com.techchallenge.adapter.driver.model;
 
+import com.techchallenge.core.domain.StatusPagamento;
 import com.techchallenge.core.domain.StatusPedido;
 import com.techchallenge.core.domain.TipoPagamento;
 
@@ -21,6 +22,16 @@ public class PedidoModel {
 
     public List<ItemPedidoModel> getItens() {
         return itens;
+    }
+
+    private StatusPagamento statusPagamento;
+
+    public StatusPagamento getStatusPagamento() {
+        return statusPagamento;
+    }
+
+    public void setStatusPagamento(StatusPagamento statusPagamento) {
+        this.statusPagamento = statusPagamento;
     }
 
     public void setItens(List<ItemPedidoModel> itens) {

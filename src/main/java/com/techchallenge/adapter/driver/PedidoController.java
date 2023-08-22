@@ -77,10 +77,10 @@ public class PedidoController {
         if (status != null) {
             StatusPedido statusPedido = StatusPedido.valueOf(status);
             List<Pedido> pedidos = service.buscarPedidosPorStatus(statusPedido);
-            return mapper.toCollectionModel(pedidos);
+            return mapper.toCollectionModelOrderByStatus(pedidos);
         } else {
             List<Pedido> pedidos = service.buscarPedidos();
-            return mapper.toCollectionModel(pedidos);
+            return mapper.toCollectionModelOrderByStatus(pedidos);
         }
     }
 
@@ -137,4 +137,16 @@ public class PedidoController {
 	public void remover(@PathVariable Long id, @RequestBody @Valid ItemPedidoInput input) {
 		itemPedidoService.excluirItemAoPedido(id, input.getProdutoId());
 	}
+
+    @ApiOperation(" Consultar o status de pagamento do pedido, informando se o pagamento foi aprovado ou não")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Status de pagamento do pedido"),
+            @ApiResponse(code = 404, message = "Pedido não encontrado com o ID informado", response = Problem.class)
+
+    })
+    @GetMapping(value = "/{id}/pagamento-status")
+    public String buscarStatusDePagamentoDoPedido(@ApiParam(value = "ID do pedido", example = "12345678") @PathVariable Long id) {
+        Pedido pedido = service.buscarPedidoPorId(id);
+        return mapper.toPagamentoStatus(pedido);
+    }
 }
