@@ -3,18 +3,17 @@ package com.techchallenge.core.applications.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-import com.techchallenge.core.applications.ports.CategoriaRepository;
-import com.techchallenge.core.domain.Categoria;
+import com.techchallenge.drivers.db.entities.CategoriaEntity;
+import com.techchallenge.drivers.db.repositories.CategoriaRepository;
 
-@Service
+//@Service
 public class CategoriaService {
 
     @Autowired
     private CategoriaRepository repository;
 
-    public List<Categoria> buscarTodos() {
+    public List<CategoriaEntity> buscarTodos() {
         return repository.findAll();
     }
 }

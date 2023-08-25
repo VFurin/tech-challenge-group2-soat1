@@ -7,15 +7,15 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.stereotype.Service;
 
-import com.techchallenge.core.applications.ports.ClienteRepository;
 import com.techchallenge.core.domain.Cliente;
 import com.techchallenge.core.domain.exception.EntidadeEmUsoException;
 import com.techchallenge.core.domain.exception.EntidadeNaoEncontradaException;
 import com.techchallenge.core.domain.exception.NegocioException;
+import com.techchallenge.drivers.db.entities.ClienteEntity;
+import com.techchallenge.drivers.db.repositories.ClienteRepository;
 
-@Service
+//@Service
 public class ClienteService {
 	
 	private static final String MSG_CLIENTE_EM_USO = "Clinte em uso com o id %d";
@@ -26,8 +26,8 @@ public class ClienteService {
     private ClienteRepository repository;
 
     @Transactional
-    public Cliente salvar(Cliente cliente) {
-    	List<Cliente> clientes = repository.findByCpfOrEmail(cliente.getCpf(), cliente.getEmail());
+    public ClienteEntity salvar(ClienteEntity cliente) {
+    	List<ClienteEntity> clientes = repository.findByCpfOrEmail(cliente.getCpf(), cliente.getEmail());
     	
     	if (!clientes.isEmpty()) {
     		throw new NegocioException(MSG_CLIENTE_EXISTENTE);
@@ -36,7 +36,7 @@ public class ClienteService {
         return repository.save(cliente);
     }
 
-    public List<Cliente> buscarPorCpf(Long cpf) {
+    public List<ClienteEntity> buscarPorCpf(Long cpf) {
         return repository.findByCpfIs(cpf);
     }
     
@@ -54,7 +54,7 @@ public class ClienteService {
     
     @Transactional
     public void atualizarDadosCliente(Long id, Cliente cliente) {
-    	Cliente clienteEntity = repository.findById(id)
+    	ClienteEntity clienteEntity = repository.findById(id)
     			.orElseThrow(() -> new EntidadeNaoEncontradaException(String.format(MSG_CLIENTE_NAO_ENCONTRADO, id)));
     	
     	clienteEntity.setEmail(cliente.getEmail());

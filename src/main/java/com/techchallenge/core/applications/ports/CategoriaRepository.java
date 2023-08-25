@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.Optional;
 
-public interface CategoriaRepository extends JpaRepository<Categoria, Long> {
+public interface CategoriaRepository { //extends JpaRepository<Categoria, Long> {
 
     Categoria save(Categoria categoria);
 

@@ -30,9 +30,9 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
-@Api(tags = "Produtos")
-@RestController
-@RequestMapping(value = "/produtos", produces = MediaType.APPLICATION_JSON_VALUE)
+//@Api(tags = "Produtos")
+//@RestController
+//@RequestMapping(value = "/produtos", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ProdutoController {
 
     @Autowired
@@ -47,8 +47,9 @@ public class ProdutoController {
 			})
     @GetMapping
     public Collection<ProdutoModel> listar() {
-        List<Produto> todosProdutos = service.buscarTodos();
-        return mapper.toCollectionModel(todosProdutos);
+//        List<Produto> todosProdutos = service.buscarTodos();
+//        return mapper.toCollectionModel(todosProdutos);
+		return null;
     }
 
 	@ApiOperation("Listar produtos filtrando por nome de categoria")
@@ -58,8 +59,9 @@ public class ProdutoController {
     // Evitar ambiguidade do resource path
     @GetMapping(value="/categorias/nome/{categoriaNome}")
     public Collection<ProdutoModel> listarPorCategoria(@PathVariable String categoriaNome) {
-        List<Produto> produto = service.buscarPorCategoria(categoriaNome);
-        return mapper.toCollectionModel(produto);
+//        List<Produto> produto = service.buscarPorCategoria(categoriaNome);
+//        return mapper.toCollectionModel(produto);
+		return null;
     }
     
 	@ApiOperation("Listar produtos filtrando por código de categoria")
@@ -69,8 +71,9 @@ public class ProdutoController {
     // Evitar ambiguidade do resource path
     @GetMapping(value="/categorias/codigo/{categoriaId}")
     public Collection<ProdutoModel> listarPorCategoria(@PathVariable Long categoriaId) {
-        List<Produto> produto = service.buscarPorCategoria(categoriaId);
-        return mapper.toCollectionModel(produto);
+//        List<Produto> produto = service.buscarPorCategoria(categoriaId);
+//        return mapper.toCollectionModel(produto);
+		return null;
     }
     
 	@ApiOperation("Inclui um produto na plataforma")
@@ -81,10 +84,11 @@ public class ProdutoController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public ProdutoModel adicionar(@RequestBody @Valid ProdutoInput input) {
-		Produto produto = mapper.toDomainObject(input);
-		produto = service.salvar(produto);
-
-		return mapper.toModel(produto);
+//		Produto produto = mapper.toDomainObject(input);
+//		produto = service.salvar(produto);
+//
+//		return mapper.toModel(produto);
+		return null;
 	}
 	
 	@ApiOperation("Exclui um produto na plataforma")
@@ -108,6 +112,6 @@ public class ProdutoController {
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void atualizar(@PathVariable Long produtoId, @RequestBody @Valid ProdutoInput input) {
 		Produto produto = mapper.toDomainObject(input);
-		service.atualizar(produtoId, produto);
+//		service.atualizar(produtoId, produto);
 	}
 }

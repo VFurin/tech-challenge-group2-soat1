@@ -4,6 +4,8 @@ import com.techchallenge.TestConfig;
 import com.techchallenge.adapter.driver.model.input.ClienteInput;
 import com.techchallenge.core.applications.service.ClienteService;
 import com.techchallenge.core.domain.Cliente;
+import com.techchallenge.drivers.db.entities.ClienteEntity;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -31,11 +33,11 @@ public class ClienteServiceTests {
         clienteInput.setEmail("teste@teste.com");
         clienteInput.setCpf(12345678911L);
 
-        Cliente clienteMock = new Cliente();
+        ClienteEntity clienteMock = new ClienteEntity();
         clienteMock.setNome(clienteInput.getNome());
         clienteMock.setEmail(clienteInput.getEmail());
         clienteMock.setCpf(clienteInput.getCpf());
-        when(service.salvar(any(Cliente.class))).thenReturn(clienteMock);
+        when(service.salvar(any(ClienteEntity.class))).thenReturn(clienteMock);
 
         assertNotNull(clienteInput);
         assertEquals(clienteMock.getNome(), clienteInput.getNome());
@@ -47,16 +49,16 @@ public class ClienteServiceTests {
     void testDeveBuscarClientePorCpfERetornarOClienteValido() {
         Long cpf = 12345678911L;
 
-        Cliente clienteMock = new Cliente();
+        ClienteEntity clienteMock = new ClienteEntity();
         clienteMock.setNome("Teste");
         clienteMock.setEmail("teste@teste.com");
         clienteMock.setCpf(cpf);
-        List<Cliente> clientesMock = new ArrayList<>();
+        List<ClienteEntity> clientesMock = new ArrayList<>();
         clientesMock.add(clienteMock);
 
         when(service.buscarPorCpf(cpf)).thenReturn(clientesMock);
 
-        Cliente clienteRetornado = service.buscarPorCpf(cpf)
+        ClienteEntity clienteRetornado = service.buscarPorCpf(cpf)
                 .stream()
                 .findFirst()
                 .orElse(null);

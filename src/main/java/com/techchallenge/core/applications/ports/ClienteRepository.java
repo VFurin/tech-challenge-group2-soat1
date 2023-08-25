@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import com.techchallenge.core.domain.Cliente;
 
-@Repository
-public interface ClienteRepository extends JpaRepository<Cliente, Long> {
+//@Repository
+public interface ClienteRepository { //extends JpaRepository<Cliente, Long> {
 
     @SuppressWarnings("unchecked")
 	Cliente save(Cliente cliente);

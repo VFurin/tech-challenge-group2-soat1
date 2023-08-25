@@ -16,9 +16,9 @@ import com.techchallenge.core.domain.Categoria;
 
 import io.swagger.annotations.Api;
 
-@Api(tags = "Categorias")
-@RestController
-@RequestMapping(value = "/categorias", produces = MediaType.APPLICATION_JSON_VALUE)
+//@Api(tags = "Categorias")
+//@RestController
+//@RequestMapping(value = "/categorias", produces = MediaType.APPLICATION_JSON_VALUE)
 public class CategoriaController {
 
     @Autowired
@@ -29,7 +29,8 @@ public class CategoriaController {
 
     @GetMapping
     public Collection<CategoriaModel> listar() {
-        List<Categoria> todasCategorias = service.buscarTodos();
-        return mapper.toCollectionModel(todasCategorias);
+//        List<Categoria> todasCategorias = service.buscarTodos();
+//        return mapper.toCollectionModel(todasCategorias);
+    	return null;
     }
 }
