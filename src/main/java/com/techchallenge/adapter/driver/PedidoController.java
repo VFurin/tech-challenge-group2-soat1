@@ -38,9 +38,9 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
-//@Api(tags = "Pedidos")
-//@RestController
-//@RequestMapping(value = "/pedidos", produces = MediaType.APPLICATION_JSON_VALUE)
+@Api(tags = "Pedidos")
+@RestController
+@RequestMapping(value = "/pedidos", produces = MediaType.APPLICATION_JSON_VALUE)
 public class PedidoController {
 
     @Autowired
@@ -64,9 +64,8 @@ public class PedidoController {
     })
     @GetMapping(value = "/{id}")
     public PedidoModel buscarPedidosPorId(@ApiParam(value = "ID do pedido", example = "12345678") @PathVariable Long id) {
-//        Pedido pedido = service.buscarPedidoPorId(id);
-//        return mapper.toModel(pedido);
-    	return null;
+        Pedido pedido = service.buscarPedidoPorId(id);
+        return mapper.toModel(pedido);
     }
 
     @ApiOperation("Lista os pedidos, podendo filtrar pelo status")
@@ -75,15 +74,14 @@ public class PedidoController {
     })
     @GetMapping
     public Collection<PedidoModel> listarPedidos(@ApiParam(value = "Status dos pedidos", example = "PREPARACAO") @RequestParam(required = false) String status) {
-//        if (status != null) {
-//            StatusPedido statusPedido = StatusPedido.valueOf(status);
-//            List<Pedido> pedidos = service.buscarPedidosPorStatus(statusPedido);
-//            return mapper.toCollectionModel(pedidos);
-//        } else {
-//            List<Pedido> pedidos = service.buscarPedidos();
-//            return mapper.toCollectionModel(pedidos);
-//        }
-    	return null;
+        if (status != null) {
+            StatusPedido statusPedido = StatusPedido.valueOf(status);
+            List<Pedido> pedidos = service.buscarPedidosPorStatus(statusPedido);
+            return mapper.toCollectionModelOrderByStatus(pedidos);
+        } else {
+            List<Pedido> pedidos = service.buscarPedidos();
+            return mapper.toCollectionModelOrderByStatus(pedidos);
+        }
     }
 
     @ApiOperation("Atualiza o status do pedido")
@@ -95,9 +93,9 @@ public class PedidoController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PatchMapping(value = "/{id}/status")
     public void atualizarStatusDoPedido(@ApiParam(value = "ID do pedido", example = "12345678") @PathVariable Long id, @RequestBody String novoStatus) {
-//        Pedido pedido = service.buscarPedidoPorId(id);
-//        StatusPedido statusPedido = StatusPedido.valueOf(novoStatus);
-//        service.atualizarStatusDoPedido(pedido, statusPedido);
+        Pedido pedido = service.buscarPedidoPorId(id);
+        StatusPedido statusPedido = StatusPedido.valueOf(novoStatus);
+        service.atualizarStatusDoPedido(pedido, statusPedido);
     }
     
 	@ApiOperation("Adicionar itens ao pedido na plataforma")
@@ -109,11 +107,10 @@ public class PedidoController {
 	@PostMapping(value = "/{id}/items")
 	@ResponseStatus(HttpStatus.OK)
 	public ItemPedidoModel adicionarProduto(@PathVariable Long id, @RequestBody @Valid ItemPedidoInput input) {
-//		ItemPedido itemPedido = itemPedidoMapper.toDomainObject(input);
-//		itemPedido = itemPedidoService.adicionarItemAoPedido(id, itemPedido);
-//
-//		return itemPedidoMapper.toModel(itemPedido);
-		return null;
+		ItemPedido itemPedido = itemPedidoMapper.toDomainObject(input);
+		itemPedido = itemPedidoService.adicionarItemAoPedido(id, itemPedido);
+
+		return itemPedidoMapper.toModel(itemPedido);
 	}
 	
 	@ApiOperation("Atualizar itens ao pedido na plataforma")
@@ -125,8 +122,8 @@ public class PedidoController {
 	@PutMapping(value = "/{id}/items")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void atualizarProduto(@PathVariable Long id, @RequestBody @Valid ItemPedidoInput input) {
-//		ItemPedido itemPedido = itemPedidoMapper.toDomainObject(input);
-//		itemPedidoService.atualizarItemAoPedido(id, itemPedido);
+		ItemPedido itemPedido = itemPedidoMapper.toDomainObject(input);
+		itemPedidoService.atualizarItemAoPedido(id, itemPedido);
 	}
 	
 	@ApiOperation("Exclui um item do pedido na plataforma")
@@ -140,4 +137,16 @@ public class PedidoController {
 	public void remover(@PathVariable Long id, @RequestBody @Valid ItemPedidoInput input) {
 		itemPedidoService.excluirItemAoPedido(id, input.getProdutoId());
 	}
+
+    @ApiOperation(" Consultar o status de pagamento do pedido, informando se o pagamento foi aprovado ou não")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Status de pagamento do pedido"),
+            @ApiResponse(code = 404, message = "Pedido não encontrado com o ID informado", response = Problem.class)
+
+    })
+    @GetMapping(value = "/{id}/pagamento-status")
+    public String buscarStatusDePagamentoDoPedido(@ApiParam(value = "ID do pedido", example = "12345678") @PathVariable Long id) {
+        Pedido pedido = service.buscarPedidoPorId(id);
+        return mapper.toPagamentoStatus(pedido);
+    }
 }

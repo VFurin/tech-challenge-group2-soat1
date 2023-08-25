@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import com.techchallenge.adapter.driver.model.ClienteModel;
 import com.techchallenge.adapter.driver.model.input.ClienteAtualizacaoInput;
 import com.techchallenge.adapter.driver.model.input.ClienteInput;
-import com.techchallenge.core.domain.Cliente;
+import com.techchallenge.core.domain.entities.Cliente;
 
 @Component
 public class ClienteApiMapper {

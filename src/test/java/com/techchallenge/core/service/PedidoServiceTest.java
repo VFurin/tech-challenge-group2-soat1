@@ -18,8 +18,6 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import com.techchallenge.TestConfig;
 import com.techchallenge.core.applications.service.PedidoService;
-import com.techchallenge.core.domain.Categoria;
-import com.techchallenge.core.domain.Cliente;
 import com.techchallenge.core.domain.ItemPedido;
 import com.techchallenge.core.domain.Pedido;
 import com.techchallenge.core.domain.Produto;
@@ -27,11 +25,6 @@ import com.techchallenge.core.domain.StatusPedido;
 import com.techchallenge.core.domain.TipoPagamento;
 import com.techchallenge.drivers.db.entities.CategoriaEntity;
 import com.techchallenge.drivers.db.entities.ClienteEntity;
-import com.techchallenge.drivers.db.entities.ItemPedidoEntity;
-import com.techchallenge.drivers.db.entities.PedidoEntity;
-import com.techchallenge.drivers.db.entities.ProdutoEntity;
-import com.techchallenge.drivers.db.entities.StatusPedidoEntity;
-import com.techchallenge.drivers.db.entities.TipoPagamentoEntity;
 
 @SpringBootTest
 @ContextConfiguration(classes = {TestConfig.class}, loader = AnnotationConfigContextLoader.class)
@@ -51,7 +44,7 @@ public class PedidoServiceTest {
         categoriaMock.setNome("Categoria");
         categoriaMock.setId(123L);
 
-        ProdutoEntity produtoMock = new ProdutoEntity();
+        Produto produtoMock = new Produto();
         produtoMock.setNome("Produto");
         produtoMock.setCategoria(categoriaMock);
         produtoMock.setId(123456L);
@@ -59,36 +52,36 @@ public class PedidoServiceTest {
         produtoMock.setDescricao("Descricao");
         produtoMock.setImagem("Imagem");
 
-        ItemPedidoEntity itemPedidoMock = new ItemPedidoEntity();
-        itemPedidoMock.setPedido(new PedidoEntity());
+        ItemPedido itemPedidoMock = new ItemPedido();
+        itemPedidoMock.setPedido(new Pedido());
         itemPedidoMock.setProduto(produtoMock);
         itemPedidoMock.setQuantidade(1);
         itemPedidoMock.setPrecoTotal(BigDecimal.valueOf(10));
 
-        List<ItemPedidoEntity> itensPedidosMock = new ArrayList<>();
+        List<ItemPedido> itensPedidosMock = new ArrayList<>();
         itensPedidosMock.add(itemPedidoMock);
 
-        TipoPagamentoEntity tipoPagamento = new TipoPagamentoEntity();
+        TipoPagamento tipoPagamento = new TipoPagamento();
         tipoPagamento.setNome("QRCODE");
 
-        PedidoEntity pedidoMock = new PedidoEntity();
+        Pedido pedidoMock = new Pedido();
         pedidoMock.setCliente(clienteMock);
         pedidoMock.setItens(itensPedidosMock);
-        pedidoMock.setStatus(StatusPedidoEntity.PREPARACAO);
+        pedidoMock.setStatus(StatusPedido.PREPARACAO);
         pedidoMock.setDataFinalizacao(OffsetDateTime.now().plusHours(1));
         pedidoMock.setDataSolicitacao(OffsetDateTime.now());
         pedidoMock.setTipoPagamento(tipoPagamento);
         pedidoMock.setValor(BigDecimal.valueOf(10));
 
 
-        List<PedidoEntity> pedidosMock = new ArrayList<>();
+        List<Pedido> pedidosMock = new ArrayList<>();
 
         pedidosMock.add(pedidoMock);
 
 
         when(service.buscarPedidos()).thenReturn(pedidosMock);
 
-        List<PedidoEntity> pedidosRetornados = service.buscarPedidos();
+        List<Pedido> pedidosRetornados = service.buscarPedidos();
 
         assertEquals(pedidosMock.get(0).getCliente().getCpf(), pedidosRetornados.get(0).getCliente().getCpf());
         assertEquals(pedidosMock.get(0).getCliente().getEmail(), pedidosRetornados.get(0).getCliente().getEmail());
@@ -115,7 +108,7 @@ public class PedidoServiceTest {
         categoriaMock1.setNome("Categoria");
         categoriaMock1.setId(123L);
 
-        ProdutoEntity produtoMock1 = new ProdutoEntity();
+        Produto produtoMock1 = new Produto();
         produtoMock1.setNome("Produto");
         produtoMock1.setCategoria(categoriaMock1);
         produtoMock1.setId(123456L);
@@ -123,22 +116,22 @@ public class PedidoServiceTest {
         produtoMock1.setDescricao("Descricao");
         produtoMock1.setImagem("Imagem");
 
-        ItemPedidoEntity itemPedidoMock1 = new ItemPedidoEntity();
-        itemPedidoMock1.setPedido(new PedidoEntity());
+        ItemPedido itemPedidoMock1 = new ItemPedido();
+        itemPedidoMock1.setPedido(new Pedido());
         itemPedidoMock1.setProduto(produtoMock1);
         itemPedidoMock1.setQuantidade(1);
         itemPedidoMock1.setPrecoTotal(BigDecimal.valueOf(10));
 
-        List<ItemPedidoEntity> itensPedidosMock1 = new ArrayList<>();
+        List<ItemPedido> itensPedidosMock1 = new ArrayList<>();
         itensPedidosMock1.add(itemPedidoMock1);
 
-        TipoPagamentoEntity tipoPagamento = new TipoPagamentoEntity();
+        TipoPagamento tipoPagamento = new TipoPagamento();
         tipoPagamento.setNome("QRCODE");
 
-        PedidoEntity pedidoMock1 = new PedidoEntity();
+        Pedido pedidoMock1 = new Pedido();
         pedidoMock1.setCliente(clienteMock1);
         pedidoMock1.setItens(itensPedidosMock1);
-        pedidoMock1.setStatus(StatusPedidoEntity.PREPARACAO);
+        pedidoMock1.setStatus(StatusPedido.PREPARACAO);
         pedidoMock1.setDataFinalizacao(OffsetDateTime.now().plusHours(1));
         pedidoMock1.setDataSolicitacao(OffsetDateTime.now());
         pedidoMock1.setTipoPagamento(tipoPagamento);
@@ -153,7 +146,7 @@ public class PedidoServiceTest {
         categoriaMock2.setNome("Categoria");
         categoriaMock2.setId(123L);
 
-        ProdutoEntity produtoMock2 = new ProdutoEntity();
+        Produto produtoMock2 = new Produto();
         produtoMock2.setNome("Produto");
         produtoMock2.setCategoria(categoriaMock2);
         produtoMock2.setId(222L);
@@ -161,35 +154,35 @@ public class PedidoServiceTest {
         produtoMock2.setDescricao("Descricao");
         produtoMock2.setImagem("Imagem");
 
-        ItemPedidoEntity itemPedidoMock2 = new ItemPedidoEntity();
-        itemPedidoMock2.setPedido(new PedidoEntity());
+        ItemPedido itemPedidoMock2 = new ItemPedido();
+        itemPedidoMock2.setPedido(new Pedido());
         itemPedidoMock2.setProduto(produtoMock2);
         itemPedidoMock2.setQuantidade(2);
         itemPedidoMock2.setPrecoTotal(BigDecimal.valueOf(20));
 
-        List<ItemPedidoEntity> itensPedidosMock2 = new ArrayList<>();
+        List<ItemPedido> itensPedidosMock2 = new ArrayList<>();
         itensPedidosMock2.add(itemPedidoMock2);
 
-        PedidoEntity pedidoMock2 = new PedidoEntity();
+        Pedido pedidoMock2 = new Pedido();
         pedidoMock2.setCliente(clienteMock2);
         pedidoMock2.setItens(itensPedidosMock2);
-        pedidoMock2.setStatus(StatusPedidoEntity.PREPARACAO);
+        pedidoMock2.setStatus(StatusPedido.PREPARACAO);
         pedidoMock2.setDataFinalizacao(OffsetDateTime.now().plusHours(1));
         pedidoMock2.setDataSolicitacao(OffsetDateTime.now());
         pedidoMock2.setTipoPagamento(tipoPagamento);
         pedidoMock2.setValor(BigDecimal.valueOf(10));
 
-        List<PedidoEntity> pedidosMock = new ArrayList<>();
+        List<Pedido> pedidosMock = new ArrayList<>();
 
         pedidosMock.add(pedidoMock1);
         pedidosMock.add(pedidoMock2);
 
-        PedidoEntity pedidoMock = pedidosMock.get(0);
+        Pedido pedidoMock = pedidosMock.get(0);
 
 
         when(service.buscarPedidoPorId(123L)).thenReturn(pedidoMock);
 
-        PedidoEntity pedidoRetornado = service.buscarPedidoPorId(123L);
+        Pedido pedidoRetornado = service.buscarPedidoPorId(123L);
 
         assertEquals(pedidosMock.get(0).getCliente().getCpf(), pedidoRetornado.getCliente().getCpf());
         assertEquals(pedidosMock.get(0).getCliente().getEmail(), pedidoRetornado.getCliente().getEmail());
@@ -207,7 +200,7 @@ public class PedidoServiceTest {
 
     @Test
     void dadoUmaListaDePedidosQuandoBuscarPedidosPorStatusEntaoRetornaPedidos() {
-        StatusPedidoEntity statusPedido = StatusPedidoEntity.PREPARACAO;
+        StatusPedido statusPedido = StatusPedido.PREPARACAO;
 
         ClienteEntity clienteMock = new ClienteEntity();
         clienteMock.setNome("Teste");
@@ -218,7 +211,7 @@ public class PedidoServiceTest {
         categoriaMock.setNome("Categoria");
         categoriaMock.setId(123L);
 
-        ProdutoEntity produtoMock = new ProdutoEntity();
+        Produto produtoMock = new Produto();
         produtoMock.setNome("Produto");
         produtoMock.setCategoria(categoriaMock);
         produtoMock.setId(123456L);
@@ -226,36 +219,36 @@ public class PedidoServiceTest {
         produtoMock.setDescricao("Descricao");
         produtoMock.setImagem("Imagem");
 
-        ItemPedidoEntity itemPedidoMock = new ItemPedidoEntity();
-        itemPedidoMock.setPedido(new PedidoEntity());
+        ItemPedido itemPedidoMock = new ItemPedido();
+        itemPedidoMock.setPedido(new Pedido());
         itemPedidoMock.setProduto(produtoMock);
         itemPedidoMock.setQuantidade(1);
         itemPedidoMock.setPrecoTotal(BigDecimal.valueOf(10));
 
-        List<ItemPedidoEntity> itensPedidosMock = new ArrayList<>();
+        List<ItemPedido> itensPedidosMock = new ArrayList<>();
         itensPedidosMock.add(itemPedidoMock);
 
-        TipoPagamentoEntity tipoPagamento = new TipoPagamentoEntity();
+        TipoPagamento tipoPagamento = new TipoPagamento();
         tipoPagamento.setNome("QRCODE");
 
-        PedidoEntity pedidoMock = new PedidoEntity();
+        Pedido pedidoMock = new Pedido();
         pedidoMock.setCliente(clienteMock);
         pedidoMock.setItens(itensPedidosMock);
-        pedidoMock.setStatus(StatusPedidoEntity.PREPARACAO);
+        pedidoMock.setStatus(StatusPedido.PREPARACAO);
         pedidoMock.setDataFinalizacao(OffsetDateTime.now().plusHours(1));
         pedidoMock.setDataSolicitacao(OffsetDateTime.now());
         pedidoMock.setTipoPagamento(tipoPagamento);
         pedidoMock.setValor(BigDecimal.valueOf(10));
 
 
-        List<PedidoEntity> pedidosMock = new ArrayList<>();
+        List<Pedido> pedidosMock = new ArrayList<>();
 
         pedidosMock.add(pedidoMock);
 
 
         when(service.buscarPedidosPorStatus(statusPedido)).thenReturn(pedidosMock);
 
-        List<PedidoEntity> pedidosRetornados = service.buscarPedidosPorStatus(statusPedido);
+        List<Pedido> pedidosRetornados = service.buscarPedidosPorStatus(statusPedido);
 
         assertEquals(pedidosMock.get(0).getCliente().getCpf(), pedidosRetornados.get(0).getCliente().getCpf());
         assertEquals(pedidosMock.get(0).getCliente().getEmail(), pedidosRetornados.get(0).getCliente().getEmail());

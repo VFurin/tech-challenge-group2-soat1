@@ -10,7 +10,7 @@ import com.techchallenge.drivers.db.repositories.ClienteRepository;
 import com.techchallenge.drivers.db.repositories.PedidoRepository;
 import com.techchallenge.drivers.db.repositories.ProdutoRepository;
 
-@Component
+//@Component
 public class FakeCheckoutGatewayImpl implements FakeCheckoutGateway {
 	
 	private static final String MSG_PRODUTO_NAO_ENCONTRADO = "Produto não encontrado com código %d";

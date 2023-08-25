@@ -3,19 +3,20 @@ package com.techchallenge.core.applications.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.techchallenge.core.applications.ports.ItemPedidoRepository;
+import com.techchallenge.core.applications.ports.PedidoRepository;
+import com.techchallenge.core.applications.ports.ProdutoRepository;
+import com.techchallenge.core.domain.ItemPedido;
+import com.techchallenge.core.domain.Pedido;
+import com.techchallenge.core.domain.Produto;
+import com.techchallenge.core.domain.StatusPedido;
 import com.techchallenge.core.domain.exception.EntidadeNaoEncontradaException;
 import com.techchallenge.core.domain.exception.NegocioException;
-import com.techchallenge.drivers.db.entities.ItemPedidoEntity;
-import com.techchallenge.drivers.db.entities.PedidoEntity;
-import com.techchallenge.drivers.db.entities.ProdutoEntity;
-import com.techchallenge.drivers.db.entities.StatusPedidoEntity;
-import com.techchallenge.drivers.db.repositories.ItemPedidoRepository;
-import com.techchallenge.drivers.db.repositories.PedidoRepository;
-import com.techchallenge.drivers.db.repositories.ProdutoRepository;
 
-//@Service
+@Service
 public class ItemPedidoService {
 
 	private static final String MSG_ITEM_NAO_ENCONTRADO = "Item não encontrado no pedido com o id %d e produto com o id %d";
@@ -33,16 +34,16 @@ public class ItemPedidoService {
     private ProdutoRepository produtoRepository;
 
     @Transactional
-    public ItemPedidoEntity adicionarItemAoPedido(Long pedidoId, ItemPedidoEntity itemPedido) {
+    public ItemPedido adicionarItemAoPedido(Long pedidoId, ItemPedido itemPedido) {
     	Long produtoId = itemPedido.getProduto().getId();
     	
-    	PedidoEntity pedido = pedidoRepository.findByIdAndStatus(pedidoId, StatusPedidoEntity.RECEBIDO)
+    	Pedido pedido = pedidoRepository.findByIdAndStatus(pedidoId, StatusPedido.RECEBIDO)
     			.orElseThrow(() -> new NegocioException(String.format(MSG_PEDIDO_NAO_ENCONTRADO, pedidoId)));
     	
-    	ProdutoEntity produto = produtoRepository.findById(itemPedido.getProduto().getId())
+    	Produto produto = produtoRepository.findById(itemPedido.getProduto().getId())
     			.orElseThrow(() -> new NegocioException(String.format(MSG_PRODUTO_NAO_ENCONTRADO, produtoId)));
     	
-    	List<ItemPedidoEntity> itens = itemPedidoRepository.findByPedidoAndProduto(pedidoId, produtoId);
+    	List<ItemPedido> itens = itemPedidoRepository.findByPedidoAndProduto(pedidoId, produtoId);
     	
     	if (!itens.isEmpty()) {
     		throw new NegocioException(String.format(MSG_ITEM_JA_ADICIONADO, pedidoId, produtoId));
@@ -60,11 +61,11 @@ public class ItemPedidoService {
     }
     
     @Transactional
-    public void atualizarItemAoPedido(Long pedidoId, ItemPedidoEntity itemPedido) {
+    public void atualizarItemAoPedido(Long pedidoId, ItemPedido itemPedido) {
     	Long produtoId = itemPedido.getProduto().getId();
-    	List<ItemPedidoEntity> itens = itemPedidoRepository.findByPedidoAndProduto(pedidoId, produtoId);
+    	List<ItemPedido> itens = itemPedidoRepository.findByPedidoAndProduto(pedidoId, produtoId);
     	
-    	ItemPedidoEntity item = itens.stream().findFirst()
+    	ItemPedido item = itens.stream().findFirst()
     			.orElseThrow(() -> new EntidadeNaoEncontradaException(String.format(MSG_ITEM_NAO_ENCONTRADO, pedidoId, produtoId)));
     	
     	item.setQuantidade(itemPedido.getQuantidade());
@@ -74,14 +75,14 @@ public class ItemPedidoService {
     
     @Transactional
     public void excluirItemAoPedido(Long pedidoId, Long produtoId) {
-    	List<ItemPedidoEntity> itens = itemPedidoRepository.findByPedidoAndProduto(pedidoId, produtoId);
+    	List<ItemPedido> itens = itemPedidoRepository.findByPedidoAndProduto(pedidoId, produtoId);
     	
-    	ItemPedidoEntity item = itens.stream().findFirst()
+    	ItemPedido item = itens.stream().findFirst()
     			.orElseThrow(() -> new EntidadeNaoEncontradaException(String.format(MSG_ITEM_NAO_ENCONTRADO, pedidoId, produtoId)));
 
     	itemPedidoRepository.deleteById(item.getId());
     	
-    	PedidoEntity pedido = pedidoRepository.findById(pedidoId).get();
+    	Pedido pedido = pedidoRepository.findById(pedidoId).get();
     	itemPedidoRepository.flush();
     	
     	pedido.calcularValor();

@@ -24,9 +24,9 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
-//@Api(tags = "Pagamentos")
-//@RestController
-//@RequestMapping(value = "/pagamentos", produces = MediaType.APPLICATION_JSON_VALUE)
+@Api(tags = "Pagamentos")
+@RestController
+@RequestMapping(value = "/pagamentos", produces = MediaType.APPLICATION_JSON_VALUE)
 public class PagamentoController {
 	
     @Autowired
@@ -47,7 +47,7 @@ public class PagamentoController {
 			Thread.sleep(5000);
 
 			TipoPagamento tipoPagamento = mapper.toDomainObject(tipoPagamentoInput);
-//			service.efetuarPagamento(pedidoId, tipoPagamento);
+			service.efetuarPagamento(pedidoId, tipoPagamento);
 		} catch (InterruptedException e) {
 			throw new RuntimeException(e);
 		}
@@ -61,7 +61,6 @@ public class PagamentoController {
 	@GetMapping("/tipos-pagamento")
 	@ResponseStatus(HttpStatus.OK)
 	public Collection<TipoPagamentoModel> listar() {
-//		return mapper.toCollectionModel(service.listar());
-		return null;
+		return mapper.toCollectionModel(service.listar());
 	}
 }

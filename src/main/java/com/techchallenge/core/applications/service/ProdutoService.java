@@ -6,15 +6,16 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.stereotype.Service;
 
+import com.techchallenge.core.applications.ports.ProdutoRepository;
+import com.techchallenge.core.domain.Produto;
 import com.techchallenge.core.domain.exception.EntidadeEmUsoException;
 import com.techchallenge.core.domain.exception.EntidadeNaoEncontradaException;
 import com.techchallenge.drivers.db.entities.CategoriaEntity;
-import com.techchallenge.drivers.db.entities.ProdutoEntity;
 import com.techchallenge.drivers.db.repositories.CategoriaRepository;
-import com.techchallenge.drivers.db.repositories.ProdutoRepository;
 
-//@Service
+@Service
 public class ProdutoService {
 
     @Autowired
@@ -28,7 +29,7 @@ public class ProdutoService {
     private static final String MSG_CATEGORIA_NAO_EXISTE = "Não existe uma categoria com código %d";
 
     @Transactional
-    public ProdutoEntity salvar(ProdutoEntity produto) {
+    public Produto salvar(Produto produto) {
     	Long categoriaId = produto.getCategoria().getId();
     	
         CategoriaEntity categoria = categoriaRepository.findById(produto.getCategoria().getId())
@@ -42,7 +43,7 @@ public class ProdutoService {
         return repository.save(produto);
     }
 
-    public ProdutoEntity editar(Long produtoId) {
+    public Produto editar(Long produtoId) {
         return repository.findById(produtoId)
                 .orElseThrow(() -> new EntidadeNaoEncontradaException(
                         String.format(MSG_PRODUTO_NAO_EXISTE, produtoId)));
@@ -58,21 +59,19 @@ public class ProdutoService {
 		}
     }
     
-    public List<ProdutoEntity> buscarTodos() {
-    	return repository.findAll();
-    }
+    public List<Produto> buscarTodos() {return repository.findAll();}
 
-    public List<ProdutoEntity> buscarPorCategoria(String produtoCategoria) {
+    public List<Produto> buscarPorCategoria(String produtoCategoria) {
         return repository.findByCategoriaNome(produtoCategoria);
     }
     
-    public List<ProdutoEntity> buscarPorCategoria(Long categoriaId) {
+    public List<Produto> buscarPorCategoria(Long categoriaId) {
     	return repository.findByCategoriaId(categoriaId);
     }
     
     @Transactional
-    public void atualizar(Long id, ProdutoEntity produto) {
-        ProdutoEntity produtoEntity = repository.findById(id)
+    public void atualizar(Long id, Produto produto) {
+        Produto produtoEntity = repository.findById(id)
                 .orElseThrow(() -> new EntidadeNaoEncontradaException(String.format(MSG_PRODUTO_NAO_EXISTE, id)));
         
     	Long categoriaId = produto.getCategoria().getId();

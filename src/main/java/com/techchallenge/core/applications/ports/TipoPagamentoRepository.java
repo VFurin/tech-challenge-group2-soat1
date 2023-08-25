@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import com.techchallenge.core.domain.TipoPagamento;
 
-//@Repository
-public interface TipoPagamentoRepository { // extends JpaRepository<TipoPagamento, Long> {
+@Repository
+public interface TipoPagamentoRepository extends JpaRepository<TipoPagamento, Long> {
 
 }

@@ -11,7 +11,7 @@ import com.techchallenge.core.domain.entities.Pedido;
 import com.techchallenge.core.domain.entities.StatusPedido;
 import com.techchallenge.drivers.db.repositories.PedidoRepository;
 
-@Component
+//@Component
 public class PedidoGatewayImpl implements PedidoGateway {
 
 	private static final String MSG_PEDIDO_EM_USO = "Pedido em uso com o id %d";

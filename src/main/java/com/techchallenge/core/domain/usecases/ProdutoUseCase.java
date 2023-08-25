@@ -2,18 +2,20 @@ package com.techchallenge.core.domain.usecases;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.techchallenge.adapter.gateways.CategoriaGateway;
 import com.techchallenge.adapter.gateways.ProdutoGateway;
 import com.techchallenge.core.domain.entities.Produto;
 
-@Service
+//@Service
 public class ProdutoUseCase {
 
-    private ProdutoGateway repository;
+	@Autowired
+    private ProdutoGateway gateway;
 
-    private CategoriaGateway categoriaRepository;
+	@Autowired
+    private CategoriaGateway categoriaGateway;
     
     private static final String MSG_PRODUTO_EM_USO = "Produto em uso com o id %d";
     private static final String MSG_PRODUTO_NAO_EXISTE = "Não existe um cadastro de produto com código %d";

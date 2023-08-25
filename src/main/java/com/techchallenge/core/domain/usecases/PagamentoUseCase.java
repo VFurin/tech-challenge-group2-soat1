@@ -3,19 +3,14 @@ package com.techchallenge.core.domain.usecases;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-import com.techchallenge.adapter.gateways.PedidoGateway;
 import com.techchallenge.core.domain.entities.TipoPagamento;
-import com.techchallenge.drivers.db.repositories.TipoPagamentoRepository;
 
-@Service
+//@Service
 public class PagamentoUseCase {
 	
 	@Autowired
-	private PedidoGateway pedidoUseCase;
-	@Autowired
-	private TipoPagamentoRepository tipoPagamentoRepository;
+	private PedidoUseCase pedidoUseCase;
 	
 	public void efetuarPagamento(Long pedidoId, TipoPagamento tipoPagamento) {
 //		Long id = tipoPagamento.getId();

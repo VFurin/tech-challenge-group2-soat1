@@ -9,10 +9,9 @@ import org.springframework.stereotype.Repository;
 import com.techchallenge.core.domain.Pedido;
 import com.techchallenge.core.domain.StatusPedido;
 
-//@Repository
-public interface PedidoRepository { // extends JpaRepository<Pedido, Long> {
+@Repository
+public interface PedidoRepository extends JpaRepository<Pedido, Long> {
 
     List<Pedido> findByStatus(StatusPedido statusPedido);
     Optional<Pedido> findByIdAndStatus(Long id, StatusPedido statusPedido);
-
 }

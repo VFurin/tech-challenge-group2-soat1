@@ -9,8 +9,8 @@ import org.springframework.stereotype.Repository;
 import com.techchallenge.drivers.db.entities.ProdutoEntity;
 
 
-@Repository
-public interface ProdutoRepository extends JpaRepository<ProdutoEntity, Long> {
+// @Repository
+public interface ProdutoRepository { //extends JpaRepository<ProdutoEntity, Long> {
 
     @SuppressWarnings("unchecked")
 	ProdutoEntity save(ProdutoEntity produto);

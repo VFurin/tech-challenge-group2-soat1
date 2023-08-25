@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import com.techchallenge.core.domain.Produto;
 
-//@Repository
-public interface ProdutoRepository { //extends JpaRepository<Produto, Long> {
+@Repository
+public interface ProdutoRepository extends JpaRepository<Produto, Long> {
 
     @SuppressWarnings("unchecked")
 	Produto save(Produto produto);

@@ -5,23 +5,20 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.stereotype.Component;
 
+import com.techchallenge.adapter.gateways.CategoriaGateway;
 import com.techchallenge.adapter.gateways.ProdutoGateway;
 import com.techchallenge.core.domain.entities.Produto;
-import com.techchallenge.core.domain.exception.EntidadeEmUsoException;
-import com.techchallenge.drivers.db.repositories.CategoriaRepository;
 import com.techchallenge.drivers.db.repositories.ProdutoRepository;
 
-@Component
+//@Component
 public class ProdutoGatewayImpl implements ProdutoGateway {
 
     @Autowired
     private ProdutoRepository repository;
 
     @Autowired
-    private CategoriaRepository categoriaRepository;
+    private CategoriaGateway categoriaGateway;
     
     private static final String MSG_PRODUTO_EM_USO = "Produto em uso com o id %d";
     private static final String MSG_PRODUTO_NAO_EXISTE = "Não existe um cadastro de produto com código %d";
@@ -52,12 +49,12 @@ public class ProdutoGatewayImpl implements ProdutoGateway {
 
     @Transactional
     public void excluir(Long produtoId) {
-    	try {
-    		repository.deleteById(produtoId);
-    		repository.flush();
-		} catch (DataIntegrityViolationException e) {
-			throw new EntidadeEmUsoException(String.format(MSG_PRODUTO_EM_USO, produtoId));
-		}
+//    	try {
+//    		repository.deleteById(produtoId);
+//    		repository.flush();
+//		} catch (DataIntegrityViolationException e) {
+//			throw new EntidadeEmUsoException(String.format(MSG_PRODUTO_EM_USO, produtoId));
+//		}
     }
     
     public List<Produto> buscarTodos() {

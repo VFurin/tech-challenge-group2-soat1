@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.techchallenge.core.domain.Produto;
+
 @Entity(name = "Categoria")
 public class CategoriaEntity {
 
@@ -19,7 +21,7 @@ public class CategoriaEntity {
     @Column(nullable = false)
     private String nome;
 	@OneToMany(mappedBy = "categoria")
-	private List<ProdutoEntity> produtos = new ArrayList<>();
+	private List<Produto> produtos = new ArrayList<>();
 
     public Long getId() {
         return id;

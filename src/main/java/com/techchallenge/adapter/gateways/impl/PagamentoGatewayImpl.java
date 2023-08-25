@@ -10,7 +10,7 @@ import com.techchallenge.adapter.gateways.PedidoGateway;
 import com.techchallenge.core.domain.entities.TipoPagamento;
 import com.techchallenge.drivers.db.repositories.TipoPagamentoRepository;
 
-@Component
+//@Component
 public class PagamentoGatewayImpl implements PagamentoGateway {
 	
 	@Autowired

@@ -10,7 +10,7 @@ import com.techchallenge.drivers.db.repositories.ItemPedidoRepository;
 import com.techchallenge.drivers.db.repositories.PedidoRepository;
 import com.techchallenge.drivers.db.repositories.ProdutoRepository;
 
-@Component
+//@Component
 public class ItemPedidoGatewayImpl implements ItemPedidoGateway {
 
 	private static final String MSG_ITEM_NAO_ENCONTRADO = "Item não encontrado no pedido com o id %d e produto com o id %d";

@@ -9,7 +9,7 @@ import com.techchallenge.adapter.gateways.PedidoGateway;
 import com.techchallenge.core.domain.entities.Pedido;
 import com.techchallenge.core.domain.entities.StatusPedido;
 
-@Service
+//@Service
 public class PedidoUseCase {
 
 	private static final String MSG_PEDIDO_EM_USO = "Pedido em uso com o id %d";
@@ -17,10 +17,11 @@ public class PedidoUseCase {
 	private static final String MSG_PEDIDO_STATUS_NAO_ENCONTRADO = "Não existe pedido com o id %d e com o status %s";
 
 	@Autowired
-    private PedidoGateway repository;
+    private PedidoGateway gateway;
     
     public List<Pedido> buscarPedidos() {
-        return repository.buscarPedidos();
+//        return repository.buscarPedidos();
+    	return null;
     }
 
     public Pedido buscarPedidoPorId(Long id) {

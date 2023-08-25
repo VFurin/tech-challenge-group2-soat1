@@ -2,22 +2,26 @@ package com.techchallenge.adapter.driver;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.techchallenge.adapter.driver.model.PedidoModel;
 import com.techchallenge.adapter.driver.model.input.PedidoInput;
 import com.techchallenge.adapter.mapper.PedidoMapper;
 import com.techchallenge.core.applications.service.FakeCheckoutService;
+import com.techchallenge.core.domain.Pedido;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
-//@Api(tags = "Checkout")
-//@RestController
-//@RequestMapping(value = "/checkout", produces = MediaType.APPLICATION_JSON_VALUE)
+@Api(tags = "Checkout")
+@RestController
+@RequestMapping(value = "/checkout", produces = MediaType.APPLICATION_JSON_VALUE)
 public class FakeCheckoutController {
 	
     @Autowired
@@ -34,10 +38,9 @@ public class FakeCheckoutController {
 			})
 	@PostMapping
 	@ResponseStatus(HttpStatus.OK)
-	public PedidoModel checkout(@RequestBody PedidoInput pedidoInput) {
+	public String checkout(@RequestBody PedidoInput pedidoInput) {
 		
-//		Pedido pedido = pedidoMapper.toDomainObject(pedidoInput);
-//		return pedidoMapper.toModel(service.checkout(pedido));
-		return null;
+		Pedido pedido = pedidoMapper.toDomainObject(pedidoInput);
+		return pedidoMapper.toModel(service.checkout(pedido)).getId().toString();
 	}
 }

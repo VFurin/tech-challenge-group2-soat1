@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: tech-challenge-group2-soat1-svc-lb
+spec:
+  selector:
+    app: tech-challenge-group2-soat1
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: LoadBalancer

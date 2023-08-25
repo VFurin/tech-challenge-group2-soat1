@@ -17,7 +17,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-//@Entity
+import com.techchallenge.drivers.db.entities.ClienteEntity;
+
+@Entity
 public class Pedido {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +35,10 @@ public class Pedido {
 	private StatusPedido status;
     @ManyToOne
     @JoinColumn(name = "cliente_id", nullable = true)
-	private Cliente cliente;
+	private ClienteEntity cliente;
+
+	@Enumerated(EnumType.STRING)
+	private StatusPagamento statusPagamento;
 
 	private OffsetDateTime dataSolicitacao;
 	private OffsetDateTime dataCancelamento;
@@ -79,11 +84,11 @@ public class Pedido {
 		this.status = status;
 	}
 
-	public Cliente getCliente() {
+	public ClienteEntity getCliente() {
 		return cliente;
 	}
 
-	public void setCliente(Cliente cliente) {
+	public void setCliente(ClienteEntity cliente) {
 		this.cliente = cliente;
 	}
 

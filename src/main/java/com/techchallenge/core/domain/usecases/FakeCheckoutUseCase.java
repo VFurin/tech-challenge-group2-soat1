@@ -1,25 +1,21 @@
 package com.techchallenge.core.domain.usecases;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-import com.techchallenge.adapter.gateways.ClienteGateway;
-import com.techchallenge.adapter.gateways.PedidoGateway;
-import com.techchallenge.adapter.gateways.ProdutoGateway;
 import com.techchallenge.core.domain.entities.Pedido;
 
-@Service
+//@Service
 public class FakeCheckoutUseCase {
 	
 	private static final String MSG_PRODUTO_NAO_ENCONTRADO = "Produto não encontrado com código %d";
 	private static final String MSG_CLIENTE_NAO_ENCONTRADO = "Cliente não encontrado com código %d";
 	
 	@Autowired
-	private PedidoGateway pedidoRepository;
+	private PedidoUseCase pedidoUseCase;
 	@Autowired
-	private ProdutoGateway produtoRepository;
+	private ProdutoUseCase produtoUseCase;
 	@Autowired
-	private ClienteGateway clienteRepository;
+	private ClienteUseCase clienteUseCase;
 	
 	public Pedido checkout(Pedido pedido) {
 		

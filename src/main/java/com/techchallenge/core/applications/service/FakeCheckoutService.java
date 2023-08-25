@@ -3,18 +3,19 @@ package com.techchallenge.core.applications.service;
 import java.time.OffsetDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.techchallenge.core.applications.ports.PedidoRepository;
+import com.techchallenge.core.applications.ports.ProdutoRepository;
+import com.techchallenge.core.domain.Pedido;
+import com.techchallenge.core.domain.Produto;
+import com.techchallenge.core.domain.StatusPedido;
 import com.techchallenge.core.domain.exception.NegocioException;
 import com.techchallenge.drivers.db.entities.ClienteEntity;
-import com.techchallenge.drivers.db.entities.PedidoEntity;
-import com.techchallenge.drivers.db.entities.ProdutoEntity;
-import com.techchallenge.drivers.db.entities.StatusPedidoEntity;
 import com.techchallenge.drivers.db.repositories.ClienteRepository;
-import com.techchallenge.drivers.db.repositories.PedidoRepository;
-import com.techchallenge.drivers.db.repositories.ProdutoRepository;
 
-//@Service
+@Service
 public class FakeCheckoutService {
 	
 	private static final String MSG_PRODUTO_NAO_ENCONTRADO = "Produto não encontrado com código %d";
@@ -28,23 +29,23 @@ public class FakeCheckoutService {
 	private ClienteRepository clienteRepository;
 
 	@Transactional
-	public PedidoEntity checkout(PedidoEntity pedido) {
+	public Pedido checkout(Pedido pedido) {
 		
 		this.validarItens(pedido);
 		this.validarCliente(pedido);
 		
 		pedido.setDataSolicitacao(OffsetDateTime.now());
-		pedido.setStatus(StatusPedidoEntity.RECEBIDO);
+		pedido.setStatus(StatusPedido.RECEBIDO);
 		pedido.calcularValor();
 		
 		return pedidoRepository.save(pedido);
 	}
 	
-	private void validarItens(PedidoEntity pedido) {
+	private void validarItens(Pedido pedido) {
 	    pedido.getItens().forEach(item -> {
 	    	Long produtoId = item.getProduto().getId();
 	    	
-	        ProdutoEntity produto = produtoRepository.findById(produtoId)
+	        Produto produto = produtoRepository.findById(produtoId)
 	        		.orElseThrow(() -> new NegocioException(String.format(MSG_PRODUTO_NAO_ENCONTRADO, produtoId)));
 	        
 	        item.setPedido(pedido);
@@ -53,7 +54,7 @@ public class FakeCheckoutService {
 	    });
 	}
 	
-	private void validarCliente(PedidoEntity pedido) {
+	private void validarCliente(Pedido pedido) {
 		Long clienteId = pedido.getCliente().getId();
 		
 		ClienteEntity cliente = clienteRepository.findById(clienteId)

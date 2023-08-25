@@ -1,14 +1,10 @@
 package com.techchallenge.core.domain.usecases;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-import com.techchallenge.adapter.gateways.ItemPedidoGateway;
-import com.techchallenge.adapter.gateways.PedidoGateway;
-import com.techchallenge.adapter.gateways.ProdutoGateway;
 import com.techchallenge.core.domain.entities.ItemPedido;
 
-@Service
+//@Service
 public class ItemPedidoUseCase {
 
 	private static final String MSG_ITEM_NAO_ENCONTRADO = "Item não encontrado no pedido com o id %d e produto com o id %d";
@@ -17,11 +13,11 @@ public class ItemPedidoUseCase {
 	private static final String MSG_PRODUTO_NAO_ENCONTRADO = "Produto com o id %d não encontrado";
 	
 	@Autowired
-    private PedidoGateway pedidoRepository;
+    private PedidoUseCase pedidoUseCase;
 	@Autowired
-    private ItemPedidoGateway itemPedidoRepository;
+    private ItemPedidoUseCase itemPedidoUseCase;
 	@Autowired
-    private ProdutoGateway produtoRepository;
+    private ProdutoUseCase produtoUseCase;
     
     public ItemPedido adicionarItemAoPedido(Long pedidoId, ItemPedido itemPedido) {
 //    	Long produtoId = itemPedido.getProduto().getId();

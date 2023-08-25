@@ -6,7 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity(name = "TipoPagamento")
+//@Entity(name = "TipoPagamento")
 public class TipoPagamentoEntity {
 
 	@Id

@@ -10,7 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-//@Entity
+import com.techchallenge.drivers.db.entities.CategoriaEntity;
+
+@Entity
 public class Produto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +21,7 @@ public class Produto {
     private String nome;
     @ManyToOne
     @JoinColumn(name = "categoria_id", nullable = false)
-    private Categoria categoria;
+    private CategoriaEntity categoria;
     @Column(nullable = false)
     private BigDecimal preco;
     @Column(nullable = false)
@@ -43,11 +45,11 @@ public class Produto {
         this.nome = nome;
     }
 
-    public Categoria getCategoria() {
+    public CategoriaEntity getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(Categoria categoria) {
+    public void setCategoria(CategoriaEntity categoria) {
         this.categoria = categoria;
     }
 
