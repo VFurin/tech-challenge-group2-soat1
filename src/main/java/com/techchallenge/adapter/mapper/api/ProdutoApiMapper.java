@@ -1,4 +1,4 @@
-package com.techchallenge.adapter.mapper;
+package com.techchallenge.adapter.mapper.api;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -9,11 +9,11 @@ import org.springframework.stereotype.Component;
 
 import com.techchallenge.adapter.driver.model.ProdutoModel;
 import com.techchallenge.adapter.driver.model.input.ProdutoInput;
-import com.techchallenge.core.domain.Produto;
-import com.techchallenge.drivers.db.entities.CategoriaEntity;
+import com.techchallenge.core.domain.entities.Categoria;
+import com.techchallenge.core.domain.entities.Produto;
 
 @Component
-public class ProdutoMapper {
+public class ProdutoApiMapper {
 
     @Autowired
     private ModelMapper mapper;
@@ -24,7 +24,7 @@ public class ProdutoMapper {
         // Não sei por qual motivo, mapper está associando o atributo categoriaId
         // para o id do produto. Por isso eu forcei o null.
         produto.setId(null);
-        produto.setCategoria(new CategoriaEntity());
+        produto.setCategoria(new Categoria());
         produto.getCategoria().setId(input.getCategoriaId());
         
         return produto;

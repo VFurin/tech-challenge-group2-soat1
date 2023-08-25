@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import com.techchallenge.adapter.driver.model.ClienteModel;
 import com.techchallenge.adapter.driver.model.input.ClienteAtualizacaoInput;
 import com.techchallenge.adapter.driver.model.input.ClienteInput;
-import com.techchallenge.adapter.mapper.ClienteMapper;
+import com.techchallenge.adapter.mapper.api.ClienteApiMapper;
 import com.techchallenge.core.domain.entities.Cliente;
 import com.techchallenge.core.domain.usecases.ClienteUseCase;
 
@@ -19,7 +19,7 @@ public class ClienteController {
 	private ClienteUseCase useCase;
 	
 	@Autowired
-	private ClienteMapper mapper;
+	private ClienteApiMapper mapper;
 	
 	public ClienteModel adicionar(ClienteInput input) {
 		Cliente cliente = mapper.toDomainObject(input);

@@ -3,84 +3,55 @@ package com.techchallenge.core.domain.usecases;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import com.techchallenge.adapter.gateways.CategoriaGateway;
 import com.techchallenge.adapter.gateways.ProdutoGateway;
+import com.techchallenge.core.domain.entities.Categoria;
 import com.techchallenge.core.domain.entities.Produto;
 
-//@Service
+@Service
 public class ProdutoUseCase {
 
 	@Autowired
     private ProdutoGateway gateway;
 
 	@Autowired
-    private CategoriaGateway categoriaGateway;
+    private CategoriaUseCase categoriaUseCase;
     
-    private static final String MSG_PRODUTO_EM_USO = "Produto em uso com o id %d";
-    private static final String MSG_PRODUTO_NAO_EXISTE = "Não existe um cadastro de produto com código %d";
-    private static final String MSG_CATEGORIA_NAO_EXISTE = "Não existe uma categoria com código %d";
     
     public Produto salvar(Produto produto) {
-//    	Long categoriaId = produto.getCategoria().getId();
-//    	
-//        Categoria categoria = categoriaRepository.findById(produto.getCategoria().getId())
-//        		.orElseThrow(() -> new EntidadeNaoEncontradaException(String.format(MSG_CATEGORIA_NAO_EXISTE, categoriaId)));
-//        
-//        Categoria detached = new Categoria();
-//        detached.setId(categoria.getId());
-//        detached.setNome(categoria.getNome());
-//        
-//        produto.setCategoria(detached);
-//        return repository.save(produto);
-    	return null;
+    	Long categoriaId = produto.getCategoria().getId();
+    	
+        Categoria categoria = categoriaUseCase.buscarPorId(categoriaId);
+        produto.setCategoria(categoria);
+        
+        return gateway.salvar(produto);
     }
 
     public Produto editar(Long produtoId) {
-//        return repository.findById(produtoId)
-//                .orElseThrow(() -> new EntidadeNaoEncontradaException(
-//                        String.format(MSG_PRODUTO_NAO_EXISTE, produtoId)));
-    	
-    	return null;
+    	return gateway.editar(produtoId);
     }
 
     public void excluir(Long produtoId) {
-//    	try {
-//    		repository.deleteById(produtoId);
-//    		repository.flush();
-//		} catch (DataIntegrityViolationException e) {
-//			throw new EntidadeEmUsoException(String.format(MSG_PRODUTO_EM_USO, produtoId));
-//		}
+    	gateway.excluir(produtoId);
     }
     
     public List<Produto> buscarTodos() {
-//    	return repository.findAll();
-    	return null;
+    	return gateway.buscarTodos();
     }
 
     public List<Produto> buscarPorCategoria(String produtoCategoria) {
-//      return repository.findByCategoriaNome(produtoCategoria);
-    	return null;
+    	return gateway.buscarPorCategoria(produtoCategoria);
     }
     
     public List<Produto> buscarPorCategoria(Long categoriaId) {
-//    	return repository.findByCategoriaId(categoriaId);
-    	return null;
+    	return gateway.buscarPorCategoria(categoriaId);
     }
     
     public void atualizar(Long id, Produto produto) {
-//        Produto produtoEntity = repository.findById(id)
-//                .orElseThrow(() -> new EntidadeNaoEncontradaException(String.format(MSG_PRODUTO_NAO_EXISTE, id)));
-//        
-//    	Long categoriaId = produto.getCategoria().getId();
-//    	
-//        Categoria categoria = categoriaRepository.findById(produto.getCategoria().getId())
-//        		.orElseThrow(() -> new EntidadeNaoEncontradaException(String.format(MSG_CATEGORIA_NAO_EXISTE, categoriaId)));
-//        
-//        produto.setCategoria(categoria);
-//        produtoEntity.setDescricao(produto.getDescricao());
-//        produtoEntity.setImagem(produto.getImagem());
-//        produtoEntity.setNome(produto.getNome());
-//        produtoEntity.setPreco(produto.getPreco());
+        Categoria categoria = categoriaUseCase.buscarPorId(produto.getCategoria().getId());
+        produto.setCategoria(categoria);
+        
+    	gateway.atualizar(id, produto);
     }
 }

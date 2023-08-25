@@ -7,13 +7,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.techchallenge.core.applications.ports.PedidoRepository;
-import com.techchallenge.core.applications.ports.ProdutoRepository;
 import com.techchallenge.core.domain.Pedido;
-import com.techchallenge.core.domain.Produto;
 import com.techchallenge.core.domain.StatusPedido;
 import com.techchallenge.core.domain.exception.NegocioException;
 import com.techchallenge.drivers.db.entities.ClienteEntity;
+import com.techchallenge.drivers.db.entities.ProdutoEntity;
 import com.techchallenge.drivers.db.repositories.ClienteRepository;
+import com.techchallenge.drivers.db.repositories.ProdutoRepository;
 
 @Service
 public class FakeCheckoutService {
@@ -45,7 +45,7 @@ public class FakeCheckoutService {
 	    pedido.getItens().forEach(item -> {
 	    	Long produtoId = item.getProduto().getId();
 	    	
-	        Produto produto = produtoRepository.findById(produtoId)
+	        ProdutoEntity produto = produtoRepository.findById(produtoId)
 	        		.orElseThrow(() -> new NegocioException(String.format(MSG_PRODUTO_NAO_ENCONTRADO, produtoId)));
 	        
 	        item.setPedido(pedido);

@@ -1,7 +1,6 @@
-package com.techchallenge.adapter.driver;
+package com.techchallenge.drivers.apis;
 
 import java.util.Collection;
-import java.util.List;
 
 import javax.validation.Valid;
 
@@ -18,12 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.techchallenge.adapter.controllers.ProdutoController;
 import com.techchallenge.adapter.driver.exceptionhandler.Problem;
 import com.techchallenge.adapter.driver.model.ProdutoModel;
 import com.techchallenge.adapter.driver.model.input.ProdutoInput;
-import com.techchallenge.adapter.mapper.ProdutoMapper;
-import com.techchallenge.core.applications.service.ProdutoService;
-import com.techchallenge.core.domain.Produto;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -33,13 +30,10 @@ import io.swagger.annotations.ApiResponses;
 @Api(tags = "Produtos")
 @RestController
 @RequestMapping(value = "/produtos", produces = MediaType.APPLICATION_JSON_VALUE)
-public class ProdutoController {
+public class ProdutoRestController {
 
     @Autowired
-    private ProdutoService service;
-
-    @Autowired
-    private ProdutoMapper mapper;
+    private ProdutoController controller;
 
 	@ApiOperation("Listar produtos cadastrados na plataforma")
 	@ApiResponses({ 
@@ -47,8 +41,7 @@ public class ProdutoController {
 			})
     @GetMapping
     public Collection<ProdutoModel> listar() {
-        List<Produto> todosProdutos = service.buscarTodos();
-        return mapper.toCollectionModel(todosProdutos);
+        return controller.listar();
     }
 
 	@ApiOperation("Listar produtos filtrando por nome de categoria")
@@ -58,8 +51,7 @@ public class ProdutoController {
     // Evitar ambiguidade do resource path
     @GetMapping(value="/categorias/nome/{categoriaNome}")
     public Collection<ProdutoModel> listarPorCategoria(@PathVariable String categoriaNome) {
-        List<Produto> produto = service.buscarPorCategoria(categoriaNome);
-        return mapper.toCollectionModel(produto);
+        return controller.listarPorCategoria(categoriaNome);
     }
     
 	@ApiOperation("Listar produtos filtrando por código de categoria")
@@ -69,8 +61,7 @@ public class ProdutoController {
     // Evitar ambiguidade do resource path
     @GetMapping(value="/categorias/codigo/{categoriaId}")
     public Collection<ProdutoModel> listarPorCategoria(@PathVariable Long categoriaId) {
-        List<Produto> produto = service.buscarPorCategoria(categoriaId);
-        return mapper.toCollectionModel(produto);
+        return controller.listarPorCategoria(categoriaId);
     }
     
 	@ApiOperation("Inclui um produto na plataforma")
@@ -81,10 +72,7 @@ public class ProdutoController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public ProdutoModel adicionar(@RequestBody @Valid ProdutoInput input) {
-		Produto produto = mapper.toDomainObject(input);
-		produto = service.salvar(produto);
-
-		return mapper.toModel(produto);
+		return controller.adicionar(input);
 	}
 	
 	@ApiOperation("Exclui um produto na plataforma")
@@ -96,7 +84,7 @@ public class ProdutoController {
 	@DeleteMapping(value="/{produtoId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void remover(@PathVariable Long produtoId) {
-		this.service.excluir(produtoId);
+		this.controller.remover(produtoId);
 	}
 	
 	@ApiOperation("Atualiza um produto na plataforma")
@@ -107,7 +95,6 @@ public class ProdutoController {
 	@PutMapping(value="/{produtoId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void atualizar(@PathVariable Long produtoId, @RequestBody @Valid ProdutoInput input) {
-		Produto produto = mapper.toDomainObject(input);
-		service.atualizar(produtoId, produto);
+		controller.atualizar(produtoId, input);
 	}
 }

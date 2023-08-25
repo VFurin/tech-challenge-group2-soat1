@@ -16,6 +16,10 @@ public class CategoriaBusinessMapper {
 
     @Autowired
     private ModelMapper mapper;
+    
+	public Categoria toModel(CategoriaEntity categoria) {
+		return mapper.map(categoria, Categoria.class);
+	}
 
     public List<Categoria> toCollectionModel(Collection<CategoriaEntity> entities) {
         return entities.stream()

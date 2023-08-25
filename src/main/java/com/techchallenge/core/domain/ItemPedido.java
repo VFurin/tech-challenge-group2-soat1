@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.techchallenge.drivers.db.entities.ProdutoEntity;
+
 @Entity
 public class ItemPedido {
 
@@ -26,7 +28,7 @@ public class ItemPedido {
 
     @ManyToOne
     @JoinColumn(name="produto_id", nullable = false)
-    private Produto produto;
+    private ProdutoEntity produto;
     
     public void calcularPrecoTotal() {
         BigDecimal precoUnitario = this.produto.getPreco();
@@ -67,11 +69,11 @@ public class ItemPedido {
 		this.pedido = pedido;
 	}
 
-	public Produto getProduto() {
+	public ProdutoEntity getProduto() {
 		return produto;
 	}
 
-	public void setProduto(Produto produto) {
+	public void setProduto(ProdutoEntity produto) {
 		this.produto = produto;
 	}
 

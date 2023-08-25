@@ -8,13 +8,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.techchallenge.core.applications.ports.ItemPedidoRepository;
 import com.techchallenge.core.applications.ports.PedidoRepository;
-import com.techchallenge.core.applications.ports.ProdutoRepository;
 import com.techchallenge.core.domain.ItemPedido;
 import com.techchallenge.core.domain.Pedido;
-import com.techchallenge.core.domain.Produto;
 import com.techchallenge.core.domain.StatusPedido;
 import com.techchallenge.core.domain.exception.EntidadeNaoEncontradaException;
 import com.techchallenge.core.domain.exception.NegocioException;
+import com.techchallenge.drivers.db.entities.ProdutoEntity;
+import com.techchallenge.drivers.db.repositories.ProdutoRepository;
 
 @Service
 public class ItemPedidoService {
@@ -40,7 +40,7 @@ public class ItemPedidoService {
     	Pedido pedido = pedidoRepository.findByIdAndStatus(pedidoId, StatusPedido.RECEBIDO)
     			.orElseThrow(() -> new NegocioException(String.format(MSG_PEDIDO_NAO_ENCONTRADO, pedidoId)));
     	
-    	Produto produto = produtoRepository.findById(itemPedido.getProduto().getId())
+    	ProdutoEntity produto = produtoRepository.findById(itemPedido.getProduto().getId())
     			.orElseThrow(() -> new NegocioException(String.format(MSG_PRODUTO_NAO_ENCONTRADO, produtoId)));
     	
     	List<ItemPedido> itens = itemPedidoRepository.findByPedidoAndProduto(pedidoId, produtoId);
