@@ -3,6 +3,8 @@ kind: Deployment
 metadata:
   name: tech-challenge-group2-db-deployment
 spec:
+  strategy:
+    type: Recreate
   template:
     metadata:
       name: tech-challenge-group2-db
@@ -17,6 +19,13 @@ spec:
           envFrom:
             - configMapRef:
                 name: tech-challenge-group2-db-configmap
+          volumeMounts:
+            - name: tech-challenge-group2-db-volume
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: tech-challenge-group2-db-volume
+          persistentVolumeClaim:
+            claimName: tech-challenge-group2-db-pvc
   selector:
     matchLabels:
       app: tech-challenge-group2-db
