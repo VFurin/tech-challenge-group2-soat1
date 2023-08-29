@@ -6,16 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.techchallenge.core.applications.ports.TipoPagamentoRepository;
-import com.techchallenge.core.domain.Pedido;
-import com.techchallenge.core.domain.StatusPedido;
 import com.techchallenge.core.domain.TipoPagamento;
+import com.techchallenge.core.domain.entities.Pedido;
+import com.techchallenge.core.domain.entities.StatusPedido;
 import com.techchallenge.core.domain.exception.EntidadeNaoEncontradaException;
+import com.techchallenge.core.domain.usecases.PedidoUseCase;
 
 @Service
 public class PagamentoService {
 	
 	@Autowired
-	private PedidoService pedidoService;
+	private PedidoUseCase pedidoService;
 	@Autowired
 	private TipoPagamentoRepository tipoPagamentoRepository;
 	
@@ -27,7 +28,7 @@ public class PagamentoService {
                 String.format("Não existe um cadastro de tipo de pagamento com código %d", id)));
 		
 		pedido.setStatus(StatusPedido.PREPARACAO);
-		pedido.setTipoPagamento(tipoPagamento);
+//		pedido.setTipoPagamento(tipoPagamento);
 		
 		pedidoService.atualizar(pedido);
 	}

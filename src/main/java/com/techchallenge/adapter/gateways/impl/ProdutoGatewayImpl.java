@@ -30,6 +30,7 @@ public class ProdutoGatewayImpl implements ProdutoGateway {
     
     private static final String MSG_PRODUTO_EM_USO = "Produto em uso com o id %d";
     private static final String MSG_PRODUTO_NAO_EXISTE = "Não existe um cadastro de produto com código %d";
+    private static final String MSG_PRODUTO_NAO_ENCONTRADO = "Produto com o id %d não encontrado";
 
     @Transactional
     public Produto salvar(Produto produto) {
@@ -79,4 +80,12 @@ public class ProdutoGatewayImpl implements ProdutoGateway {
         entity.setNome(produto.getNome());
         entity.setPreco(produto.getPreco());
     }
+
+	@Override
+	public Produto buscarPorId(Long produtoId) {
+		ProdutoEntity entity = repository.findById(produtoId)
+				.orElseThrow(() -> new EntidadeNaoEncontradaException(String.format(MSG_PRODUTO_NAO_ENCONTRADO, produtoId)));
+		
+		return businessMapper.toModel(entity);
+	}
 }

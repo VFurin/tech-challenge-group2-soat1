@@ -3,7 +3,6 @@ package com.techchallenge.drivers.db.entities;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.List;
-import java.util.Optional;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -17,7 +16,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-//@Entity(name = "Pedido")
+import com.techchallenge.core.domain.TipoPagamento;
+import com.techchallenge.core.domain.entities.StatusPedido;
+
+@Entity(name = "Pedido")
 public class PedidoEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,9 +30,9 @@ public class PedidoEntity {
 	private BigDecimal valor;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="tipo_pagamento_id", nullable = true)
-	private TipoPagamentoEntity tipoPagamento;
+	private TipoPagamento tipoPagamento;
 	@Enumerated(EnumType.STRING)
-	private StatusPedidoEntity status;
+	private StatusPedido status;
     @ManyToOne
     @JoinColumn(name = "cliente_id", nullable = true)
 	private ClienteEntity cliente;
@@ -39,14 +41,6 @@ public class PedidoEntity {
 	private OffsetDateTime dataCancelamento;
 	private OffsetDateTime dataFinalizacao;
 	
-    public void calcularValor() {
-    	Optional<BigDecimal> valorTotal = itens.stream()
-    			.map((ItemPedidoEntity i) -> i.getPrecoTotal())
-    			.reduce((BigDecimal p1, BigDecimal p2) -> p1.add(p2));
-    	
-    	this.setValor(valorTotal.orElse(BigDecimal.ZERO));
-    }
-
 	public List<ItemPedidoEntity> getItens() {
 		return itens;
 	}
@@ -63,19 +57,19 @@ public class PedidoEntity {
 		this.valor = valor;
 	}
 
-	public TipoPagamentoEntity getTipoPagamento() {
+	public TipoPagamento getTipoPagamento() {
 		return tipoPagamento;
 	}
 
-	public void setTipoPagamento(TipoPagamentoEntity tipoPagamento) {
+	public void setTipoPagamento(TipoPagamento tipoPagamento) {
 		this.tipoPagamento = tipoPagamento;
 	}
 
-	public StatusPedidoEntity getStatus() {
+	public StatusPedido getStatus() {
 		return status;
 	}
 
-	public void setStatus(StatusPedidoEntity status) {
+	public void setStatus(StatusPedido status) {
 		this.status = status;
 	}
 

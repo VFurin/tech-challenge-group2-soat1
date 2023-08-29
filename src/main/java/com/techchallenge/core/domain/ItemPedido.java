@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne;
 
 import com.techchallenge.drivers.db.entities.ProdutoEntity;
 
-@Entity
+//@Entity
 public class ItemPedido {
 
     @Id

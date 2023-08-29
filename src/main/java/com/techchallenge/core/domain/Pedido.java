@@ -18,15 +18,16 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.techchallenge.drivers.db.entities.ClienteEntity;
+import com.techchallenge.drivers.db.entities.ItemPedidoEntity;
 
-@Entity
+//@Entity
 public class Pedido {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
-	private List<ItemPedido> itens;
+	private List<ItemPedidoEntity> itens;
 	private BigDecimal valor;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="tipo_pagamento_id", nullable = true)
@@ -46,17 +47,17 @@ public class Pedido {
 	
     public void calcularValor() {
     	Optional<BigDecimal> valorTotal = itens.stream()
-    			.map((ItemPedido i) -> i.getPrecoTotal())
+    			.map((ItemPedidoEntity i) -> i.getPrecoTotal())
     			.reduce((BigDecimal p1, BigDecimal p2) -> p1.add(p2));
     	
     	this.setValor(valorTotal.orElse(BigDecimal.ZERO));
     }
 
-	public List<ItemPedido> getItens() {
+	public List<ItemPedidoEntity> getItens() {
 		return itens;
 	}
 
-	public void setItens(List<ItemPedido> itens) {
+	public void setItens(List<ItemPedidoEntity> itens) {
 		this.itens = itens;
 	}
 

@@ -23,6 +23,10 @@ public class ClienteUseCase {
     		throw e;
     	}
     }
+    
+    public Cliente buscarPorId(Long id) {
+    	return gateway.buscarPorId(id);
+    }
 
     public List<Cliente> buscarPorCpf(Long cpf) {
         return gateway.buscarPorCpf(cpf);

@@ -17,44 +17,44 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import com.techchallenge.TestConfig;
-import com.techchallenge.core.applications.service.PedidoService;
-import com.techchallenge.core.domain.ItemPedido;
-import com.techchallenge.core.domain.Pedido;
-import com.techchallenge.core.domain.StatusPedido;
+import com.techchallenge.adapter.gateways.PedidoGateway;
 import com.techchallenge.core.domain.TipoPagamento;
-import com.techchallenge.drivers.db.entities.CategoriaEntity;
-import com.techchallenge.drivers.db.entities.ClienteEntity;
-import com.techchallenge.drivers.db.entities.ProdutoEntity;
+import com.techchallenge.core.domain.entities.Categoria;
+import com.techchallenge.core.domain.entities.Cliente;
+import com.techchallenge.core.domain.entities.ItemPedido;
+import com.techchallenge.core.domain.entities.Pedido;
+import com.techchallenge.core.domain.entities.Produto;
+import com.techchallenge.core.domain.entities.StatusPedido;
 
 @SpringBootTest
 @ContextConfiguration(classes = {TestConfig.class}, loader = AnnotationConfigContextLoader.class)
 public class PedidoServiceTest {
 
     @MockBean
-    private PedidoService service;
+    private PedidoGateway service;
 
     @Test
     void dadoUmaListaDePedidosQuandoBuscarPedidosEntaoRetornaPedidos() {
-    	ClienteEntity clienteMock = new ClienteEntity();
+    	Cliente clienteMock = new Cliente();
         clienteMock.setNome("Teste");
         clienteMock.setEmail("teste@teste.com");
         clienteMock.setCpf(123456789L);
 
-        CategoriaEntity categoriaMock = new CategoriaEntity();
+        Categoria categoriaMock = new Categoria();
         categoriaMock.setNome("Categoria");
         categoriaMock.setId(123L);
 
-        ProdutoEntity ProdutoEntityMock = new ProdutoEntity();
-        ProdutoEntityMock.setNome("ProdutoEntity");
-        ProdutoEntityMock.setCategoria(categoriaMock);
-        ProdutoEntityMock.setId(123456L);
-        ProdutoEntityMock.setPreco(BigDecimal.valueOf(10));
-        ProdutoEntityMock.setDescricao("Descricao");
-        ProdutoEntityMock.setImagem("Imagem");
+        Produto ProdutoMock = new Produto();
+        ProdutoMock.setNome("Produto");
+        ProdutoMock.setCategoria(categoriaMock);
+        ProdutoMock.setId(123456L);
+        ProdutoMock.setPreco(BigDecimal.valueOf(10));
+        ProdutoMock.setDescricao("Descricao");
+        ProdutoMock.setImagem("Imagem");
 
         ItemPedido itemPedidoMock = new ItemPedido();
         itemPedidoMock.setPedido(new Pedido());
-        itemPedidoMock.setProduto(ProdutoEntityMock);
+        itemPedidoMock.setProduto(ProdutoMock);
         itemPedidoMock.setQuantidade(1);
         itemPedidoMock.setPrecoTotal(BigDecimal.valueOf(10));
 
@@ -70,7 +70,7 @@ public class PedidoServiceTest {
         pedidoMock.setStatus(StatusPedido.PREPARACAO);
         pedidoMock.setDataFinalizacao(OffsetDateTime.now().plusHours(1));
         pedidoMock.setDataSolicitacao(OffsetDateTime.now());
-        pedidoMock.setTipoPagamento(tipoPagamento);
+//        pedidoMock.setTipoPagamento(tipoPagamento);
         pedidoMock.setValor(BigDecimal.valueOf(10));
 
 
@@ -99,26 +99,26 @@ public class PedidoServiceTest {
 
     @Test
     void dadoUmaListaDePedidosQuandoBuscarPedidoPorIdEntaoRetornaPedido() {
-        ClienteEntity clienteMock1 = new ClienteEntity();
+        Cliente clienteMock1 = new Cliente();
         clienteMock1.setNome("Teste");
         clienteMock1.setEmail("teste@teste.com");
         clienteMock1.setCpf(123456789L);
 
-        CategoriaEntity categoriaMock1 = new CategoriaEntity();
+        Categoria categoriaMock1 = new Categoria();
         categoriaMock1.setNome("Categoria");
         categoriaMock1.setId(123L);
 
-        ProdutoEntity ProdutoEntityMock1 = new ProdutoEntity();
-        ProdutoEntityMock1.setNome("ProdutoEntity");
-        ProdutoEntityMock1.setCategoria(categoriaMock1);
-        ProdutoEntityMock1.setId(123456L);
-        ProdutoEntityMock1.setPreco(BigDecimal.valueOf(10));
-        ProdutoEntityMock1.setDescricao("Descricao");
-        ProdutoEntityMock1.setImagem("Imagem");
+        Produto ProdutoMock1 = new Produto();
+        ProdutoMock1.setNome("Produto");
+        ProdutoMock1.setCategoria(categoriaMock1);
+        ProdutoMock1.setId(123456L);
+        ProdutoMock1.setPreco(BigDecimal.valueOf(10));
+        ProdutoMock1.setDescricao("Descricao");
+        ProdutoMock1.setImagem("Imagem");
 
         ItemPedido itemPedidoMock1 = new ItemPedido();
         itemPedidoMock1.setPedido(new Pedido());
-        itemPedidoMock1.setProduto(ProdutoEntityMock1);
+        itemPedidoMock1.setProduto(ProdutoMock1);
         itemPedidoMock1.setQuantidade(1);
         itemPedidoMock1.setPrecoTotal(BigDecimal.valueOf(10));
 
@@ -134,29 +134,29 @@ public class PedidoServiceTest {
         pedidoMock1.setStatus(StatusPedido.PREPARACAO);
         pedidoMock1.setDataFinalizacao(OffsetDateTime.now().plusHours(1));
         pedidoMock1.setDataSolicitacao(OffsetDateTime.now());
-        pedidoMock1.setTipoPagamento(tipoPagamento);
+//        pedidoMock1.setTipoPagamento(tipoPagamento);
         pedidoMock1.setValor(BigDecimal.valueOf(10));
 
-        ClienteEntity clienteMock2 = new ClienteEntity();
+        Cliente clienteMock2 = new Cliente();
         clienteMock2.setNome("Teste");
         clienteMock2.setEmail("teste@teste.com");
         clienteMock2.setCpf(3332123L);
 
-        CategoriaEntity categoriaMock2 = new CategoriaEntity();
+        Categoria categoriaMock2 = new Categoria();
         categoriaMock2.setNome("Categoria");
         categoriaMock2.setId(123L);
 
-        ProdutoEntity ProdutoEntityMock2 = new ProdutoEntity();
-        ProdutoEntityMock2.setNome("ProdutoEntity");
-        ProdutoEntityMock2.setCategoria(categoriaMock2);
-        ProdutoEntityMock2.setId(222L);
-        ProdutoEntityMock2.setPreco(BigDecimal.valueOf(30));
-        ProdutoEntityMock2.setDescricao("Descricao");
-        ProdutoEntityMock2.setImagem("Imagem");
+        Produto ProdutoMock2 = new Produto();
+        ProdutoMock2.setNome("Produto");
+        ProdutoMock2.setCategoria(categoriaMock2);
+        ProdutoMock2.setId(222L);
+        ProdutoMock2.setPreco(BigDecimal.valueOf(30));
+        ProdutoMock2.setDescricao("Descricao");
+        ProdutoMock2.setImagem("Imagem");
 
         ItemPedido itemPedidoMock2 = new ItemPedido();
         itemPedidoMock2.setPedido(new Pedido());
-        itemPedidoMock2.setProduto(ProdutoEntityMock2);
+        itemPedidoMock2.setProduto(ProdutoMock2);
         itemPedidoMock2.setQuantidade(2);
         itemPedidoMock2.setPrecoTotal(BigDecimal.valueOf(20));
 
@@ -169,7 +169,7 @@ public class PedidoServiceTest {
         pedidoMock2.setStatus(StatusPedido.PREPARACAO);
         pedidoMock2.setDataFinalizacao(OffsetDateTime.now().plusHours(1));
         pedidoMock2.setDataSolicitacao(OffsetDateTime.now());
-        pedidoMock2.setTipoPagamento(tipoPagamento);
+//        pedidoMock2.setTipoPagamento(tipoPagamento);
         pedidoMock2.setValor(BigDecimal.valueOf(10));
 
         List<Pedido> pedidosMock = new ArrayList<>();
@@ -202,26 +202,26 @@ public class PedidoServiceTest {
     void dadoUmaListaDePedidosQuandoBuscarPedidosPorStatusEntaoRetornaPedidos() {
         StatusPedido statusPedido = StatusPedido.PREPARACAO;
 
-        ClienteEntity clienteMock = new ClienteEntity();
+        Cliente clienteMock = new Cliente();
         clienteMock.setNome("Teste");
         clienteMock.setEmail("teste@teste.com");
         clienteMock.setCpf(123456789L);
 
-        CategoriaEntity categoriaMock = new CategoriaEntity();
+        Categoria categoriaMock = new Categoria();
         categoriaMock.setNome("Categoria");
         categoriaMock.setId(123L);
 
-        ProdutoEntity ProdutoEntityMock = new ProdutoEntity();
-        ProdutoEntityMock.setNome("ProdutoEntity");
-        ProdutoEntityMock.setCategoria(categoriaMock);
-        ProdutoEntityMock.setId(123456L);
-        ProdutoEntityMock.setPreco(BigDecimal.valueOf(10));
-        ProdutoEntityMock.setDescricao("Descricao");
-        ProdutoEntityMock.setImagem("Imagem");
+        Produto ProdutoMock = new Produto();
+        ProdutoMock.setNome("Produto");
+        ProdutoMock.setCategoria(categoriaMock);
+        ProdutoMock.setId(123456L);
+        ProdutoMock.setPreco(BigDecimal.valueOf(10));
+        ProdutoMock.setDescricao("Descricao");
+        ProdutoMock.setImagem("Imagem");
 
         ItemPedido itemPedidoMock = new ItemPedido();
         itemPedidoMock.setPedido(new Pedido());
-        itemPedidoMock.setProduto(ProdutoEntityMock);
+        itemPedidoMock.setProduto(ProdutoMock);
         itemPedidoMock.setQuantidade(1);
         itemPedidoMock.setPrecoTotal(BigDecimal.valueOf(10));
 
@@ -237,7 +237,7 @@ public class PedidoServiceTest {
         pedidoMock.setStatus(StatusPedido.PREPARACAO);
         pedidoMock.setDataFinalizacao(OffsetDateTime.now().plusHours(1));
         pedidoMock.setDataSolicitacao(OffsetDateTime.now());
-        pedidoMock.setTipoPagamento(tipoPagamento);
+//        pedidoMock.setTipoPagamento(tipoPagamento);
         pedidoMock.setValor(BigDecimal.valueOf(10));
 
 

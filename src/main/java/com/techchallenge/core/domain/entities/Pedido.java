@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class Pedido {
+	private Long id;
 	private List<ItemPedido> itens;
 	private BigDecimal valor;
 	private TipoPagamento tipoPagamento;
@@ -86,5 +87,13 @@ public class Pedido {
 
 	public void setDataFinalizacao(OffsetDateTime dataFinalizacao) {
 		this.dataFinalizacao = dataFinalizacao;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 }
