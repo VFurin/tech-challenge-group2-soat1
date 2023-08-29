@@ -1,4 +1,4 @@
-package com.techchallenge.core.domain;
+package com.techchallenge.core.domain.entities;
 
 public enum StatusPagamento {
     APROVADO,

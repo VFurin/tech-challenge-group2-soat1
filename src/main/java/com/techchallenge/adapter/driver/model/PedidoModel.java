@@ -1,12 +1,12 @@
 package com.techchallenge.adapter.driver.model;
 
-import com.techchallenge.core.domain.StatusPagamento;
-import com.techchallenge.core.domain.StatusPedido;
-import com.techchallenge.core.domain.TipoPagamento;
-
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.List;
+
+import com.techchallenge.core.domain.entities.StatusPagamento;
+import com.techchallenge.core.domain.entities.StatusPedido;
+import com.techchallenge.core.domain.entities.TipoPagamento;
 
 public class PedidoModel {
 	private Long id;

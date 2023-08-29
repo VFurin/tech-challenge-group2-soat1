@@ -10,9 +10,9 @@ import org.springframework.stereotype.Component;
 
 import com.techchallenge.adapter.driver.model.PedidoModel;
 import com.techchallenge.adapter.driver.model.input.PedidoInput;
-import com.techchallenge.core.domain.StatusPedido;
 import com.techchallenge.core.domain.entities.Cliente;
 import com.techchallenge.core.domain.entities.Pedido;
+import com.techchallenge.core.domain.entities.StatusPedido;
 
 @Component
 public class PedidoApiMapper {

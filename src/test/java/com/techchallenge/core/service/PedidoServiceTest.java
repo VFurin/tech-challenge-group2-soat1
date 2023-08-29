@@ -18,13 +18,13 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import com.techchallenge.TestConfig;
 import com.techchallenge.adapter.gateways.PedidoGateway;
-import com.techchallenge.core.domain.TipoPagamento;
 import com.techchallenge.core.domain.entities.Categoria;
 import com.techchallenge.core.domain.entities.Cliente;
 import com.techchallenge.core.domain.entities.ItemPedido;
 import com.techchallenge.core.domain.entities.Pedido;
 import com.techchallenge.core.domain.entities.Produto;
 import com.techchallenge.core.domain.entities.StatusPedido;
+import com.techchallenge.core.domain.entities.TipoPagamento;
 
 @SpringBootTest
 @ContextConfiguration(classes = {TestConfig.class}, loader = AnnotationConfigContextLoader.class)
