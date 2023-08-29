@@ -20,7 +20,7 @@ import io.swagger.annotations.ApiResponses;
 public class FakeCheckoutController {
 	
     @Autowired
-    private FakeCheckoutUseCase service;
+    private FakeCheckoutUseCase useCase;
     
     @Autowired
     private PedidoApiMapper pedidoMapper;
@@ -36,6 +36,6 @@ public class FakeCheckoutController {
 	public String checkout(@RequestBody PedidoInput pedidoInput) {
 		
 		Pedido pedido = pedidoMapper.toDomainObject(pedidoInput);
-		return pedidoMapper.toModel(service.checkout(pedido)).getId().toString();
+		return pedidoMapper.toModel(useCase.checkout(pedido)).getId().toString();
 	}
 }

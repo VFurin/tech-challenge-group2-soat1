@@ -7,32 +7,32 @@ import org.springframework.stereotype.Component;
 
 import com.techchallenge.adapter.gateways.PagamentoGateway;
 import com.techchallenge.adapter.gateways.PedidoGateway;
+import com.techchallenge.adapter.mapper.business.TipoPagamentoBusinessMapper;
 import com.techchallenge.core.domain.entities.TipoPagamento;
+import com.techchallenge.core.domain.exception.EntidadeNaoEncontradaException;
+import com.techchallenge.drivers.db.entities.TipoPagamentoEntity;
 import com.techchallenge.drivers.db.repositories.TipoPagamentoRepository;
 
-//@Component
+@Component
 public class PagamentoGatewayImpl implements PagamentoGateway {
 	
 	@Autowired
-	private PedidoGateway pedidoService;
+	private PedidoGateway pedidoGateway;
 	@Autowired
 	private TipoPagamentoRepository tipoPagamentoRepository;
+	@Autowired
+	private TipoPagamentoBusinessMapper businessMapper;
 	
 	public void efetuarPagamento(Long pedidoId, TipoPagamento tipoPagamento) {
-//		Long id = tipoPagamento.getId();
-//		Pedido pedido = pedidoService.buscarPedidoPorIdEStatus(pedidoId, StatusPedido.RECEBIDO);
-//		
-//		tipoPagamento = tipoPagamentoRepository.findById(id).orElseThrow(() -> new EntidadeNaoEncontradaException(
-//                String.format("Não existe um cadastro de tipo de pagamento com código %d", id)));
-//		
-//		pedido.setStatus(StatusPedido.PREPARACAO);
-//		pedido.setTipoPagamento(tipoPagamento);
-//		
-//		pedidoService.atualizar(pedido);
+		Long id = tipoPagamento.getId();
+		
+		TipoPagamentoEntity entity = tipoPagamentoRepository.findById(id).orElseThrow(() -> new EntidadeNaoEncontradaException(
+                String.format("Não existe um cadastro de tipo de pagamento com código %d", id)));
+		
+		pedidoGateway.atualizarTipoPagamento(pedidoId, businessMapper.toModel(entity));
 	}
 	
 	public List<TipoPagamento> listar() {
-//		return tipoPagamentoRepository.findAll();
-		return null;
+		return businessMapper.toCollectionModel(tipoPagamentoRepository.findAll());
 	}
 }

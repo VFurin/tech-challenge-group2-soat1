@@ -12,7 +12,7 @@ import com.techchallenge.core.domain.entities.StatusPedido;
 import com.techchallenge.core.domain.exception.EntidadeNaoEncontradaException;
 import com.techchallenge.core.domain.usecases.PedidoUseCase;
 
-@Service
+//@Service
 public class PagamentoService {
 	
 	@Autowired
@@ -21,19 +21,20 @@ public class PagamentoService {
 	private TipoPagamentoRepository tipoPagamentoRepository;
 	
 	public void efetuarPagamento(Long pedidoId, TipoPagamento tipoPagamento) {
-		Long id = tipoPagamento.getId();
-		Pedido pedido = pedidoService.buscarPedidoPorIdEStatus(pedidoId, StatusPedido.RECEBIDO);
-		
-		tipoPagamento = tipoPagamentoRepository.findById(id).orElseThrow(() -> new EntidadeNaoEncontradaException(
-                String.format("Não existe um cadastro de tipo de pagamento com código %d", id)));
-		
-		pedido.setStatus(StatusPedido.PREPARACAO);
-//		pedido.setTipoPagamento(tipoPagamento);
-		
-		pedidoService.atualizar(pedido);
+//		Long id = tipoPagamento.getId();
+//		Pedido pedido = pedidoService.buscarPedidoPorIdEStatus(pedidoId, StatusPedido.RECEBIDO);
+//		
+//		tipoPagamento = tipoPagamentoRepository.findById(id).orElseThrow(() -> new EntidadeNaoEncontradaException(
+//                String.format("Não existe um cadastro de tipo de pagamento com código %d", id)));
+//		
+//		pedido.setStatus(StatusPedido.PREPARACAO);
+////		pedido.setTipoPagamento(tipoPagamento);
+//		
+//		pedidoService.atualizar(pedido);
 	}
 	
 	public List<TipoPagamento> listar() {
-		return tipoPagamentoRepository.findAll();
+//		return tipoPagamentoRepository.findAll();
+		return null;
 	}
 }

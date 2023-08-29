@@ -2,6 +2,7 @@ package com.techchallenge.core.domain.entities;
 
 public class TipoPagamento {
 
+	private Long id;
 	private String nome;
 
 	public String getNome() {
@@ -10,5 +11,13 @@ public class TipoPagamento {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 }

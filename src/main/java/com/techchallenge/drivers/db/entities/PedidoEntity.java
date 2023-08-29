@@ -16,7 +16,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.techchallenge.core.domain.TipoPagamento;
 import com.techchallenge.core.domain.entities.StatusPedido;
 
 @Entity(name = "Pedido")
@@ -30,7 +29,7 @@ public class PedidoEntity {
 	private BigDecimal valor;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="tipo_pagamento_id", nullable = true)
-	private TipoPagamento tipoPagamento;
+	private TipoPagamentoEntity tipoPagamento;
 	@Enumerated(EnumType.STRING)
 	private StatusPedido status;
     @ManyToOne
@@ -57,11 +56,11 @@ public class PedidoEntity {
 		this.valor = valor;
 	}
 
-	public TipoPagamento getTipoPagamento() {
+	public TipoPagamentoEntity getTipoPagamento() {
 		return tipoPagamento;
 	}
 
-	public void setTipoPagamento(TipoPagamento tipoPagamento) {
+	public void setTipoPagamento(TipoPagamentoEntity tipoPagamento) {
 		this.tipoPagamento = tipoPagamento;
 	}
 

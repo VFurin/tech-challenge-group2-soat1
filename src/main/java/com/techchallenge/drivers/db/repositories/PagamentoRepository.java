@@ -4,7 +4,7 @@ import org.springframework.stereotype.Repository;
 
 import com.techchallenge.drivers.db.entities.PagamentoEntity;
 
-// @Repository
-public interface PagamentoRepository { //extends JpaRepository<PagamentoEntity, Long> {
+@Repository
+public interface PagamentoRepository extends JpaRepository<PagamentoEntity, Long> {
 	
 }

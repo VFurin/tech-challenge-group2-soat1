@@ -20,6 +20,10 @@ public class PedidoEntityMapper {
 		return mapper.map(pedido, PedidoEntity.class);
 	}
 	
+	public PedidoEntity toModel(PedidoEntity pedido) {
+		return mapper.map(pedido, PedidoEntity.class);
+	}
+	
 	public Collection<PedidoEntity> toCollectionModel(Collection<Pedido> pedidos) {
 		return pedidos.stream()
 				.map(c -> mapper.map(c, PedidoEntity.class))

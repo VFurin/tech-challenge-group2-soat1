@@ -11,11 +11,14 @@ import org.springframework.transaction.annotation.Transactional;
 import com.techchallenge.adapter.gateways.PedidoGateway;
 import com.techchallenge.adapter.mapper.business.PedidoBusinessMapper;
 import com.techchallenge.adapter.mapper.db.PedidoEntityMapper;
+import com.techchallenge.adapter.mapper.db.TipoPagamentoEntityMapper;
 import com.techchallenge.core.domain.entities.Pedido;
 import com.techchallenge.core.domain.entities.StatusPedido;
+import com.techchallenge.core.domain.entities.TipoPagamento;
 import com.techchallenge.core.domain.exception.EntidadeEmUsoException;
 import com.techchallenge.core.domain.exception.EntidadeNaoEncontradaException;
 import com.techchallenge.drivers.db.entities.PedidoEntity;
+import com.techchallenge.drivers.db.entities.TipoPagamentoEntity;
 import com.techchallenge.drivers.db.repositories.PedidoRepository;
 
 @Component
@@ -31,6 +34,8 @@ public class PedidoGatewayImpl implements PedidoGateway {
     private PedidoEntityMapper mapper;
     @Autowired
     private PedidoBusinessMapper businessMapper;
+    @Autowired
+    private TipoPagamentoEntityMapper pagamentoEntityMapper;
     
     public List<Pedido> buscarPedidos() {
         return businessMapper.toCollectionModel(repository.findAll());
@@ -56,7 +61,9 @@ public class PedidoGatewayImpl implements PedidoGateway {
 
     @Transactional
     public void atualizarStatusDoPedido(Pedido pedido, StatusPedido statusPedido) {
-    	PedidoEntity entity = mapper.toModel(pedido);
+    	PedidoEntity entity = repository.findById(pedido.getId()).orElseThrow(() -> new EntidadeNaoEncontradaException(
+                String.format(MSG_PEDIDO_NAO_ENCONTRADO, pedido.getId())));
+    	
         entity.setStatus(statusPedido);
         repository.save(entity);
     }
@@ -78,4 +85,16 @@ public class PedidoGatewayImpl implements PedidoGateway {
 			throw new EntidadeNaoEncontradaException(String.format(MSG_PEDIDO_NAO_ENCONTRADO, pedidoId));
 		}
     }
+
+	@Override
+	@Transactional
+	public void atualizarTipoPagamento(Long id, TipoPagamento tipoPagamento) {
+        PedidoEntity entity = repository.findByIdAndStatus(id, StatusPedido.RECEBIDO).orElseThrow(() -> new EntidadeNaoEncontradaException(
+                String.format(MSG_PEDIDO_STATUS_NAO_ENCONTRADO, id)));
+        
+        TipoPagamentoEntity pagamentoEntity = pagamentoEntityMapper.toModel(tipoPagamento);
+        
+        entity.setStatus(StatusPedido.PREPARACAO);
+        entity.setTipoPagamento(pagamentoEntity);
+	}
 }
