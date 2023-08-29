@@ -1,4 +1,4 @@
-package com.techchallenge.core.domain;
+package com.techchallenge.drivers.db.entities;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
@@ -17,28 +17,23 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.techchallenge.drivers.db.entities.ClienteEntity;
-
-@Entity
-public class Pedido {
+//@Entity(name = "Pedido")
+public class PedidoEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
-	private List<ItemPedido> itens;
+	private List<ItemPedidoEntity> itens;
 	private BigDecimal valor;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="tipo_pagamento_id", nullable = true)
-	private TipoPagamento tipoPagamento;
+	private TipoPagamentoEntity tipoPagamento;
 	@Enumerated(EnumType.STRING)
-	private StatusPedido status;
+	private StatusPedidoEntity status;
     @ManyToOne
     @JoinColumn(name = "cliente_id", nullable = true)
 	private ClienteEntity cliente;
-
-	@Enumerated(EnumType.STRING)
-	private StatusPagamento statusPagamento;
 
 	private OffsetDateTime dataSolicitacao;
 	private OffsetDateTime dataCancelamento;
@@ -46,17 +41,17 @@ public class Pedido {
 	
     public void calcularValor() {
     	Optional<BigDecimal> valorTotal = itens.stream()
-    			.map((ItemPedido i) -> i.getPrecoTotal())
+    			.map((ItemPedidoEntity i) -> i.getPrecoTotal())
     			.reduce((BigDecimal p1, BigDecimal p2) -> p1.add(p2));
     	
     	this.setValor(valorTotal.orElse(BigDecimal.ZERO));
     }
 
-	public List<ItemPedido> getItens() {
+	public List<ItemPedidoEntity> getItens() {
 		return itens;
 	}
 
-	public void setItens(List<ItemPedido> itens) {
+	public void setItens(List<ItemPedidoEntity> itens) {
 		this.itens = itens;
 	}
 
@@ -68,19 +63,19 @@ public class Pedido {
 		this.valor = valor;
 	}
 
-	public TipoPagamento getTipoPagamento() {
+	public TipoPagamentoEntity getTipoPagamento() {
 		return tipoPagamento;
 	}
 
-	public void setTipoPagamento(TipoPagamento tipoPagamento) {
+	public void setTipoPagamento(TipoPagamentoEntity tipoPagamento) {
 		this.tipoPagamento = tipoPagamento;
 	}
 
-	public StatusPedido getStatus() {
+	public StatusPedidoEntity getStatus() {
 		return status;
 	}
 
-	public void setStatus(StatusPedido status) {
+	public void setStatus(StatusPedidoEntity status) {
 		this.status = status;
 	}
 

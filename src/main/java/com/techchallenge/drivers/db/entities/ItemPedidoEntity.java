@@ -1,4 +1,4 @@
-package com.techchallenge.core.domain;
+package com.techchallenge.drivers.db.entities;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -10,10 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.techchallenge.drivers.db.entities.ProdutoEntity;
-
-@Entity
-public class ItemPedido {
+//@Entity(name = "ItemPedido")
+public class ItemPedidoEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +22,7 @@ public class ItemPedido {
 
     @ManyToOne
     @JoinColumn(name="pedido_id", nullable = false)
-    private Pedido pedido;
+    private PedidoEntity pedido;
 
     @ManyToOne
     @JoinColumn(name="produto_id", nullable = false)
@@ -61,11 +59,11 @@ public class ItemPedido {
 		this.quantidade = quantidade;
 	}
 
-	public Pedido getPedido() {
+	public PedidoEntity getPedido() {
 		return pedido;
 	}
 
-	public void setPedido(Pedido pedido) {
+	public void setPedido(PedidoEntity pedido) {
 		this.pedido = pedido;
 	}
 
@@ -94,7 +92,7 @@ public class ItemPedido {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ItemPedido other = (ItemPedido) obj;
+		ItemPedidoEntity other = (ItemPedidoEntity) obj;
 		return Objects.equals(id, other.id);
 	}
 }

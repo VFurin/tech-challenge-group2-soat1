@@ -23,10 +23,11 @@ public class PedidoService {
 
     @Autowired
     private PedidoRepository repository;
-
+    
     public List<Pedido> buscarPedidos() {
          return repository.findAll();
     }
+
 
     public Pedido buscarPedidoPorId(Long id) {
         return repository.findById(id).orElseThrow(() -> new EntidadeNaoEncontradaException(

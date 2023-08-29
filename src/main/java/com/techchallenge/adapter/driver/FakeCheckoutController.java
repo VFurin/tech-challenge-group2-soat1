@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.techchallenge.adapter.driver.model.PedidoModel;
 import com.techchallenge.adapter.driver.model.input.PedidoInput;
 import com.techchallenge.adapter.mapper.PedidoMapper;
 import com.techchallenge.core.applications.service.FakeCheckoutService;

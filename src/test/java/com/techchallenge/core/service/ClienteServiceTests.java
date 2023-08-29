@@ -1,28 +1,32 @@
 package com.techchallenge.core.service;
 
-import com.techchallenge.TestConfig;
-import com.techchallenge.adapter.driver.model.input.ClienteInput;
-import com.techchallenge.core.applications.service.ClienteService;
-import com.techchallenge.core.domain.Cliente;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.*;
+import com.techchallenge.TestConfig;
+import com.techchallenge.adapter.driver.model.input.ClienteInput;
+import com.techchallenge.core.domain.entities.Cliente;
+import com.techchallenge.core.domain.usecases.ClienteUseCase;
 
 @SpringBootTest
 @ContextConfiguration(classes = {TestConfig.class}, loader = AnnotationConfigContextLoader.class)
 public class ClienteServiceTests {
 
     @MockBean
-    private ClienteService service;
+    private ClienteUseCase service;
 
     @Test
     void testDeveSalvarClienteComClienteInputValido() {

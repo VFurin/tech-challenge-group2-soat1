@@ -4,15 +4,15 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.stream.Collectors;
 
-import com.techchallenge.core.domain.StatusPedido;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.techchallenge.adapter.driver.model.PedidoModel;
 import com.techchallenge.adapter.driver.model.input.PedidoInput;
-import com.techchallenge.core.domain.Cliente;
 import com.techchallenge.core.domain.Pedido;
+import com.techchallenge.core.domain.StatusPedido;
+import com.techchallenge.drivers.db.entities.ClienteEntity;
 
 @Component
 public class PedidoMapper {
@@ -23,7 +23,7 @@ public class PedidoMapper {
     public Pedido toDomainObject(PedidoInput input) {
         Pedido pedido = mapper.map(input, Pedido.class);
 
-        pedido.setCliente(new Cliente());
+        pedido.setCliente(new ClienteEntity());
         pedido.getCliente().setId(input.getClienteId());
 
         return pedido;
