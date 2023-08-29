@@ -48,6 +48,10 @@ public class ProdutoUseCase {
     	return gateway.buscarPorCategoria(categoriaId);
     }
     
+    public Produto buscarPorId(Long produtoId) {
+    	return gateway.buscarPorId(produtoId);
+    }
+    
     public void atualizar(Long id, Produto produto) {
         Categoria categoria = categoriaUseCase.buscarPorId(produto.getCategoria().getId());
         produto.setCategoria(categoria);

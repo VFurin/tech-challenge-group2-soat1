@@ -1,4 +1,4 @@
-package com.techchallenge.adapter.mapper;
+package com.techchallenge.adapter.mapper.api;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -9,10 +9,10 @@ import org.springframework.stereotype.Component;
 
 import com.techchallenge.adapter.driver.model.TipoPagamentoModel;
 import com.techchallenge.adapter.driver.model.input.TipoPagamentoInput;
-import com.techchallenge.core.domain.TipoPagamento;
+import com.techchallenge.core.domain.entities.TipoPagamento;
 
 @Component
-public class PagamentoMapper {
+public class PagamentoApiMapper {
 
     @Autowired
     private ModelMapper mapper;

@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 public class ItemPedido {
 
+	private Long id;
     private BigDecimal precoTotal;
     private Integer quantidade;
 
@@ -55,5 +56,13 @@ public class ItemPedido {
 
 	public void setProduto(Produto produto) {
 		this.produto = produto;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 }

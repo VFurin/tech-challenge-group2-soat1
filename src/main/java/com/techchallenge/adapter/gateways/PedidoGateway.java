@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.techchallenge.core.domain.entities.Pedido;
 import com.techchallenge.core.domain.entities.StatusPedido;
+import com.techchallenge.core.domain.entities.TipoPagamento;
 
 
 public interface PedidoGateway {
@@ -13,6 +14,7 @@ public interface PedidoGateway {
     List<Pedido> buscarPedidosPorStatus(StatusPedido statusPedido);
     Pedido buscarPedidoPorIdEStatus(Long id, StatusPedido statusPedido);
     void atualizarStatusDoPedido(Pedido pedido, StatusPedido statusPedido);
+    void atualizarTipoPagamento(Long id, TipoPagamento tipoPagamento);
     void atualizar(Pedido pedido);
     void excluir(Long pedidoId);
 }

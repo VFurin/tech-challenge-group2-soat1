@@ -47,6 +47,11 @@ public class ClienteGatewayImpl implements ClienteGateway {
     	
     	return businessMapper.toModel(repository.save(entity));
     }
+    
+    public Cliente buscarPorId(Long id) {
+        return businessMapper.toModel(repository.findById(id)
+        		.orElseThrow(() -> new NegocioException(MSG_CLIENTE_EXISTENTE)));
+    }
 
     public List<Cliente> buscarPorCpf(Long cpf) {
         return businessMapper.toCollectionModel(repository.findByCpfIs(cpf));

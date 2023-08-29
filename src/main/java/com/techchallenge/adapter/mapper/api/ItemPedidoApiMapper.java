@@ -1,4 +1,4 @@
-package com.techchallenge.adapter.mapper;
+package com.techchallenge.adapter.mapper.api;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -9,11 +9,11 @@ import org.springframework.stereotype.Component;
 
 import com.techchallenge.adapter.driver.model.ItemPedidoModel;
 import com.techchallenge.adapter.driver.model.input.ItemPedidoInput;
-import com.techchallenge.core.domain.ItemPedido;
-import com.techchallenge.drivers.db.entities.ProdutoEntity;
+import com.techchallenge.core.domain.entities.ItemPedido;
+import com.techchallenge.core.domain.entities.Produto;
 
 @Component
-public class ItemPedidoMapper {
+public class ItemPedidoApiMapper {
 
     @Autowired
     private ModelMapper mapper;
@@ -21,7 +21,7 @@ public class ItemPedidoMapper {
     public ItemPedido toDomainObject(ItemPedidoInput input) {
         ItemPedido itemPedido = mapper.map(input, ItemPedido.class);
         
-        itemPedido.setProduto(new ProdutoEntity());
+        itemPedido.setProduto(new Produto());
         itemPedido.getProduto().setId(input.getProdutoId());
         
         return itemPedido;

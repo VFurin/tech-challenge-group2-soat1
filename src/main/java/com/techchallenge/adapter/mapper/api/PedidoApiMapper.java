@@ -1,4 +1,4 @@
-package com.techchallenge.adapter.mapper;
+package com.techchallenge.adapter.mapper.api;
 
 import java.util.Collection;
 import java.util.Comparator;
@@ -10,20 +10,20 @@ import org.springframework.stereotype.Component;
 
 import com.techchallenge.adapter.driver.model.PedidoModel;
 import com.techchallenge.adapter.driver.model.input.PedidoInput;
-import com.techchallenge.core.domain.Pedido;
-import com.techchallenge.core.domain.StatusPedido;
-import com.techchallenge.drivers.db.entities.ClienteEntity;
+import com.techchallenge.core.domain.entities.Cliente;
+import com.techchallenge.core.domain.entities.Pedido;
+import com.techchallenge.core.domain.entities.StatusPedido;
 
 @Component
-public class PedidoMapper {
+public class PedidoApiMapper {
 
-    @Autowired
-    private ModelMapper mapper;
-
+	@Autowired
+	private ModelMapper mapper;
+	
     public Pedido toDomainObject(PedidoInput input) {
         Pedido pedido = mapper.map(input, Pedido.class);
 
-        pedido.setCliente(new ClienteEntity());
+        pedido.setCliente(new Cliente());
         pedido.getCliente().setId(input.getClienteId());
 
         return pedido;

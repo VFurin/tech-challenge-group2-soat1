@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-//@Entity(name = "ItemPedido")
+@Entity(name = "ItemPedido")
 public class ItemPedidoEntity {
 
     @Id
@@ -28,21 +28,6 @@ public class ItemPedidoEntity {
     @JoinColumn(name="produto_id", nullable = false)
     private ProdutoEntity produto;
     
-    public void calcularPrecoTotal() {
-        BigDecimal precoUnitario = this.produto.getPreco();
-        Integer quantidade = this.getQuantidade();
-
-        if (precoUnitario == null) {
-            precoUnitario = BigDecimal.ZERO;
-        }
-
-        if (quantidade == null) {
-            quantidade = 0;
-        }
-
-        this.setPrecoTotal(precoUnitario.multiply(new BigDecimal(quantidade)));
-    }
-
 	public BigDecimal getPrecoTotal() {
 		return precoTotal;
 	}

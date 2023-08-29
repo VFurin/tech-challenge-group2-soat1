@@ -14,4 +14,5 @@ public interface ProdutoGateway {
     List<Produto> buscarPorCategoria(String produtoCategoria);
     List<Produto> buscarPorCategoria(Long categoriaId);
     void atualizar(Long id, Produto produto);
+    Produto buscarPorId(Long produtoId);
 }

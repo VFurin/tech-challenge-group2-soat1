@@ -1,4 +1,4 @@
-package com.techchallenge.adapter.driver;
+package com.techchallenge.drivers.apis;
 
 import java.util.Collection;
 
@@ -13,11 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.techchallenge.adapter.controllers.PagamentoController;
 import com.techchallenge.adapter.driver.model.TipoPagamentoModel;
 import com.techchallenge.adapter.driver.model.input.TipoPagamentoInput;
-import com.techchallenge.adapter.mapper.PagamentoMapper;
-import com.techchallenge.core.applications.service.PagamentoService;
-import com.techchallenge.core.domain.TipoPagamento;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -27,14 +25,11 @@ import io.swagger.annotations.ApiResponses;
 @Api(tags = "Pagamentos")
 @RestController
 @RequestMapping(value = "/pagamentos", produces = MediaType.APPLICATION_JSON_VALUE)
-public class PagamentoController {
+public class PagamentoRestController {
 	
     @Autowired
-    private PagamentoService service;
+    private PagamentoController controller;
     
-    @Autowired
-    private PagamentoMapper mapper;
-	
 	@ApiOperation("Efetuar pagamento do pedido na plataforma")
 	@ApiResponses({ 
 			@ApiResponse(code = 201, message = "Pagamento registrado com sucesso"),
@@ -43,14 +38,8 @@ public class PagamentoController {
 	@PutMapping("/pedidos/{pedidoId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void realizarPagamento(@PathVariable Long pedidoId, @RequestBody TipoPagamentoInput tipoPagamentoInput) {
-		try {
-			Thread.sleep(5000);
+		controller.realizarPagamento(pedidoId, tipoPagamentoInput);
 
-			TipoPagamento tipoPagamento = mapper.toDomainObject(tipoPagamentoInput);
-			service.efetuarPagamento(pedidoId, tipoPagamento);
-		} catch (InterruptedException e) {
-			throw new RuntimeException(e);
-		}
 	}
 	
 	@ApiOperation("Consultar tipos de pagamentos aceitos na plataforma")
@@ -61,6 +50,6 @@ public class PagamentoController {
 	@GetMapping("/tipos-pagamento")
 	@ResponseStatus(HttpStatus.OK)
 	public Collection<TipoPagamentoModel> listar() {
-		return mapper.toCollectionModel(service.listar());
+		return controller.listar();
 	}
 }
