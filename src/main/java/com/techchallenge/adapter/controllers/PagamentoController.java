@@ -2,6 +2,8 @@ package com.techchallenge.adapter.controllers;
 
 import java.util.Collection;
 
+import com.techchallenge.adapter.driver.model.input.EventoPagamentoInput;
+import com.techchallenge.core.domain.entities.EventoPagamento;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -33,5 +35,15 @@ public class PagamentoController {
 	
 	public Collection<TipoPagamentoModel> listar() {
 		return mapper.toCollectionModel(useCase.listar());
+	}
+
+	public void confirmarPagamento(Long pedidoId, EventoPagamentoInput eventoPagamentoInput) {
+		try {
+			Thread.sleep(5000);
+			EventoPagamento eventoPagamento = mapper.toDomainObject(eventoPagamentoInput);
+			useCase.confirmarPagamento(pedidoId, eventoPagamento);
+		} catch (InterruptedException e) {
+			throw new RuntimeException(e);
+		}
 	}
 }

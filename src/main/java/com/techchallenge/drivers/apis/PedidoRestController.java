@@ -121,6 +121,6 @@ public class PedidoRestController {
     })
     @GetMapping(value = "/{id}/pagamento-status")
     public String buscarStatusDePagamentoDoPedido(@ApiParam(value = "ID do pedido", example = "12345678") @PathVariable Long id) {
-    	return this.buscarStatusDePagamentoDoPedido(id);
+    	return this.controller.buscarStatusDePagamentoDoPedido(id);
     }
 }

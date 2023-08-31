@@ -78,6 +78,7 @@ Basta clicar no link [diretório postman](src/main/resources/postman) onde está
   5. [Checkout pedido informando os produtos](#ancora5)
   6. [Listar tipos de pagamento](#ancora6)
   7. [Efetuar pagamento](#ancora7)
+  8. [Confirmar pagamento](#ancora8)
 
 ## Informações adicionais
 Algumas informações adicionais sobre a construção da API
@@ -273,6 +274,9 @@ Request body
 GET http://localhost:8080/api/pedidos/{id}/pagamento-status
 ```
 
+Os possíveis status de pagamento dos pedidos são: AGUARDANDO_PAGAMENTO, PROCESSAMENTO,
+APROVADO e RECUSADO.
+
 ## Recurso Checkout
 Endpoints gerados para o processo de checkout de pedidos na plataforma
 
@@ -319,6 +323,20 @@ PUT http://localhost:8080/api/pagamentos/pedidos/1
 Request body
 {
     "pagamentoId": 1
+}
+```
+
+<a id="ancora8"></a>
+##### Webhook para receber confirmação do pagamento aprovado ou pagamento recusado
+
+Esse webhook poderá receber eventos de  confirmação do pagamento aprovado ou pagamento recusado. No momento, esse webhook não está integrado com o Mercado Pago.
+```sh
+POST http://localhost:8080/api/pagamentos/pedidos/1/confirmar
+
+Request body
+{
+    "pedidoId": 1,
+    "statusPagamento": "APROVADO"
 }
 ```
 

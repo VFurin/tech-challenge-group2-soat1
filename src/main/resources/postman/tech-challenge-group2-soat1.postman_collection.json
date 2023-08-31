@@ -202,7 +202,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": null
+									"value": "1"
 								}
 							]
 						}
@@ -348,6 +348,25 @@
 							"path": [
 								"pedidos",
 								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "BUSCAR STATUS DE PAGAMENTO DO PEDIDO POR ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/pedidos/2/pagamento-status",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"pedidos",
+								"2",
+								"pagamento-status"
 							]
 						}
 					},
@@ -596,6 +615,41 @@
 							"path": [
 								"pagamentos",
 								"tipos-pagamento"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CONFIRMAR PAGAMENTO",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"pedidoId\": 1,\n    \"statusPagamento\": \"APROVADO\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/pagamentos/pedidos/:id/confirmar",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"pagamentos",
+								"pedidos",
+								":id",
+								"confirmar"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
 							]
 						}
 					},

@@ -12,6 +12,7 @@ public class Pedido {
 	private TipoPagamento tipoPagamento;
 	private StatusPedido status;
 	private Cliente cliente;
+	private StatusPagamento statusPagamento;
 
 	private OffsetDateTime dataSolicitacao;
 	private OffsetDateTime dataCancelamento;
@@ -95,5 +96,13 @@ public class Pedido {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public StatusPagamento getStatusPagamento() {
+		return statusPagamento;
+	}
+
+	public void setStatusPagamento(StatusPagamento statusPagamento) {
+		this.statusPagamento = statusPagamento;
 	}
 }

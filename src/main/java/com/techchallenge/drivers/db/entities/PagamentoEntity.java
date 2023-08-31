@@ -1,9 +1,6 @@
 package com.techchallenge.drivers.db.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity(name = "Pagamento")
 public class PagamentoEntity {
