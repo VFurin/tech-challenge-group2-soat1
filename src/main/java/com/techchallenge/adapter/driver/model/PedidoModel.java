@@ -30,10 +30,6 @@ public class PedidoModel {
         return statusPagamento;
     }
 
-    public void setStatusPagamento(StatusPagamento statusPagamento) {
-        this.statusPagamento = statusPagamento;
-    }
-
     public void setItens(List<ItemPedidoModel> itens) {
         this.itens = itens;
     }

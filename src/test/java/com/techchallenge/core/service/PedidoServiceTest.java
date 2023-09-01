@@ -70,7 +70,7 @@ public class PedidoServiceTest {
         pedidoMock.setStatus(StatusPedido.PREPARACAO);
         pedidoMock.setDataFinalizacao(OffsetDateTime.now().plusHours(1));
         pedidoMock.setDataSolicitacao(OffsetDateTime.now());
-//        pedidoMock.setTipoPagamento(tipoPagamento);
+        pedidoMock.setTipoPagamento(tipoPagamento);
         pedidoMock.setValor(BigDecimal.valueOf(10));
 
 
@@ -134,7 +134,7 @@ public class PedidoServiceTest {
         pedidoMock1.setStatus(StatusPedido.PREPARACAO);
         pedidoMock1.setDataFinalizacao(OffsetDateTime.now().plusHours(1));
         pedidoMock1.setDataSolicitacao(OffsetDateTime.now());
-//        pedidoMock1.setTipoPagamento(tipoPagamento);
+        pedidoMock1.setTipoPagamento(tipoPagamento);
         pedidoMock1.setValor(BigDecimal.valueOf(10));
 
         Cliente clienteMock2 = new Cliente();
@@ -169,7 +169,7 @@ public class PedidoServiceTest {
         pedidoMock2.setStatus(StatusPedido.PREPARACAO);
         pedidoMock2.setDataFinalizacao(OffsetDateTime.now().plusHours(1));
         pedidoMock2.setDataSolicitacao(OffsetDateTime.now());
-//        pedidoMock2.setTipoPagamento(tipoPagamento);
+        pedidoMock2.setTipoPagamento(tipoPagamento);
         pedidoMock2.setValor(BigDecimal.valueOf(10));
 
         List<Pedido> pedidosMock = new ArrayList<>();
@@ -237,7 +237,7 @@ public class PedidoServiceTest {
         pedidoMock.setStatus(StatusPedido.PREPARACAO);
         pedidoMock.setDataFinalizacao(OffsetDateTime.now().plusHours(1));
         pedidoMock.setDataSolicitacao(OffsetDateTime.now());
-//        pedidoMock.setTipoPagamento(tipoPagamento);
+        pedidoMock.setTipoPagamento(tipoPagamento);
         pedidoMock.setValor(BigDecimal.valueOf(10));
 
 

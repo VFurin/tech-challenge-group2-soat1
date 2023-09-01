@@ -3,6 +3,8 @@ package com.techchallenge.adapter.mapper.api;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+import com.techchallenge.adapter.driver.model.input.EventoPagamentoInput;
+import com.techchallenge.core.domain.entities.EventoPagamento;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -19,13 +21,18 @@ public class PagamentoApiMapper {
 
     public TipoPagamento toDomainObject(TipoPagamentoInput input) {
         TipoPagamento tipoPagamento = mapper.map(input, TipoPagamento.class);
-        
+
         return tipoPagamento;
     }
-    
+
     public Collection<TipoPagamentoModel> toCollectionModel(Collection<TipoPagamento> tipoPagamento) {
         return tipoPagamento.stream()
                 .map(c -> mapper.map(c, TipoPagamentoModel.class))
                 .collect(Collectors.toList());
+    }
+
+    public EventoPagamento toDomainObject(EventoPagamentoInput input) {
+        EventoPagamento eventoPagamento = mapper.map(input, EventoPagamento.class);
+        return eventoPagamento;
     }
 }

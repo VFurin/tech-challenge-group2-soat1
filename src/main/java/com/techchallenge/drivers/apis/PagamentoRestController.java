@@ -2,16 +2,11 @@ package com.techchallenge.drivers.apis;
 
 import java.util.Collection;
 
+import com.techchallenge.adapter.driver.model.input.EventoPagamentoInput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.techchallenge.adapter.controllers.PagamentoController;
 import com.techchallenge.adapter.driver.model.TipoPagamentoModel;
@@ -51,5 +46,16 @@ public class PagamentoRestController {
 	@ResponseStatus(HttpStatus.OK)
 	public Collection<TipoPagamentoModel> listar() {
 		return controller.listar();
+	}
+
+	@ApiOperation("Webhook para receber confirmação do pagamento aprovado ou pagamento recusado")
+	@ApiResponses({
+			@ApiResponse(code = 201, message = "Evento de confirmação do pagamento aprovado ou pagamento recusado recebido com sucesso"),
+			@ApiResponse(code = 404, message = "Caso o pedido ou pagamento com o ID informado não exista")
+	})
+	@PostMapping("/pedidos/{pedidoId}/confirmar")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void confirmarPagamento(@PathVariable Long pedidoId, @RequestBody EventoPagamentoInput eventoPagamentoInput) {
+		controller.confirmarPagamento(pedidoId, eventoPagamentoInput);
 	}
 }

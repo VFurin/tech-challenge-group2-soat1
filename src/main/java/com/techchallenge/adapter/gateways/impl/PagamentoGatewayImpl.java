@@ -2,6 +2,8 @@ package com.techchallenge.adapter.gateways.impl;
 
 import java.util.List;
 
+import com.techchallenge.core.domain.entities.Pedido;
+import com.techchallenge.core.domain.entities.StatusPagamento;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -30,6 +32,9 @@ public class PagamentoGatewayImpl implements PagamentoGateway {
                 String.format("Não existe um cadastro de tipo de pagamento com código %d", id)));
 		
 		pedidoGateway.atualizarTipoPagamento(pedidoId, businessMapper.toModel(entity));
+
+		Pedido pedido = pedidoGateway.buscarPedidoPorId(pedidoId);
+		pedido.setStatusPagamento(StatusPagamento.PROCESSAMENTO);
 	}
 	
 	public List<TipoPagamento> listar() {

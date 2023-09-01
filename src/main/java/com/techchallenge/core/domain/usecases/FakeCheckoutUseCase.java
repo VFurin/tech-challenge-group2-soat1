@@ -2,13 +2,9 @@ package com.techchallenge.core.domain.usecases;
 
 import java.time.OffsetDateTime;
 
+import com.techchallenge.core.domain.entities.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.techchallenge.core.domain.entities.Cliente;
-import com.techchallenge.core.domain.entities.Pedido;
-import com.techchallenge.core.domain.entities.Produto;
-import com.techchallenge.core.domain.entities.StatusPedido;
 
 @Service
 public class FakeCheckoutUseCase {
@@ -28,6 +24,7 @@ public class FakeCheckoutUseCase {
 		pedido.setDataSolicitacao(OffsetDateTime.now());
 		pedido.setStatus(StatusPedido.RECEBIDO);
 		pedido.calcularValor();
+		pedido.setStatusPagamento(StatusPagamento.AGUARDANDO_PAGAMENTO);
 		
 		pedidoUseCase.atualizar(pedido);
 		

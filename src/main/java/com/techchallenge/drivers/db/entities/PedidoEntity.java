@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.techchallenge.core.domain.entities.StatusPagamento;
 import com.techchallenge.core.domain.entities.StatusPedido;
 
 @Entity(name = "Pedido")
@@ -35,6 +36,9 @@ public class PedidoEntity {
     @ManyToOne
     @JoinColumn(name = "cliente_id", nullable = true)
 	private ClienteEntity cliente;
+
+	@Enumerated(EnumType.STRING)
+	private StatusPagamento statusPagamento;
 
 	private OffsetDateTime dataSolicitacao;
 	private OffsetDateTime dataCancelamento;
@@ -106,5 +110,13 @@ public class PedidoEntity {
 
 	public Long getId() {
 		return id;
+	}
+
+	public StatusPagamento getStatusPagamento() {
+		return statusPagamento;
+	}
+
+	public void setStatusPagamento(StatusPagamento statusPagamento) {
+		this.statusPagamento = statusPagamento;
 	}
 }
