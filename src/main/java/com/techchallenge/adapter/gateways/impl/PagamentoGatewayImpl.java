@@ -46,7 +46,7 @@ public class PagamentoGatewayImpl implements PagamentoGateway {
 
 		ClienteDocumentoDTO clienteDocumentoDTO = new ClienteDocumentoDTO();
 		clienteDocumentoDTO.setTipo("CPF");
-		clienteDocumentoDTO.setNumero("12345678909");
+		clienteDocumentoDTO.setNumero(pedido.getCliente().getCpf().toString());
 
 		ClienteDTO clienteDTO = new ClienteDTO();
 		clienteDTO.setDocumento(clienteDocumentoDTO);
@@ -58,7 +58,11 @@ public class PagamentoGatewayImpl implements PagamentoGateway {
 		pagamentoPixDTO.setTotal(pedido.getValor());
 		pagamentoPixDTO.setDescricao("Pagamento do pedido " + pedido.getId());
 
-		return mercadoPagoAPI.efetuarPagamentoViaPix(pagamentoPixDTO);
+		PagamentoPixResponseDTO pagamentoPixResponseDTO = mercadoPagoAPI.efetuarPagamentoViaPix(pagamentoPixDTO);
+
+		pedidoGateway.atualizarPaymentId(pedidoId, pagamentoPixResponseDTO.getId());
+
+		return pagamentoPixResponseDTO;
 	}
 	
 	public List<TipoPagamento> listar() {

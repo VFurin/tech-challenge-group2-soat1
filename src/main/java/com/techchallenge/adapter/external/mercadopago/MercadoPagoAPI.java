@@ -19,6 +19,9 @@ public class MercadoPagoAPI {
     @Value("${mercadopago.access_token}")
     private String mercadoPagoAccessToken;
 
+    @Value("${mercadopago.notification_url}")
+    private String mercadoPagoNotificationUrl;
+
     public PagamentoPixResponseDTO efetuarPagamentoViaPix(PagamentoPixDTO pagamentoPixDTO) {
         try {
             MercadoPagoConfig.setAccessToken(mercadoPagoAccessToken);
@@ -30,6 +33,7 @@ public class MercadoPagoAPI {
                             .transactionAmount(pagamentoPixDTO.getTotal())
                             .description(pagamentoPixDTO.getDescricao())
                             .paymentMethodId("pix")
+                            .notificationUrl(mercadoPagoNotificationUrl)
                             .payer(
                                     PaymentPayerRequest.builder()
                                             .email(pagamentoPixDTO.getCliente().getEmail())

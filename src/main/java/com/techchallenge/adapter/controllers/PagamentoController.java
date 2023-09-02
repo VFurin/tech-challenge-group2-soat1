@@ -38,12 +38,8 @@ public class PagamentoController {
 	}
 
 	public void confirmarPagamento(Long pedidoId, EventoPagamentoInput eventoPagamentoInput) {
-		try {
-			Thread.sleep(5000);
-			EventoPagamento eventoPagamento = mapper.toDomainObject(eventoPagamentoInput);
-			useCase.confirmarPagamento(pedidoId, eventoPagamento);
-		} catch (InterruptedException e) {
-			throw new RuntimeException(e);
-		}
+		EventoPagamento eventoPagamento = mapper.toDomainObject(eventoPagamentoInput);
+
+		useCase.confirmarPagamento(pedidoId, eventoPagamento);
 	}
 }

@@ -4,3 +4,4 @@ metadata:
   name: tech-challenge-group2-configmap
 data:
   DB_HOST: tech-challenge-group2-db-svc
+  MP_NOTIFICATION_URL: https://webhook.site/820da4fd-08cc-446d-8f0d-d4b9f22738b9/mercadopago/notifications

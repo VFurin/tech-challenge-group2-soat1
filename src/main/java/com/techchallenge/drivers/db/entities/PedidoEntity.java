@@ -24,7 +24,7 @@ public class PedidoEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
+	private Long paymentId;
 	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
 	private List<ItemPedidoEntity> itens;
 	private BigDecimal valor;
@@ -110,6 +110,14 @@ public class PedidoEntity {
 
 	public Long getId() {
 		return id;
+	}
+
+	public void setPaymentId(Long paymentId) {
+		this.paymentId = paymentId;
+	}
+
+	public Long getPaymentId() {
+		return paymentId;
 	}
 
 	public StatusPagamento getStatusPagamento() {
