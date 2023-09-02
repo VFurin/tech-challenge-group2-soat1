@@ -1,5 +1,8 @@
 package com.techchallenge.adapter.external.mercadopago;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
 import com.mercadopago.MercadoPagoConfig;
 import com.mercadopago.client.common.IdentificationRequest;
 import com.mercadopago.client.payment.PaymentClient;
@@ -9,10 +12,9 @@ import com.mercadopago.exceptions.MPApiException;
 import com.mercadopago.exceptions.MPException;
 import com.mercadopago.resources.payment.Payment;
 import com.techchallenge.adapter.driver.exceptionhandler.MercadoPagoException;
+import com.techchallenge.adapter.dto.pagamentos.PagamentoResponseDTO;
 import com.techchallenge.adapter.dto.pagamentos.PagamentoPixDTO;
 import com.techchallenge.adapter.dto.pagamentos.PagamentoPixResponseDTO;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
 
 @Service
 public class MercadoPagoAPI {
@@ -54,9 +56,30 @@ public class MercadoPagoAPI {
                     createdPayment.getId(),
                     String.valueOf(createdPayment.getStatus()),
                     createdPayment.getStatusDetail(),
+                    createdPayment.getPaymentMethodId(),
                     createdPayment.getPointOfInteraction().getTransactionData().getQrCodeBase64(),
                     createdPayment.getPointOfInteraction().getTransactionData().getQrCode()
             );
+        } catch (MPApiException apiException) {
+            throw new MercadoPagoException(apiException.getApiResponse().getContent());
+        } catch (MPException exception) {
+            throw new MercadoPagoException(exception.getMessage());
+        }
+    }
+    
+    public PagamentoResponseDTO consultarPagamento(Long paymentId) {
+        try {
+            MercadoPagoConfig.setAccessToken(mercadoPagoAccessToken);
+
+            PaymentClient paymentClient = new PaymentClient();
+            Payment payment = paymentClient.get(paymentId);
+
+            return new PagamentoResponseDTO(
+            		payment.getId(),
+                    String.valueOf(payment.getStatus()),
+                    payment.getStatusDetail(),
+                    payment.getPaymentMethodId());
+            
         } catch (MPApiException apiException) {
             throw new MercadoPagoException(apiException.getApiResponse().getContent());
         } catch (MPException exception) {

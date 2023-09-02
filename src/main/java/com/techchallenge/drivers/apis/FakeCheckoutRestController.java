@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.techchallenge.adapter.controllers.FakeCheckoutController;
+import com.techchallenge.adapter.driver.model.PedidoModel;
 import com.techchallenge.adapter.driver.model.input.PedidoInput;
 
 import io.swagger.annotations.Api;
@@ -33,7 +34,7 @@ public class FakeCheckoutRestController {
 			})
 	@PostMapping
 	@ResponseStatus(HttpStatus.OK)
-	public String checkout(@RequestBody PedidoInput pedidoInput) {
+	public PedidoModel checkout(@RequestBody PedidoInput pedidoInput) {
 		return controller.checkout(pedidoInput);
 	}
 }

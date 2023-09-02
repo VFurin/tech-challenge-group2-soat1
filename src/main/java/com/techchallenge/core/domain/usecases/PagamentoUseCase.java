@@ -2,13 +2,17 @@ package com.techchallenge.core.domain.usecases;
 
 import java.util.List;
 
-import com.techchallenge.adapter.dto.pagamentos.PagamentoPixResponseDTO;
-import com.techchallenge.adapter.gateways.PedidoGateway;
-import com.techchallenge.core.domain.entities.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.techchallenge.adapter.dto.pagamentos.PagamentoPixResponseDTO;
+import com.techchallenge.adapter.dto.pagamentos.PagamentoResponseDTO;
 import com.techchallenge.adapter.gateways.PagamentoGateway;
+import com.techchallenge.adapter.gateways.PedidoGateway;
+import com.techchallenge.core.domain.entities.EventoPagamento;
+import com.techchallenge.core.domain.entities.StatusPagamento;
+import com.techchallenge.core.domain.entities.StatusPedido;
+import com.techchallenge.core.domain.entities.TipoPagamento;
 
 @Service
 public class PagamentoUseCase {
@@ -23,20 +27,23 @@ public class PagamentoUseCase {
 		return gateway.efetuarPagamento(pedidoId, tipoPagamento);
 	}
 	
+	public PagamentoResponseDTO consultarPagamento(Long paymentId) {
+		return gateway.consultarPagamento(paymentId);
+	}
+	
 	public List<TipoPagamento> listar() {
 		return gateway.listar();
 	}
 
 	public void confirmarPagamento(Long pedidoId, EventoPagamento eventoPagamento) {
 
-		Pedido pedido = pedidoGateway.buscarPedidoPorId(pedidoId);
-
+		// Se encontrarmos uma forma de efetivar via mock o pagamento via API do MP para PIX
+		// alteraremos para efetuar a consulta pelo PaymentId e atualizar o status do pagamento
+		// com base no retorno recebido da API.
 		if (eventoPagamento.getStatusPagamento() == StatusPagamento.APROVADO) {
-			pedido.setStatus(StatusPedido.PREPARACAO);
-			pedido.setStatusPagamento(StatusPagamento.APROVADO);
-			pedidoGateway.atualizar(pedido);
+			pedidoGateway.atualizarStatusDoPedidoEPagamento(pedidoId, StatusPedido.PREPARACAO, StatusPagamento.APROVADO);
+		} else {
+			pedidoGateway.atualizarStatusPagamento(pedidoId, StatusPagamento.RECUSADO);			
 		}
-		pedido.setStatusPagamento(StatusPagamento.RECUSADO);
-		pedidoGateway.atualizar(pedido);
 	}
 }

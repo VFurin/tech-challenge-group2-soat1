@@ -35,18 +35,11 @@ public class PedidoUseCase {
     	this.gateway.atualizarStatusDoPedido(pedido, statusPedido);
     }
     
-    public void atualizar(Pedido pedido) {
-    	this.gateway.atualizar(pedido);
+    public Pedido gravar(Pedido pedido) {
+    	return this.gateway.gravar(pedido);
     }
     
     public void excluir(Long pedidoId) {
     	this.gateway.excluir(pedidoId);
-    }
-    
-    public void atualizarValorTotal(Long pedidoId) {
-    	Pedido pedido = this.gateway.buscarPedidoPorId(pedidoId);
-    	pedido.calcularValor();
-    	
-    	this.gateway.atualizar(pedido);
     }
 }

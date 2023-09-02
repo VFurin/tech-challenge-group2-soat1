@@ -26,9 +26,7 @@ public class FakeCheckoutUseCase {
 		pedido.calcularValor();
 		pedido.setStatusPagamento(StatusPagamento.AGUARDANDO_PAGAMENTO);
 		
-		pedidoUseCase.atualizar(pedido);
-		
-		return pedido;
+		return pedidoUseCase.gravar(pedido);
 	}
 	
 	private void validarItens(Pedido pedido) {
