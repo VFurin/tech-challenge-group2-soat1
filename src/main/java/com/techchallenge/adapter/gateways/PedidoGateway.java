@@ -15,6 +15,7 @@ public interface PedidoGateway {
     Pedido buscarPedidoPorIdEStatus(Long id, StatusPedido statusPedido);
     void atualizarStatusDoPedido(Pedido pedido, StatusPedido statusPedido);
     void atualizarTipoPagamento(Long id, TipoPagamento tipoPagamento);
+    void atualizarPaymentId(Long id, Long paymentId);
     void atualizar(Pedido pedido);
     void excluir(Long pedidoId);
 }

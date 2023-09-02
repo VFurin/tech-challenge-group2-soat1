@@ -12,7 +12,7 @@ spec:
       restartPolicy: Always
       containers:
         - name: tech-challenge-group2-container
-          image: furin27/tech-challenge-group2:v1.0.1
+          image: furin27/tech-challenge-group2:v1.0.2
           imagePullPolicy: Always
           ports:
             - containerPort: 8080

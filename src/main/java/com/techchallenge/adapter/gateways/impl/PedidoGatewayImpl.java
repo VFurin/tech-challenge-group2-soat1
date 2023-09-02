@@ -97,4 +97,13 @@ public class PedidoGatewayImpl implements PedidoGateway {
         entity.setStatus(StatusPedido.PREPARACAO);
         entity.setTipoPagamento(pagamentoEntity);
 	}
+
+    @Override
+    @Transactional
+    public void atualizarPaymentId(Long id, Long paymentId) {
+        PedidoEntity entity = repository.findByIdAndStatus(id, StatusPedido.PREPARACAO).orElseThrow(() -> new EntidadeNaoEncontradaException(
+                String.format(MSG_PEDIDO_STATUS_NAO_ENCONTRADO, id)));
+
+        entity.setPaymentId(paymentId);
+    }
 }
