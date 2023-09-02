@@ -16,6 +16,27 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
+          env:
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: tech-challenge-group2-secret
+                  key: db_user
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: tech-challenge-group2-secret
+                  key: db_password
+            - name: DB_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: tech-challenge-group2-secret
+                  key: db_root_password
+            - name: MP_ACCESS_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: tech-challenge-group2-secret
+                  key: mp_access_token
           envFrom:
             - configMapRef:
                 name: tech-challenge-group2-configmap

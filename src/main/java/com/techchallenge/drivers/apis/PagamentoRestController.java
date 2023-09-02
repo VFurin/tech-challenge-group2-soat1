@@ -3,6 +3,7 @@ package com.techchallenge.drivers.apis;
 import java.util.Collection;
 
 import com.techchallenge.adapter.driver.model.input.EventoPagamentoInput;
+import com.techchallenge.adapter.dto.pagamentos.PagamentoPixResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -31,10 +32,9 @@ public class PagamentoRestController {
 			@ApiResponse(code = 404, message = "Caso o pedido ou pagamento com o ID informado não exista")
 			})
 	@PutMapping("/pedidos/{pedidoId}")
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void realizarPagamento(@PathVariable Long pedidoId, @RequestBody TipoPagamentoInput tipoPagamentoInput) {
-		controller.realizarPagamento(pedidoId, tipoPagamentoInput);
-
+	@ResponseStatus(HttpStatus.OK)
+	public PagamentoPixResponseDTO realizarPagamento(@PathVariable Long pedidoId, @RequestBody TipoPagamentoInput tipoPagamentoInput) {
+		return controller.realizarPagamento(pedidoId, tipoPagamentoInput);
 	}
 	
 	@ApiOperation("Consultar tipos de pagamentos aceitos na plataforma")
