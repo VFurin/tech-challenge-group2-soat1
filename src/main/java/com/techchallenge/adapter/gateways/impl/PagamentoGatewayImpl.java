@@ -2,6 +2,11 @@ package com.techchallenge.adapter.gateways.impl;
 
 import java.util.List;
 
+import com.techchallenge.adapter.dto.cliente.ClienteDTO;
+import com.techchallenge.adapter.dto.cliente.ClienteDocumentoDTO;
+import com.techchallenge.adapter.dto.pagamentos.PagamentoPixDTO;
+import com.techchallenge.adapter.dto.pagamentos.PagamentoPixResponseDTO;
+import com.techchallenge.adapter.external.mercadopago.MercadoPagoAPI;
 import com.techchallenge.core.domain.entities.Pedido;
 import com.techchallenge.core.domain.entities.StatusPagamento;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +29,11 @@ public class PagamentoGatewayImpl implements PagamentoGateway {
 	private TipoPagamentoRepository tipoPagamentoRepository;
 	@Autowired
 	private TipoPagamentoBusinessMapper businessMapper;
+
+	@Autowired
+	private MercadoPagoAPI mercadoPagoAPI;
 	
-	public void efetuarPagamento(Long pedidoId, TipoPagamento tipoPagamento) {
+	public PagamentoPixResponseDTO efetuarPagamento(Long pedidoId, TipoPagamento tipoPagamento) {
 		Long id = tipoPagamento.getId();
 		
 		TipoPagamentoEntity entity = tipoPagamentoRepository.findById(id).orElseThrow(() -> new EntidadeNaoEncontradaException(
@@ -35,6 +43,22 @@ public class PagamentoGatewayImpl implements PagamentoGateway {
 
 		Pedido pedido = pedidoGateway.buscarPedidoPorId(pedidoId);
 		pedido.setStatusPagamento(StatusPagamento.PROCESSAMENTO);
+
+		ClienteDocumentoDTO clienteDocumentoDTO = new ClienteDocumentoDTO();
+		clienteDocumentoDTO.setTipo("CPF");
+		clienteDocumentoDTO.setNumero("12345678909");
+
+		ClienteDTO clienteDTO = new ClienteDTO();
+		clienteDTO.setDocumento(clienteDocumentoDTO);
+		clienteDTO.setEmail(pedido.getCliente().getEmail());
+		clienteDTO.setNome(pedido.getCliente().getNome());
+
+		PagamentoPixDTO pagamentoPixDTO = new PagamentoPixDTO();
+		pagamentoPixDTO.setCliente(clienteDTO);
+		pagamentoPixDTO.setTotal(pedido.getValor());
+		pagamentoPixDTO.setDescricao("Pagamento do pedido " + pedido.getId());
+
+		return mercadoPagoAPI.efetuarPagamentoViaPix(pagamentoPixDTO);
 	}
 	
 	public List<TipoPagamento> listar() {

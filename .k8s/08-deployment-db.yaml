@@ -19,6 +19,22 @@ spec:
           envFrom:
             - configMapRef:
                 name: tech-challenge-group2-db-configmap
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: tech-challenge-group2-secret
+                  key: db_root_password
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: tech-challenge-group2-secret
+                  key: db_user
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: tech-challenge-group2-secret
+                  key: db_password
           volumeMounts:
             - name: tech-challenge-group2-db-volume
               mountPath: /var/lib/mysql

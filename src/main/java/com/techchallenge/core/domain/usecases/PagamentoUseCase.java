@@ -2,6 +2,7 @@ package com.techchallenge.core.domain.usecases;
 
 import java.util.List;
 
+import com.techchallenge.adapter.dto.pagamentos.PagamentoPixResponseDTO;
 import com.techchallenge.adapter.gateways.PedidoGateway;
 import com.techchallenge.core.domain.entities.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,8 @@ public class PagamentoUseCase {
 	@Autowired
 	private PedidoGateway pedidoGateway;
 
-	public void efetuarPagamento(Long pedidoId, TipoPagamento tipoPagamento) {
-		gateway.efetuarPagamento(pedidoId, tipoPagamento);
+	public PagamentoPixResponseDTO efetuarPagamento(Long pedidoId, TipoPagamento tipoPagamento) {
+		return gateway.efetuarPagamento(pedidoId, tipoPagamento);
 	}
 	
 	public List<TipoPagamento> listar() {

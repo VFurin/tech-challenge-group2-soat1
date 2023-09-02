@@ -4,5 +4,3 @@ metadata:
   name: tech-challenge-group2-configmap
 data:
   DB_HOST: tech-challenge-group2-db-svc
-  DB_USER: root
-  DB_PASSWORD: root

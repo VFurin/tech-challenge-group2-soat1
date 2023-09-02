@@ -3,6 +3,4 @@ kind: ConfigMap
 metadata:
   name: tech-challenge-group2-db-configmap
 data:
-  MYSQL_ROOT_PASSWORD: root
   MYSQL_DATABASE: tech_challenge
-  MYSQL_PASSWORD: root
