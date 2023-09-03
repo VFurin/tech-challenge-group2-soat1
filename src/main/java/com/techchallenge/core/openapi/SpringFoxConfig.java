@@ -46,7 +46,7 @@ public class SpringFoxConfig implements WebMvcConfigurer {
 		
 		return new Docket(DocumentationType.SWAGGER_2)
 				.select()
-				.apis(RequestHandlerSelectors.basePackage("com.techchallenge.adapter.driver"))
+				.apis(RequestHandlerSelectors.any())
 				.paths(PathSelectors.any())
 				.build()
 				.useDefaultResponseMessages(Boolean.FALSE)
