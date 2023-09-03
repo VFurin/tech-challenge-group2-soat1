@@ -69,6 +69,18 @@ Os arquivos devem ser aplicados ao k8s na ordem que estão mapeados.
 
 Após provisionamento dos recursos, a aplicação estará disponível no endereço associado a NAT configurada no ambiente provido do k8s. O contexto da aplicação está definida como **/api**.
 
+Após o provisionamento dos recursos, será necessário realizar uma carga de dados iniciais na base, executando o seguinte comando:
+
+```sh
+kubectl exec -i tech-challenge-group2-db-deployment-<hash> -- mysql -u root -proot  < .docker/seeds/load-data.sql
+```
+**Observação:** Substituir *&lt;hash&gt;* pelo hash associado ao pod provisionado pelo deployment.
+
+**Importante!**
+- Esse comando é necessário ser executado apenas no primeiro provisionamento dos recursos. 
+- Após a primeira inicialização, os volumes relacionados aos dados do MySQL estarão persistidos. 
+- Somente será necessária a execução novamente se houver a remoção do **persistent volume** gerado durante o provisionamento declarado no arquivo **01-persistent-volume-db.yaml**.
+
 ## Documentação Swagger da API
 A documentação em padrão Swagger está disponível em http://localhost:8080/api/swagger-ui.html.
 
@@ -357,7 +369,7 @@ O QR Code será gerado através da integração com a API do Mercado Pago e ser�
 Esse webhook para recebimento de eventos relacionados a mudança de estado do pagamento pelo Mercado Pago. Através do id do pagamento é realizada uma consulta na API do Mercado Pago para detalhe do status do método de pagamento e posterior atualização do status do pedido.
 
 ```sh
-POST http://localhost:8080/api/pagamentos/mercadopago/notifications
+POST http://localhost:8080/api/mercadopago/notifications
 
 Request body
 {
