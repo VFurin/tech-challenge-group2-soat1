@@ -1,3 +1,4 @@
+
 # Documentação - Tech Challenge - Grupo 2 SOAT1 - PosTech - Arquitetura de Software - FIAP 
 Repositório para o desafio do Tech Challenge da Pós-gradução em Software Architecture pela FIAP.
 
@@ -37,32 +38,35 @@ Esse artefato será copiado para a imagem do container em momento de build duran
 **Executando o projeto:**<br/>
 Após a conclusão da etapa anterior, você pode executar o projeto seguindo as instruções específicas do projeto.
 
-# Build do Container Docker
-Para buildar o container da aplicação, utilize o comando a seguir:
+# Imagem padrão do projeto
+Para a imagem do microserviço, o arquivo yaml de deployment já possui uma imagem configurada na qual reflete a última versão da imagem no Docker Registry. Portanto, toda a configuração informada abaixo relacionada aos recursos provisionados no k8s sempre serão referenciadas a essa imagem.
+Caso haja necessidade de gerar outra imagem para testes, basta alterar a referência d registry no arquivo **09-deployment.yaml**.
 
+# Build da imagem do projeto
+Caso seja necessária a geração de uma nova imagem, executar o comando no diretório raíz do projeto:
 ```sh
-docker-compose up -d
+docker build --build-arg "JAR_FILE=tech-challenge-group2-soat1.jar" -t <usuario>/<imagem_nome>:<tag> .
 ```
+Após geração da imagem, alterar o arquivo **09-deployment.yaml** indicando o novo tagueamento da imagem.
 
-Após finalizar o start dos containers, será necessário realizar uma carga de dados iniciais na base, executando o seguinte comando:
+# Recursos provisionados no k8s
+Lista de arquivos YAML com recursos do k8s:
+- **00-secrets.yaml:** Armazenamento das secrets de banco de dados e access_token para a API do MP;
+- **01-persistent-volume-db.yaml:** Mapeamento da PV para os arquivos de banco de dados;
+- **02-persistent-volume-claim.yaml:** Mapeamento da PVC com configuração de claims para volumes do banco de dados;
+- **03-configmap.yaml:** ConfigMap com chaves relacionadas a integração do microserviço;
+- **04-configmap-db.yaml:** ConfigMap com chaves relacionadas a integração do banco de dados;
+- **05-service-db.yaml:** Mapeamento das portas para acesso ao service de banco de dados;
+- **06-service-lb.yaml:** Mapeamento das portas para acesso ao service LoadBalancer do microserviço;
+- **07-service-np.yaml:** Mapeamento das portar para acesso ao service NodePort do microserviço;
+- **08-deployment-db.yaml:** Deployment para disponibilização do banco de dados;
+- **09-deployment.yaml:** Deployment para disponibilização do microserviço;
+- **10-autoscale.yaml:** HPA com parametrização de quantidade de réplicas e indicador para escalabilidade.
 
-```sh
-docker exec -i tech-challenge-db mysql -u root -p[password] < .docker/seeds/load-data.sql
-```
+**Importante!** 
+Os arquivos devem ser aplicados ao k8s na ordem que estão mapeados.
 
-**Importante!**<br/>
-- Esse comando é necessário ser executado apenas uma vez no up do compose. 
-- Após a primeira inicialização, os volumes relacionados aos dados do MySQL estarão persistidos. 
-- Somente será necessária a execução novamente se houver a remoção dos volumes mapeados.
-
-### Rebuid do Container Docker
-Para rebuidar o container da aplicação, utilize o comando a seguir:
-
-```sh
-docker-compose up -d --build
-```
-
-Após executar o comando acima, a aplicação estará disponível em http://localhost:8080/api.
+Após provisionamento dos recursos, a aplicação estará disponível no endereço associado a NAT configurada no ambiente provido do k8s. O contexto da aplicação está definida como **/api**.
 
 ## Documentação Swagger da API
 A documentação em padrão Swagger está disponível em http://localhost:8080/api/swagger-ui.html.
@@ -84,8 +88,26 @@ Basta clicar no link [diretório postman](src/main/resources/postman) onde está
 Algumas informações adicionais sobre a construção da API
 
 ### Conexão com banco de dados
-Na API foi adicionado um parâmetro condicional para verificação de uma variável de ambiente chamada **DB_HOST**. Essa variável é injetada no container em momento de construção e é indicada com a URL para acesso ao banco de dados. Caso não seja encontrado um valor para essa variável, o valor **localhost:3306** será utilizado como **default**.<br/><br/>
+Na API foi adicionado um parâmetro condicional para verificação de uma variável de ambiente chamada **DB_HOST**. Essa variável é injetada no container em momento de construção e é indicada com a URL para acesso ao banco de dados. Caso não seja encontrado um valor para essa variável, o valor **localhost:3306** será utilizado como **default**.<br/>
 Essa parametrização foi utilizada no caso se for necessário realizar testes via API localmente, sem a necessidade de estar inicializada no container.
+
+### Habilitadores para geração de QR Code do Mercado Pago e configuração de Webhook
+Na API foi disponibilizada a integração com o Mercado Pago para geração do QR Code e parametrização do Webhook para notificações relacionadas a posteriores eventos emitidos relacionados a solicitação de pagamento gerada.
+
+#### Premissas para integração
+Para integração com o Mercado Pago é necessário que se tenha uma conta gerada e uma aplicação no padrão MarketPlace e integração CheckoutTransparente.
+Com a geração da aplicação no Mercado Pago é possível gerar as credenciais de teste que devem ser utilizadas na integração com a API para geração do método de pagamento e habilitação do Webhook.
+
+#### Configuração
+Para o pleno funcionamento da integração com o Mercado Pago foram configuradas duas variáveis de ambientes injetadas no properties da API, sendo elas:
+
+- **MP_ACCESS_TOKEN:** Access token para autenticação na REST API do Mercado Pago para a geração do método de pagamento QR Code e retorno da estrutura de dados contendo a estrutura em base64 para a imagem do QR Code e chave para pagamento;
+- **MP_NOTIFICATION_URL:** Endereço do Webhook que será acionada pela API do Mercado Pago quando qualquer evento relacionado ao método de pagamento gerado for atualizado.
+
+Ambas as variáveis são disponibilizadas no ambiente através do provisionamento dos recursos no k8s.
+
+**Importante!**
+Devido a API estar sendo executada em ambiente local, será necessário dispor de um ambiente público no qual permita a configuração de webhooks para testes de integração. No caso dos testes realizados, foi utilizado o site https://webhook.site/.
 
 ### Profiles do Springboot
 Foram criados dois profiles springboot para execução da API, sendo eles:
