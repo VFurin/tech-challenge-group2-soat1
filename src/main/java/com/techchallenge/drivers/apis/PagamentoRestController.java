@@ -2,16 +2,24 @@ package com.techchallenge.drivers.apis;
 
 import java.util.Collection;
 
-import com.techchallenge.adapter.driver.model.input.EventoPagamentoInput;
-import com.techchallenge.adapter.dto.pagamentos.PagamentoPixResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.techchallenge.adapter.controllers.PagamentoController;
 import com.techchallenge.adapter.driver.model.TipoPagamentoModel;
+import com.techchallenge.adapter.driver.model.input.EventoPagamentoInput;
 import com.techchallenge.adapter.driver.model.input.TipoPagamentoInput;
+import com.techchallenge.adapter.dto.pagamentos.PagamentoPixResponseDTO;
+import com.techchallenge.adapter.dto.pagamentos.PagamentoResponseDTO;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -54,8 +62,8 @@ public class PagamentoRestController {
 			@ApiResponse(code = 404, message = "Caso o pedido ou pagamento com o ID informado não exista")
 	})
 	@PostMapping("/mercadopago/notifications")
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void confirmarPagamento(@PathVariable Long pedidoId, @RequestBody EventoPagamentoInput eventoPagamentoInput) {
-		controller.confirmarPagamento(pedidoId, eventoPagamentoInput);
+	@ResponseStatus(HttpStatus.OK)
+	public void confirmarPagamento(@RequestBody EventoPagamentoInput eventoPagamentoInput) {
+		controller.confirmarPagamento(eventoPagamentoInput);
 	}
 }

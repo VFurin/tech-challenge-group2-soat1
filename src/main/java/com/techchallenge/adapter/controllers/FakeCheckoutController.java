@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import com.techchallenge.adapter.driver.model.PedidoModel;
 import com.techchallenge.adapter.driver.model.input.PedidoInput;
 import com.techchallenge.adapter.mapper.api.PedidoApiMapper;
 import com.techchallenge.core.domain.entities.Pedido;
@@ -33,9 +34,9 @@ public class FakeCheckoutController {
 			})
 	@PostMapping
 	@ResponseStatus(HttpStatus.OK)
-	public String checkout(@RequestBody PedidoInput pedidoInput) {
+	public PedidoModel checkout(@RequestBody PedidoInput pedidoInput) {
 		
 		Pedido pedido = pedidoMapper.toDomainObject(pedidoInput);
-		return pedidoMapper.toModel(useCase.checkout(pedido)).getId().toString();
+		return pedidoMapper.toModel(useCase.checkout(pedido));
 	}
 }
