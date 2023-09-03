@@ -347,11 +347,14 @@ Request body
     "pagamentoId": 1
 }
 ```
+Nesse momento será gerado o QR Code para pagamento do pedido. 
+O QR Code será gerado através da integração com a API do Mercado Pago e será retornado no payload da resposta da requisição.
 
 <a id="ancora8"></a>
 ##### Webhook para receber confirmação do pagamento aprovado ou pagamento recusado
 
-Esse webhook poderá receber eventos de  confirmação do pagamento aprovado ou pagamento recusado. No momento, esse webhook não está integrado com o Mercado Pago.
+Esse webhook poderá receber eventos de  confirmação do pagamento aprovado ou pagamento recusado. Consultaremos o status do pagamento através da API do Mercado Pago e atualizaremos o status do pedido.
+
 ```sh
 POST http://localhost:8080/api/pagamentos/pedidos/1/confirmar
 
