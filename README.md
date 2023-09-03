@@ -1,4 +1,5 @@
 
+
 # Documentação - Tech Challenge - Grupo 2 SOAT1 - PosTech - Arquitetura de Software - FIAP 
 Repositório para o desafio do Tech Challenge da Pós-gradução em Software Architecture pela FIAP.
 
@@ -82,7 +83,7 @@ Basta clicar no link [diretório postman](src/main/resources/postman) onde está
   5. [Checkout pedido informando os produtos](#ancora5)
   6. [Listar tipos de pagamento](#ancora6)
   7. [Efetuar pagamento](#ancora7)
-  8. [Confirmar pagamento](#ancora8)
+  8. [Webhook de notificação de eventos relacionados ao meio de pagamento](#ancora8)
 
 ## Informações adicionais
 Algumas informações adicionais sobre a construção da API
@@ -347,25 +348,31 @@ Request body
     "pagamentoId": 1
 }
 ```
-Nesse momento será gerado o QR Code para pagamento do pedido. 
-O QR Code será gerado através da integração com a API do Mercado Pago e será retornado no payload da resposta da requisição.
+Nesse momento será gerado o QR Code para pagamento do pedido via PIX. 
+O QR Code será gerado através da integração com a API do Mercado Pago e será retornado no payload da resposta da requisição. A partir desse ponto, as alterações ocorridas no status do pagamento originadas pelo Mercado Pago serão notificadas para o webhook configurado no projeto.
 
 <a id="ancora8"></a>
-##### Webhook para receber confirmação do pagamento aprovado ou pagamento recusado
+##### Webhook de notificação de eventos relacionados ao meio de pagamento
 
-Esse webhook poderá receber eventos de  confirmação do pagamento aprovado ou pagamento recusado. Consultaremos o status do pagamento através da API do Mercado Pago e atualizaremos o status do pedido.
+Esse webhook para recebimento de eventos relacionados a mudança de estado do pagamento pelo Mercado Pago. Através do id do pagamento é realizada uma consulta na API do Mercado Pago para detalhe do status do método de pagamento e posterior atualização do status do pedido.
 
 ```sh
-POST http://localhost:8080/api/pagamentos/pedidos/1/confirmar
+POST http://localhost:8080/api/mercadopago/notifications
 
 Request body
 {
-    "pedidoId": 1,
-    "statusPagamento": "APROVADO"
+	"data" : {
+		"id": 1234567
+	}
 }
 ```
 
-**Importante!**<br/>
+**Importante!**
 - Após realizar requisição do pagamento, o status do pedido será alterado para **GERAÇÃO**. Esse status **não permite** mais manutenção no pedido.
 - O pedido, após efetivar o pagamento, será encaminhado a cozinha para que seja preparado.
 - Para alteração do status do pedido, utilizar os endpoints disponibilizados no recurso pedidos.
+
+**Observação**
+O tech challenge define que o método de pagamento pelo Mercado Pago seja através de PIX.
+O webhook foi construído com a definição de suportar o recebimento de notificações perante a atualização de status sobre o pagamento gerado no Mercado Pago. Porém, não foi encontrada nenhuma documentação, **a caráter de teste**, que apresentasse uma chamada via API do Mercado Pago na qual simulasse a efetivação do pagamento. Sendo que o pagamento via PIX é necessário ser realizado por mediação de um instituição financeira.
+Portanto, nesse ponto, foi construída a implementação do Webhook com o objetivo de **analisar o estado do pagamento recebido**. Com isso, realizar a atualização do pagamento do pedido dentro do sistema. Por não ter como atualizar de forma mockada esse retorno, esse endpoint sempre manterá o estado do pagamento atual para o pedido.
