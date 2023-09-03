@@ -12,6 +12,7 @@ public interface PedidoGateway {
 
     List<Pedido> buscarPedidos();
     Pedido buscarPedidoPorId(Long id);
+    Pedido buscarPedidoPorPaymentId(Long PaymentId);
     List<Pedido> buscarPedidosPorStatus(StatusPedido statusPedido);
     Pedido buscarPedidoPorIdEStatus(Long id, StatusPedido statusPedido);
     void atualizarStatusDoPedido(Pedido pedido, StatusPedido statusPedido);

@@ -1,22 +1,18 @@
 package com.techchallenge.core.domain.entities;
 
 public class EventoPagamento {
-    private Long paymentId;
-    private StatusPagamento statusPagamento;
 
-    public StatusPagamento getStatusPagamento() {
-        return statusPagamento;
+    private Data data;
+
+    public Data getData() { return data; }
+
+    public void setData(Data data) { this.data = data; }
+
+    public static class Data {
+        private Long id;
+
+        public Long getId() { return id; }
+
+        public void setId(Long id) { this.id = id; }
     }
-
-    public void setStatusPagamento(StatusPagamento statusPagamento) {
-        this.statusPagamento = statusPagamento;
-    }
-
-	public Long getPaymentId() {
-		return paymentId;
-	}
-
-	public void setPaymentId(Long paymentId) {
-		this.paymentId = paymentId;
-	}
 }

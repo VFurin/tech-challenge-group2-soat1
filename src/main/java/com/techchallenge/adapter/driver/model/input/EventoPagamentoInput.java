@@ -1,26 +1,20 @@
 package com.techchallenge.adapter.driver.model.input;
 
-import com.techchallenge.core.domain.entities.StatusPagamento;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class EventoPagamentoInput {
 
-	private Long paymentId;
+	private Data data;
 
-	private StatusPagamento statusPagamento;
+	public Data getData() { return data; }
 
-	public StatusPagamento getStatusPagamento() {
-		return statusPagamento;
-	}
+	public void setData(Data data) { this.data = data; }
 
-	public void setStatusPagamento(StatusPagamento statusPagamento) {
-		this.statusPagamento = statusPagamento;
-	}
+	public static class Data {
+		private Long id;
 
-	public Long getPaymentId() {
-		return paymentId;
-	}
+		public Long getId() { return id; }
 
-	public void setPaymentId(Long paymentId) {
-		this.paymentId = paymentId;
+		public void setId(Long id) { this.id = id; }
 	}
 }

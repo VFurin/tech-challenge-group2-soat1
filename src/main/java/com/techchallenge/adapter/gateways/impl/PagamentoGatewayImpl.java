@@ -2,6 +2,7 @@ package com.techchallenge.adapter.gateways.impl;
 
 import java.util.List;
 
+import com.techchallenge.core.domain.entities.StatusPedido;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -69,9 +70,18 @@ public class PagamentoGatewayImpl implements PagamentoGateway {
 	}
 	
 	public PagamentoResponseDTO consultarPagamento(Long paymentId) {
-		PagamentoResponseDTO response = mercadoPagoAPI.consultarPagamento(paymentId);
+		PagamentoResponseDTO pagamentoResponseDTO= mercadoPagoAPI.consultarPagamento(paymentId);
 
-		return response;
+		System.out.println(pagamentoResponseDTO.getStatus());
+
+		if (pagamentoResponseDTO.getStatus().equals("approved")) {
+			Pedido pedido = pedidoGateway.buscarPedidoPorPaymentId(paymentId);
+
+			pedidoGateway.atualizarStatusPagamento(pedido.getId(), StatusPagamento.APROVADO);
+			pedidoGateway.atualizarStatusDoPedido(pedido, StatusPedido.PREPARACAO);
+		}
+
+		return pagamentoResponseDTO;
 	}
 	
 	public List<TipoPagamento> listar() {

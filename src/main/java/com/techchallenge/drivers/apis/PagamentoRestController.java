@@ -61,20 +61,9 @@ public class PagamentoRestController {
 			@ApiResponse(code = 201, message = "Evento de confirmação do pagamento aprovado ou pagamento recusado recebido com sucesso"),
 			@ApiResponse(code = 404, message = "Caso o pedido ou pagamento com o ID informado não exista")
 	})
-	@PostMapping("/pedidos/{pedidoId}/confirmar")
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void confirmarPagamento(@PathVariable Long pedidoId, @RequestBody EventoPagamentoInput eventoPagamentoInput) {
-		controller.confirmarPagamento(pedidoId, eventoPagamentoInput);
-	}
-
-	@ApiOperation("Consultar dados referente ao método de pagamento.")
-	@ApiResponses({
-			@ApiResponse(code = 200, message = "Dados retornados com sucesso."),
-			@ApiResponse(code = 404, message = "Caso o id de pagamento informado não exista.")
-	})
-	@GetMapping("/{paymentId}")
+	@PostMapping("/mercadopago/notifications")
 	@ResponseStatus(HttpStatus.OK)
-	public PagamentoResponseDTO consultarPagamento(@PathVariable Long paymentId) {
-		return controller.consultarPagamento(paymentId);
+	public void confirmarPagamento(@RequestBody EventoPagamentoInput eventoPagamentoInput) {
+		controller.confirmarPagamento(eventoPagamentoInput);
 	}
 }

@@ -20,9 +20,7 @@ public class PagamentoApiMapper {
     private ModelMapper mapper;
 
     public TipoPagamento toDomainObject(TipoPagamentoInput input) {
-        TipoPagamento tipoPagamento = mapper.map(input, TipoPagamento.class);
-
-        return tipoPagamento;
+        return mapper.map(input, TipoPagamento.class);
     }
 
     public Collection<TipoPagamentoModel> toCollectionModel(Collection<TipoPagamento> tipoPagamento) {
@@ -32,7 +30,6 @@ public class PagamentoApiMapper {
     }
 
     public EventoPagamento toDomainObject(EventoPagamentoInput input) {
-        EventoPagamento eventoPagamento = mapper.map(input, EventoPagamento.class);
-        return eventoPagamento;
+        return mapper.map(input, EventoPagamento.class);
     }
 }

@@ -79,7 +79,6 @@ public class MercadoPagoAPI {
                     String.valueOf(payment.getStatus()),
                     payment.getStatusDetail(),
                     payment.getPaymentMethodId());
-            
         } catch (MPApiException apiException) {
             throw new MercadoPagoException(apiException.getApiResponse().getContent());
         } catch (MPException exception) {

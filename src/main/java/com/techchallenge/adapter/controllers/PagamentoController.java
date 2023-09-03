@@ -30,21 +30,19 @@ public class PagamentoController {
 	
 	public PagamentoPixResponseDTO realizarPagamento(Long pedidoId, TipoPagamentoInput tipoPagamentoInput) {
 		TipoPagamento tipoPagamento = mapper.toDomainObject(tipoPagamentoInput);
+		PagamentoPixResponseDTO pagamentoPixResponseDTO = useCase.efetuarPagamento(pedidoId, tipoPagamento);
 
-		return mercadoPagoApiMapper.toDomainObject(useCase.efetuarPagamento(pedidoId, tipoPagamento));
+		return mercadoPagoApiMapper.toDomainObject(pagamentoPixResponseDTO);
 	}
 	
 	public Collection<TipoPagamentoModel> listar() {
 		return mapper.toCollectionModel(useCase.listar());
 	}
 
-	public void confirmarPagamento(Long pedidoId, EventoPagamentoInput eventoPagamentoInput) {
+	public void confirmarPagamento(EventoPagamentoInput eventoPagamentoInput) {
 		EventoPagamento eventoPagamento = mapper.toDomainObject(eventoPagamentoInput);
+		Long paymentId = eventoPagamento.getData().getId();
 
-		useCase.confirmarPagamento(pedidoId, eventoPagamento);
-	}
-	
-	public PagamentoResponseDTO consultarPagamento(Long paymentId) {
-		return mercadoPagoApiMapper.toDomainObject(useCase.consultarPagamento(paymentId));
+		mercadoPagoApiMapper.toDomainObject(useCase.consultarPagamento(paymentId));
 	}
 }

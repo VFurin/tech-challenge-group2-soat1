@@ -49,6 +49,13 @@ public class PedidoGatewayImpl implements PedidoGateway {
     	return businessMapper.toModel(entity);
     }
 
+    public Pedido buscarPedidoPorPaymentId(Long paymentId) {
+        PedidoEntity entity = repository.findByPaymentId(paymentId).orElseThrow(() -> new EntidadeNaoEncontradaException(
+                String.format(MSG_PEDIDO_NAO_ENCONTRADO, paymentId)));
+
+    	return businessMapper.toModel(entity);
+    }
+
     public List<Pedido> buscarPedidosPorStatus(StatusPedido statusPedido) {
         return businessMapper.toCollectionModel(repository.findByStatus(statusPedido));
     }
