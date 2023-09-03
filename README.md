@@ -369,7 +369,7 @@ O QR Code será gerado através da integração com a API do Mercado Pago e ser�
 Esse webhook para recebimento de eventos relacionados a mudança de estado do pagamento pelo Mercado Pago. Através do id do pagamento é realizada uma consulta na API do Mercado Pago para detalhe do status do método de pagamento e posterior atualização do status do pedido.
 
 ```sh
-POST http://localhost:8080/api/mercadopago/notifications
+POST http://localhost:8080/api/pagamentos/mercadopago/notifications
 
 Request body
 {
