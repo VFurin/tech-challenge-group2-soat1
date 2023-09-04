@@ -4,7 +4,7 @@
 		"name": "tech-challenge-group2-soat1",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "13953835",
-		"_collection_link": "https://grey-moon-1126-1.postman.co/workspace/ac04c78e-05f8-49a2-833a-48df469f18ac/collection/6731231-36138abe-f87c-4440-ac63-5763598003c0?action=share&creator=13953835&source=collection_link"
+		"_collection_link": "https://grey-moon-1126-1.postman.co/workspace/TecChallenge-SOAT1~ac04c78e-05f8-49a2-833a-48df469f18ac/collection/6731231-36138abe-f87c-4440-ac63-5763598003c0?action=share&source=collection_link&creator=13953835"
 	},
 	"item": [
 		{
@@ -17,7 +17,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nome\": \"Teste 2\",\r\n    \"email\": \"teste2@teste.com.br\",\r\n    \"cpf\": 10987654321\r\n}",
+							"raw": "{\r\n    \"nome\": \"Teste 3\",\r\n    \"email\": \"teste3@teste.com.br\",\r\n    \"cpf\": 12345678909\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -53,7 +53,7 @@
 							"variable": [
 								{
 									"key": "cpf",
-									"value": null
+									"value": "12345678909"
 								}
 							]
 						}
@@ -110,7 +110,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "3"
+									"value": "1"
 								}
 							]
 						}
@@ -166,7 +166,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n \"nome\": \"Sorvete casquinha Chocolate aaaaa1\",\n \"categoriaId\": 4,\n \"preco\" : \"2.00\",\n \"descricao\" : \"Sorvete de casquinha de chocolate.\",\n \"imagem\" : \"/imgs/products/icecream.png\"\n \n}",
+							"raw": "{\n \"nome\": \"Sorvete casquinha Chocolate aaaaa\",\n \"categoriaId\": 4,\n \"preco\" : \"2.00\",\n \"descricao\" : \"Sorvete de casquinha de chocolate.\",\n \"imagem\" : \"/imgs/products/icecream.png\"\n \n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -235,7 +235,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "4"
+									"value": "1"
 								}
 							]
 						}
@@ -413,7 +413,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"quantidade\" : 1,\n    \"produtoId\" : 3 \n}",
+							"raw": "{\n    \"quantidade\" : 1,\n    \"produtoId\" : 2 \n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -433,7 +433,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "15"
+									"value": "1"
 								}
 							]
 						}
@@ -471,7 +471,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"quantidade\" : 5,\n    \"produtoId\" : 2 \n}",
+							"raw": "{\n    \"quantidade\" : 2,\n    \"produtoId\" : 1 \n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -491,7 +491,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "14"
+									"value": "1"
 								}
 							]
 						}
@@ -525,7 +525,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "14"
+									"value": "1"
 								}
 							]
 						}
@@ -544,7 +544,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"itens\" :[\n        {\n            \"quantidade\": 2,\n            \"produtoId\": 1\n        },\n        {\n            \"quantidade\": 1,\n            \"produtoId\": 2\n        }\n    ],\n    \"clienteId\": 1\n}",
+							"raw": "{\n    \"itens\" :[\n        {\n            \"quantidade\": 1,\n            \"produtoId\": 1\n        }\n    ],\n    \"clienteId\": 1\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -595,7 +595,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": null
+									"value": "1"
 								}
 							]
 						}
@@ -621,13 +621,37 @@
 					"response": []
 				},
 				{
+					"name": "CONSULTAR PAGAMENTO - MP",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/pagamentos/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"pagamentos",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1317606695"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "CONFIRMAR PAGAMENTO",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"pedidoId\": 1,\n    \"statusPagamento\": \"APROVADO\"\n}",
+							"raw": "{\n    \"paymentId\": 1317606565,\n    \"statusPagamento\": \"APROVADO\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -648,8 +672,138 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": null
+									"value": "1"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "WEBHOOK NOTIFICAÇÃO DE STATUS DO PAGAMENTO",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"data\" : {\n        \"id\": 1234567\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/pagamentos/mercadopago/notifications",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"pagamentos",
+								"mercadopago",
+								"notifications"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "MERCADO PAGO",
+			"item": [
+				{
+					"name": "CONSULTAR STATUS PAYMENT",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.mercadopago.com/v1/payments/:id",
+							"protocol": "https",
+							"host": [
+								"api",
+								"mercadopago",
+								"com"
+							],
+							"path": [
+								"v1",
+								"payments",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1317605169"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ATUALIZAR STATUS PAYMENT",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"capture\": true,\n    \"transaction_amount\": 2,\n    \"status\": \"pending\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://api.mercadopago.com/v1/payments/1317605169",
+							"protocol": "https",
+							"host": [
+								"api",
+								"mercadopago",
+								"com"
+							],
+							"path": [
+								"v1",
+								"payments",
+								"1317605169"
 							]
 						}
 					},
