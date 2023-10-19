@@ -1,0 +1,135 @@
+parameters:
+  - name: containerRegistry
+    displayName: Container Registry
+    type: string
+    default: 'techchallengeacr.azurecr.io'
+
+trigger:
+  - develop
+
+stages:
+  - stage: sPack
+    displayName: Pack k8s configuration
+    jobs:
+      - job: jPack
+        displayName: Pack k8s configuration
+        pool:
+          vmImage: ubuntu-latest
+          steps:
+            - checkout: self
+            - task: CopyFiles@2
+              displayName: Copy k8s configuration
+              inputs:
+                SourceFolder: '$(Build.SourcesDirectory)'
+                Contents: '.k8s/*'
+                TargetFolder: $(Build.ArtifactStagingDirectory)
+            - task: PublishBuildArtifacts@1
+              displayName: Publish k8s configuration
+              inputs:
+                targetPath: '$(Build.ArtifactStagingDirectory)'
+                ArtifactName: 'tech-challenge-group2'
+
+  - stage: sMain
+    displayName: Build & Deploy to Main
+    jobs:
+      - job: jBuildMain
+        displayName: Build and Push Docker image
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - checkout: self
+          - task: ReplaceTokens@3
+            displayName: Replace tokens in Dockerfile
+            inputs:
+              rootDirectory: '$(Build.SourcesDirectory)/.docker'
+              targetFiles: Dockerfile
+          - task: Docker@2
+            displayName: Login Docker
+            inputs:
+              command: login
+          - task: Docker@2
+            displayName: Build and Push Docker
+            inputs:
+              command: buildAndPush
+              repository: ${{ parameters.ContainerRegistry }}
+              dockerfile: '$(Build.SourcesDirectory)/.docker/Dockerfile'
+              buildContext: '$(Build.SourcesDirectory)'
+              tags: |
+                latest
+          - task: Docker@2
+            displayName: Logout Docker
+            inputs:
+              command: logout
+      - deployment: jDeployMain
+        displayName: Deploy to AKS
+        dependsOn: jBuildMain
+        pool:
+          vmImage: ubuntu-latest
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - download: current
+                - task: replacetokens@5
+                  inputs:
+                    rootDirectory: '$(Pipeline.Workspace)/.k8s'
+                    targetFiles: |
+                      **/*.yml
+                      **/*.yaml
+                    encoding: 'auto'
+                    tokenPattern: 'azpipelines'
+                    writeBOM: true
+                    actionOnMissing: 'warn'
+                    keepToken: false
+                    actionOnNoFiles: 'continue'
+                    enableTransforms: false
+                    enableRecursion: false
+                    useLegacyPattern: false
+                    enableTelemetry: true
+                - task: Kubernetes@1
+                  displayName: Apply Secrets
+                  inputs:
+                      action: apply
+                      namespace: tech-challenge-group2
+                      manifests: |
+                        $(Pipeline.Workspace)/.k8s/00-secrets.yaml
+                - task: Kubernetes@1
+                  displayName: Apply Persist Volume
+                  inputs:
+                    action: apply
+                    namespace: tech-challenge-group2
+                    manifests: |
+                        $(Pipeline.Workspace)/.k8s/01-persist-volume-db.yaml
+                        $(Pipeline.Workspace)/.k8s/02-persist-volume-claim.yaml
+                - task: Kubernetes@1
+                  displayName: Apply Configmap
+                  inputs:
+                      action: apply
+                      namespace: tech-challenge-group2
+                      manifests: |
+                          $(Pipeline.Workspace)/.k8s/03-configmap.yaml
+                          $(Pipeline.Workspace)/.k8s/04-configmap-db.yaml
+                - task: Kubernetes@1
+                  displayName: Apply Service
+                  inputs:
+                      action: apply
+                      namespace: tech-challenge-group2
+                      manifests: |
+                          $(Pipeline.Workspace)/.k8s/05-service-db.yaml
+                          $(Pipeline.Workspace)/.k8s/06-service-lb.yaml
+                          $(Pipeline.Workspace)/.k8s/07-service-np.yaml
+                - task: Kubernetes@1
+                  displayName: Apply Deployment
+                  inputs:
+                      action: apply
+                      namespace: tech-challenge-group2
+                      manifests: |
+                          $(Pipeline.Workspace)/.k8s/08-deployment-db.yaml
+                          $(Pipeline.Workspace)/.k8s/09-deployment.yaml
+                - task: Kubernetes@1
+                  displayName: Apply Autoscale
+                  inputs:
+                      action: apply
+                      namespace: tech-challenge-group2
+                      manifests: |
+                          $(Pipeline.Workspace)/.k8s/10-autoscale.yaml
