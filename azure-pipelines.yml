@@ -61,7 +61,7 @@ stages:
               dockerfile: '$(Build.SourcesDirectory)/.docker/Dockerfile'
               buildContext: '$(Build.SourcesDirectory)/'
               tags: |
-                $(image_tag)
+                '$(Build.BuildId)'
           - task: Docker@2
             displayName: Logout Docker
             inputs:
