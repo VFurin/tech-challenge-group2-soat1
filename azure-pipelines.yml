@@ -23,7 +23,9 @@ stages:
               inputs:
                 SourceFolder: '$(Build.SourcesDirectory)'
                 Contents: '.k8s/*'
-                TargetFolder: $(Build.ArtifactStagingDirectory)
+                TargetFolder: '$(Build.ArtifactStagingDirectory)'
+                CleanTargetFolder: true
+                ignoreMakeDirErrors: true
             - task: PublishBuildArtifacts@1
               displayName: Publish k8s configuration
               inputs:
@@ -55,11 +57,11 @@ stages:
             inputs:
               containerRegistry: '${{ parameters.ContainerRegistry }}'
               repository: '$(imageName)'
-              command: buildAndPush
+              command: 'buildAndPush'
               dockerfile: '$(Build.SourcesDirectory)/.docker/Dockerfile'
               buildContext: '$(Build.SourcesDirectory)/'
               tags: |
-                latest
+                $(image_tag)
           - task: Docker@2
             displayName: Logout Docker
             inputs:
