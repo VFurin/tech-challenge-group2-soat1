@@ -53,10 +53,11 @@ stages:
           - task: Docker@2
             displayName: Build and Push Docker
             inputs:
+              containerRegistry: '${{ parameters.ContainerRegistry }}'
+              repository: '$(imageName)'
               command: buildAndPush
-              repository: ${{ parameters.ContainerRegistry }}
               dockerfile: '$(Build.SourcesDirectory)/.docker/Dockerfile'
-              buildContext: '$(Build.SourcesDirectory)'
+              buildContext: '$(Build.SourcesDirectory)/'
               tags: |
                 latest
           - task: Docker@2
@@ -94,47 +95,47 @@ stages:
                 - task: Kubernetes@1
                   displayName: Apply Secrets
                   inputs:
-                      action: apply
-                      namespace: tech-challenge-group2
-                      manifests: |
-                        $(Pipeline.Workspace)/.k8s/00-secrets.yaml
+                    action: apply
+                    namespace: tech-challenge-group2
+                    manifests: |
+                      $(Pipeline.Workspace)/.k8s/00-secrets.yaml
                 - task: Kubernetes@1
                   displayName: Apply Persist Volume
                   inputs:
                     action: apply
                     namespace: tech-challenge-group2
                     manifests: |
-                        $(Pipeline.Workspace)/.k8s/01-persist-volume-db.yaml
-                        $(Pipeline.Workspace)/.k8s/02-persist-volume-claim.yaml
+                      $(Pipeline.Workspace)/.k8s/01-persist-volume-db.yaml
+                      $(Pipeline.Workspace)/.k8s/02-persist-volume-claim.yaml
                 - task: Kubernetes@1
                   displayName: Apply Configmap
                   inputs:
-                      action: apply
-                      namespace: tech-challenge-group2
-                      manifests: |
-                          $(Pipeline.Workspace)/.k8s/03-configmap.yaml
-                          $(Pipeline.Workspace)/.k8s/04-configmap-db.yaml
+                    action: apply
+                    namespace: tech-challenge-group2
+                    manifests: |
+                      $(Pipeline.Workspace)/.k8s/03-configmap.yaml
+                      $(Pipeline.Workspace)/.k8s/04-configmap-db.yaml
                 - task: Kubernetes@1
                   displayName: Apply Service
                   inputs:
-                      action: apply
-                      namespace: tech-challenge-group2
-                      manifests: |
-                          $(Pipeline.Workspace)/.k8s/05-service-db.yaml
-                          $(Pipeline.Workspace)/.k8s/06-service-lb.yaml
-                          $(Pipeline.Workspace)/.k8s/07-service-np.yaml
+                    action: apply
+                    namespace: tech-challenge-group2
+                    manifests: |
+                      $(Pipeline.Workspace)/.k8s/05-service-db.yaml
+                      $(Pipeline.Workspace)/.k8s/06-service-lb.yaml
+                      $(Pipeline.Workspace)/.k8s/07-service-np.yaml
                 - task: Kubernetes@1
                   displayName: Apply Deployment
                   inputs:
-                      action: apply
-                      namespace: tech-challenge-group2
-                      manifests: |
-                          $(Pipeline.Workspace)/.k8s/08-deployment-db.yaml
-                          $(Pipeline.Workspace)/.k8s/09-deployment.yaml
+                    action: apply
+                    namespace: tech-challenge-group2
+                    manifests: |
+                      $(Pipeline.Workspace)/.k8s/08-deployment-db.yaml
+                      $(Pipeline.Workspace)/.k8s/09-deployment.yaml
                 - task: Kubernetes@1
                   displayName: Apply Autoscale
                   inputs:
-                      action: apply
-                      namespace: tech-challenge-group2
-                      manifests: |
-                          $(Pipeline.Workspace)/.k8s/10-autoscale.yaml
+                    action: apply
+                    namespace: tech-challenge-group2
+                    manifests: |
+                      $(Pipeline.Workspace)/.k8s/10-autoscale.yaml
