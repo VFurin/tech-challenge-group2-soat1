@@ -15,6 +15,7 @@ stages:
         displayName: Pack k8s configuration
         pool:
           vmImage: ubuntu-latest
+          name: Local
           steps:
             - checkout: self
             - task: CopyFiles@2
@@ -36,6 +37,7 @@ stages:
         displayName: Build and Push Docker image
         pool:
           vmImage: ubuntu-latest
+          name: Local
         steps:
           - checkout: self
           - task: ReplaceTokens@3
@@ -66,6 +68,7 @@ stages:
         dependsOn: jBuildMain
         pool:
           vmImage: ubuntu-latest
+          name: Local
         strategy:
           runOnce:
             deploy:
