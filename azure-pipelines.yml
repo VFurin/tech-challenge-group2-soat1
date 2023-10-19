@@ -48,6 +48,7 @@ stages:
           - task: Docker@2
             displayName: Login Docker
             inputs:
+              containerRegistry: ${{ parameters.ContainerRegistry }}
               command: login
           - task: Docker@2
             displayName: Build and Push Docker
