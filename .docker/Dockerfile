@@ -4,6 +4,7 @@ FROM maven:3.8.6-openjdk-11-slim AS build
 WORKDIR /app
 
 COPY src /app/src
+COPY .k8s /app/.k8s
 COPY pom.xml /app
 COPY wait-for-it.sh /wait-for-it.sh
 
